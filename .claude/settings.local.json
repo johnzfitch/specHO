@@ -1,0 +1,12 @@
+{
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "memory"
+  ],
+  "outputStyle": "Explanatory",
+  "permissions": {
+    "allow": [
+      "Bash(python:*)"
+    ]
+  }
+}

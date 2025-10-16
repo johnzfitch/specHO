@@ -1,0 +1,32 @@
+# NLP Core
+spacy>=3.7.0
+en-core-web-sm  # or en-core-web-lg for better accuracy
+
+# Phonetic Processing
+pronouncing>=0.2.0
+# OR
+g2p-en>=2.1.0
+
+# String Similarity
+python-Levenshtein>=0.21.0
+jellyfish>=1.0.0
+
+# Semantic Analysis
+gensim>=4.3.0
+numpy>=1.24.0
+scipy>=1.11.0
+
+# Data Structures
+pydantic>=2.0.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.0
+
+# CLI & Utilities
+rich>=13.0.0
+tqdm>=4.66.0
+
+# Optional: Advanced semantic models
+# sentence-transformers>=2.2.0

@@ -1,1029 +1,392 @@
-# SpecHO Project Development Plan
+# SpecHO Development Guide
 
-**Document Version:** 2.0 (Three-Tier Architecture)  
-**Last Updated:** [October 16, 2025]  
-**Status:** Ready for Implementation
+**Version:** 2.0  
+**Type:** Machine-readable project specification  
+**Target:** Claude Code AI assistant  
+**Purpose:** Watermark detection system for AI-generated text
 
-**Quick Navigation:**
-- [Task Decomposition](##part-1-task-decomposition) - What to build
-- [Implementation Specification](#implementation-specification) - How to build it (Tier 1/2/3)
+---
+
+## PROJECT_METADATA
+
+```yaml
+project_name: SpecHO
+objective: Detect "Echo Rule" watermark in AI-generated text
+approach: Three-tier implementation (MVP → Production → Research)
+total_tasks: 32
+estimated_duration: 12 weeks (Tier 1)
+primary_language: Python 3.11+
+architecture: Five-component sequential pipeline
+```
+
+---
+
+## DOCUMENTATION_STRUCTURE
+
+```yaml
+navigation_files:
+  setup:
+    - file: docs/QUICKSTART.md
+      purpose: Initial environment setup and Task 1.1 implementation
+      read_when: First session
+    
+    - file: architecture.md
+      purpose: Original watermark design specification
+      read_when: Need context on Echo Rule algorithm
   
-- [Project Organization](#part-2-project-organization-strategy) - Where things go
-- [Development Guidelines](#development-guidelines) - Best practices
-
----
-
-## Part 1: Task Decomposition
-
-### Phase 1: Core Data Structures & Foundation
-
-**Task 1.1: Create Core Data Models**
-
-- **Function/Class**: `models.py` with dataclasses for the entire pipeline
-- **Key Libraries**: `dataclasses`, `typing`
-- **Specific Items**:
-  - `Token` dataclass (text, pos_tag, phonetic, is_content_word, syllable_count)
-  - `Clause` dataclass (tokens, start_idx, end_idx, clause_type)
-  - `ClausePair` dataclass (clause_a, clause_b, zone_a_tokens, zone_b_tokens, pair_type)
-  - `EchoScore` dataclass (phonetic_score, structural_score, semantic_score, combined_score)
-  - `DocumentAnalysis` dataclass (text, clause_pairs, echo_scores, final_score, z_score, confidence)
-
-**Task 1.2: Create Configuration Management**
-- **Function/Class**: `config.py` with three-tier profile system
-- **Key Libraries**: `dataclasses`, `typing`
-- **Specific Items**:
-  - Define SpecHOConfig dataclass with component-level configs
-  - Implement three profiles: "simple" (MVP), "robust" (production), "research" (experimental)
-  - Create load_config() function with override support
-  - See "Implementation Specifications" section for full profile details
-  - Start with "simple" profile, graduate to "robust" after testing
-
----
-
-### Phase 2: Component 1 (Linguistic Preprocessor)
-
-**Task 2.1: Build Text Tokenizer**
-- **Function/Class**: `preprocessor.tokenizer.Tokenizer` class
-- **Key Libraries**: `spacy`
-- **Specific Items**:
-  - `tokenize(text: str) -> List[Token]` method
-  - Integration with spaCy's tokenizer
-  - Handle edge cases (contractions, hyphenated words)
-
-**Task 2.2: Implement POS Tagger**
-- **Function/Class**: `preprocessor.pos_tagger.POSTagger` class
-- **Key Libraries**: `spacy`
-- **Specific Items**:
-  - `tag(tokens: List[Token]) -> List[Token]` method (enriches tokens with POS tags)
-  - `is_content_word(token: Token) -> bool` utility function
-  - Filter out stopwords for zone extraction
-
-**Task 2.3: Build Dependency Parser**
-- **Function/Class**: `preprocessor.dependency_parser.DependencyParser` class
-- **Key Libraries**: `spacy`
-- **Specific Items**:
-  - `parse(text: str) -> spacy.tokens.Doc` method
-  - Extract dependency tree structures
-  - `get_clause_boundaries(doc: spacy.tokens.Doc) -> List[Tuple[int, int]]` method
-
-**Task 2.4: Implement Phonetic Transcriber**
-- **Function/Class**: `preprocessor.phonetic.PhoneticTranscriber` class
-- **Key Libraries**: `pronouncing` or `g2p_en` (grapheme-to-phoneme)
-- **Specific Items**:
-  - `transcribe(word: str) -> str` method (returns ARPAbet representation)
-  - Handle words not in dictionary (fallback rules)
-  - `get_stressed_syllables(phonetic: str) -> List[str]` method
-
-**Task 2.5: Create Preprocessor Orchestrator**
-- **Function/Class**: `preprocessor.pipeline.LinguisticPreprocessor` class
-- **Key Libraries**: Integrates above components
-- **Specific Items**:
-  - `process(text: str) -> List[Token]` main method
-  - Chain all sub-processors
-  - Return enriched token list with all linguistic features
-
----
-
-### Phase 3: Component 2 (Clause Pair Identifier)
-
-**Task 3.1: Build Clause Boundary Detector**
-- **Function/Class**: `clause_identifier.boundary_detector.ClauseBoundaryDetector` class
-- **Key Libraries**: Uses spaCy dependency parse output
-- **Specific Items**:
-  - `identify_clauses(doc: spacy.tokens.Doc) -> List[Clause]` method
-  - Detect independent and dependent clauses using dependency relations
-  - Handle multi-sentence text
-
-**Implementation Tiers:**
-- Tier 1 (MVP): Basic ROOT/conj detection, simple punctuation rules
-- Tier 2 (Production): Add edge case handling, fragment merging, configurable params
-- Tier 3 (Research): Cross-sentence pairing, advanced tie-breakers
-See "Implementation Specifications" for full details.
-
-**Task 3.2: Implement Thematic Pair Rules Engine**
-- **Function/Class**: `clause_identifier.pair_rules.PairRulesEngine` class
-- **Key Libraries**: `re` (for pattern matching)
-- **Specific Items**:
-  - `apply_rule_a(clauses: List[Clause]) -> List[ClausePair]` (punctuation-based)
-  - `apply_rule_b(clauses: List[Clause]) -> List[ClausePair]` (conjunction-based)
-  - `apply_rule_c(clauses: List[Clause]) -> List[ClausePair]` (transition-based)
-  - Conjunction detection list (but, however, yet, etc.)
-  - Transition phrase detection list (In contrast, Therefore, etc.)
-
-**Task 3.3: Create Zone Extractor**
-- **Function/Class**: `clause_identifier.zone_extractor.ZoneExtractor` class
-- **Key Libraries**: None (uses Token dataclass)
-- **Specific Items**:
-  - `extract_zones(clause_pair: ClausePair) -> Tuple[List[Token], List[Token]]` method
-  - `get_terminal_content_words(clause: Clause, n: int = 3) -> List[Token]` method
-  - `get_initial_content_words(clause: Clause, n: int = 3) -> List[Token]` method
-
-**Task 3.4: Create Clause Identifier Orchestrator**
-- **Function/Class**: `clause_identifier.pipeline.ClauseIdentifier` class
-- **Key Libraries**: Integrates above components
-- **Specific Items**:
-  - `identify_pairs(preprocessed_tokens: List[Token], doc: spacy.tokens.Doc) -> List[ClausePair]` method
-  - Apply all rules and extract zones for each pair
-
----
-
-### Phase 4: Component 3 (Echo Analysis Engine)
-
-**Task 4.1: Build Phonetic Echo Analyzer**
-- **Function/Class**: `echo_engine.phonetic_analyzer.PhoneticEchoAnalyzer` class
-- **Key Libraries**: `python-Levenshtein` or `jellyfish`
-- **Specific Items**:
-  - `analyze(zone_a: List[Token], zone_b: List[Token]) -> float` method
-  - `calculate_phonetic_distance(phoneme_a: str, phoneme_b: str) -> float` helper
-  - Normalize distance to 0.0-1.0 similarity score
-  - Handle multi-word zone comparisons
-
-**Task 4.2: Build Structural Echo Analyzer**
-- **Function/Class**: `echo_engine.structural_analyzer.StructuralEchoAnalyzer` class
-- **Key Libraries**: None (uses Token dataclass)
-- **Specific Items**:
-  - `analyze(zone_a: List[Token], zone_b: List[Token]) -> float` method
-  - `compare_pos_patterns(zone_a: List[Token], zone_b: List[Token]) -> float` helper
-  - `compare_syllable_counts(zone_a: List[Token], zone_b: List[Token]) -> float` helper
-  - `compare_word_properties(zone_a: List[Token], zone_b: List[Token]) -> float` helper (abstract nouns, etc.)
-
-**Task 4.3: Build Semantic Echo Analyzer**
-- **Function/Class**: `echo_engine.semantic_analyzer.SemanticEchoAnalyzer` class
-- **Key Libraries**: `gensim` (for Word2Vec), `numpy` (for cosine similarity), or `sentence-transformers`
-- **Specific Items**:
-  - `analyze(zone_a: List[Token], zone_b: List[Token]) -> float` method
-  - Load pre-trained embeddings in `__init__`
-  - `get_word_vector(word: str) -> np.ndarray` method
-  - `calculate_cosine_similarity(vec_a: np.ndarray, vec_b: np.ndarray) -> float` helper
-  - `check_antonym_relationship(zone_a: List[Token], zone_b: List[Token]) -> float` helper
-
-**Task 4.4: Create Echo Engine Orchestrator**
-- **Function/Class**: `echo_engine.pipeline.EchoAnalysisEngine` class
-- **Key Libraries**: Integrates above analyzers
-- **Specific Items**:
-  - `analyze_pair(clause_pair: ClausePair) -> EchoScore` method
-  - Run all three analyzers on each pair
-  - Return consolidated EchoScore object
-
----
-
-### Phase 5: Component 4 (Scoring & Aggregation)
-
-**Task 5.1: Implement Weighted Scoring Function**
-- **Function/Class**: `scoring.weighted_scorer.WeightedScorer` class
-- **Key Libraries**: `numpy`
-- **Specific Items**:
-  - `calculate_pair_score(echo_score: EchoScore, weights: Dict[str, float]) -> float` method
-  - Load weights from config
-  - `pair_echo_score = (w_p * phonetic) + (w_s * structural) + (w_sem * semantic)`
-
-**Task 5.2: Build Document Aggregator**
-- **Function/Class**: `scoring.aggregator.DocumentAggregator` class
-- **Key Libraries**: `numpy` or `statistics`
-- **Specific Items**:
-  - `aggregate_scores(pair_scores: List[float]) -> float` method
-  - Calculate mean of all pair scores
-  - Optional: add median, percentile calculations for robustness
-  - Handle edge case of zero pairs
-
-**Task 5.3: Create Scoring Module Orchestrator**
-- **Function/Class**: `scoring.pipeline.ScoringModule` class
-- **Key Libraries**: Integrates above components
-- **Specific Items**:
-  - `score_document(echo_scores: List[EchoScore]) -> float` method
-  - Orchestrate weighted scoring and aggregation
-
----
-
-### Phase 6: Component 5 (Statistical Validator)
-
-**Task 6.1: Build Baseline Corpus Processor**
-- **Function/Class**: `validator.baseline_builder.BaselineCorpusProcessor` class
-- **Key Libraries**: `numpy`, `pickle` (for caching), `tqdm` (for progress bars)
-- **Specific Items**:
-  - `process_corpus(corpus_path: str) -> Dict[str, float]` method
-  - Run entire SpecHO pipeline on corpus texts
-  - Calculate `human_mean_score` and `human_std_dev`
-  - `save_baseline(baseline_stats: Dict, output_path: str)` method
-  - `load_baseline(baseline_path: str) -> Dict[str, float]` method
-
-**Task 6.2: Implement Z-Score Calculator**
-- **Function/Class**: `validator.z_score.ZScoreCalculator` class
-- **Key Libraries**: `scipy.stats`
-- **Specific Items**:
-  - `calculate_z_score(document_score: float, human_mean: float, human_std: float) -> float` method
-  - Formula: `(document_score - human_mean) / human_std`
-
-**Task 6.3: Build Confidence Converter**
-- **Function/Class**: `validator.confidence.ConfidenceConverter` class
-- **Key Libraries**: `scipy.stats`
-- **Specific Items**:
-  - `z_score_to_percentile(z_score: float) -> float` method
-  - `z_score_to_confidence(z_score: float) -> float` method (returns 0.0-1.0 confidence)
-  - Use cumulative distribution function for conversion
-
-**Task 6.4: Create Statistical Validator Orchestrator**
-- **Function/Class**: `validator.pipeline.StatisticalValidator` class
-- **Key Libraries**: Integrates above components
-- **Specific Items**:
-  - `validate(document_score: float) -> Tuple[float, float]` method (returns z_score, confidence)
-  - Load baseline statistics in `__init__`
-  - Orchestrate z-score calculation and confidence conversion
-
----
-
-### Phase 7: Main Pipeline & Utilities
-
-**Task 7.1: Build Main SpecHO Pipeline**
-- **Function/Class**: `SpecHO.SpecHODetector` class
-- **Key Libraries**: All previous components
-- **Specific Items**:
-  - `analyze(text: str) -> DocumentAnalysis` main method
-  - Chain all five components in sequence
-  - Handle errors gracefully at each stage
-  - Log intermediate results for debugging
-
-**Task 7.2: Create CLI Interface**
-- **Function/Class**: `cli.py` with argparse
-- **Key Libraries**: `argparse`, `rich` (for pretty output)
-- **Specific Items**:
-  - Accept text file or string input
-  - Display results with confidence score
-  - Optional verbose mode for detailed breakdown
-  - Optional JSON output format
-
-**Task 7.3: Build Utility Functions**
-- **Function/Class**: `utils.py` module
-- **Key Libraries**: Various
-- **Specific Items**:
-  - `load_text_file(path: str) -> str`
-  - `save_analysis_results(analysis: DocumentAnalysis, output_path: str)`
-  - `setup_logging(level: str)`
-  - Error handling decorators
-
-**Task 7.4: Create Baseline Corpus Builder Script**
-- **Function/Class**: `scripts/build_baseline.py`
-- **Key Libraries**: All SpecHO components
-- **Specific Items**:
-  - Script to process large corpus
-  - Save baseline statistics to disk
-  - Progress tracking and error recovery
-
----
-
-### Phase 8: Testing & Validation
-
-**Task 8.1: Unit Tests for Preprocessor**
-- **Test File**: `tests/test_preprocessor.py`
-- **Key Libraries**: `pytest`, `pytest-mock`
-- **Specific Tests**:
-  - Test tokenization with various inputs
-  - Test POS tagging accuracy
-  - Test phonetic transcription (known word → expected ARPAbet)
-  - Test dependency parsing with sample sentences
-
-**Task 8.2: Unit Tests for Clause Identifier**
-- **Test File**: `tests/test_clause_identifier.py`
-- **Key Libraries**: `pytest`
-- **Specific Tests**:
-  - Test clause boundary detection with known sentence structures
-  - Test each pair rule (A, B, C) independently
-  - Test zone extraction with various clause lengths
-
-**Task 8.3: Unit Tests for Echo Analyzers**
-- **Test File**: `tests/test_echo_analyzers.py`
-- **Key Libraries**: `pytest`
-- **Specific Tests**:
-  - Test phonetic similarity with known phoneme pairs
-  - Test structural similarity with known POS patterns
-  - Test semantic similarity with synonym/antonym pairs
-  - Test score ranges (0.0-1.0)
-
-**Task 8.4: Unit Tests for Scoring Module**
-- **Test File**: `tests/test_scoring.py`
-- **Key Libraries**: `pytest`
-- **Specific Tests**:
-  - Test weighted scoring with known weights and scores
-  - Test aggregation with various score distributions
-  - Test edge cases (empty lists, single pair)
-
-**Task 8.5: Unit Tests for Statistical Validator**
-- **Test File**: `tests/test_validator.py`
-- **Key Libraries**: `pytest`
-- **Specific Tests**:
-  - Test z-score calculation with known baseline
-  - Test confidence conversion
-  - Test baseline loading/saving
-
-**Task 8.6: Integration Tests**
-- **Test File**: `tests/test_integration.py`
-- **Key Libraries**: `pytest`
-- **Specific Tests**:
-  - Test full pipeline with sample human-written text
-  - Test full pipeline with synthetic watermarked text
-  - Test performance with long documents
-  - Test error handling throughout pipeline
-
----
-##Implementation Specification (#implementation-specification)
-
-### Implementation Philosophy: Three-Tier Approach
-
-**Tier 1: MVP (Weeks 1-6)** - Get it working
-**Tier 2: Production (Weeks 7-10)** - Make it reliable  
-**Tier 3: Research (Weeks 11+)** - Optimize performance
-
-Each component below lists specifications by tier. Start with Tier 1, 
-validate it works, then add Tier 2/3 features as needed.
-
----
-
-### Component 2: Clause Identifier (Enhanced Specs)
-
-#### Boundary Detector
-
-**Tier 1 (MVP):**
-- API: `identify_clauses(doc: spacy.tokens.Doc) -> List[Clause]`
-- Basic heuristics: Split on finite verb heads (ROOT, conj), subordinate clauses (advcl, ccomp)
-- Simple punctuation rules: period, semicolon, em dash
-- Return: List[Clause] with start_idx, end_idx, clause_type, tokens
-
-**Tier 2 (Production):**
-- Add: relative clause detection (acl/relcl with mark)
-- Edge case handling: quotes/parentheses trimming, avoid zero-length spans
-- Fragment merging: merge clauses < 3 tokens into adjacent clause
-- Config params: min_clause_length=3, strict_mode=False
-
-**Tier 3 (Research):**
-- Advanced: multi-sentence cross-boundary pairing
-- Sophisticated trimming: sentence-initial adverbials, list detection
-- Tie-breakers for overlapping spans
-
-**Config additions:**
-```python
-clause_detection = {
-    "min_length": 3,
-    "max_length": 50,
-    "punctuation": [";", "—", ":"],
-    "dependency_labels": ["ROOT", "conj", "advcl", "ccomp"],
-    "strict_mode": False
-}
-```
-
-#### Pair Rules Engine
-
-**Tier 1 (MVP):**
-- API: `apply_rule_a()`, `apply_rule_b()`, `apply_rule_c()` each returns List[ClausePair]
-- Rule A: Semicolon and em dash only
-- Rule B: Basic coordinating conjunctions (but, and, or)
-- Rule C: Common transitions (However, Therefore, Thus)
-- Simple de-duplication by clause indices
-
-**Tier 2 (Production):**
-- Add ClausePair fields: pair_type, rule_id, confidence, rationale
-- Rule A enhancement: weight semicolon > em dash > colon
-- Rule B enhancement: correlative pairs (either/or, not only/but also)
-- Rule C enhancement: expanded transition list + directionality
-- Confidence scoring based on signal strength
-- Negative guards: skip if either clause < min_tokens
-
-**Tier 3 (Research):**
-- Lightweight pre-scoring based on zone content-word overlap
-- False positive detection for parentheticals
-- List detection after colons (skip if no verb)
-
-**Config additions:**
-```python
-pair_rules = {
-    "conjunctions": ["but", "yet", "however", "and", "or"],
-    "transitions": ["However,", "Therefore,", "Thus,", "In contrast,", "Meanwhile,"],
-    "min_pair_confidence": 0.3,
-    "use_confidence_weighting": False  # Tier 2+
-}
-```
-
-#### Zone Extractor
-
-**Tier 1 (MVP):**
-- API: `extract_zones(clause_pair) -> Tuple[List[Token], List[Token]]`
-- Extract last 3 content words from clause_a
-- Extract first 3 content words from clause_b
-- Basic content word detection: nouns, verbs, adjectives
-
-**Tier 2 (Production):**
-- Add lemmatization
-- Exclude discourse markers (however, therefore)
-- Handle short clauses: use all content words if < 3
-- Leading/trailing quote/parenthesis trimming
-- Deterministic sorting by token index
-
-**Tier 3 (Research):**
-- Configurable window sizes (1-5 words)
-- Priority weighting (terminal vs initial)
-- Low-confidence marking for edge cases
-
-**Config additions:**
-```python
-zone_extraction = {
-    "window_size": 3,
-    "min_zone_length": 1,
-    "exclude_discourse_markers": True,
-    "discourse_markers": ["however", "therefore", "thus", "moreover"]
-}
-```
-
----
-
-### Component 3: Echo Engine (Enhanced Specs)
-
-#### Phonetic Analyzer
-
-**Tier 1 (MVP):**
-- API: `analyze(zone_a, zone_b) -> float` returns 0-1
-- Use Token.phonetic from preprocessor
-- Simple Levenshtein distance normalized to [0,1]
-- Pairwise comparison: best match between zones
-- Return 0 if either zone empty
-
-**Tier 2 (Production):**
-- Rime-based comparison (from last stressed vowel onward)
-- Multiple features: rhyme match, onset overlap, syllable similarity
-- Aggregation: average top-k matches with length penalty
-- Handle OOV with fallback G2P
-- Strip punctuation/interjections
-
-**Tier 3 (Research):**
-- Hungarian algorithm for optimal alignment
-- Phoneme-level feature extraction
-- Stress pattern matching
-- LRU cache for phonetic computations
-
-**Config additions:**
-```python
-phonetic_analysis = {
-    "algorithm": "levenshtein",  # Tier 1; add "rime" for Tier 2
-    "top_k_matches": 2,
-    "length_penalty": 0.1,
-    "use_stress_patterns": False  # Tier 3
-}
-```
-
-#### Structural Analyzer
-
-**Tier 1 (MVP):**
-- Simple POS pattern comparison
-- Syllable count similarity
-- Basic scoring: pattern_sim * 0.5 + syllable_sim * 0.5
-
-**Tier 2 (Production):**
-- Coarse POS tag mapping
-- LCS similarity for patterns: 2*LCS/(lenA+lenB)
-- Word property checks: content-word ratios, NER presence
-- Weighted aggregation of features
-- Short zone fallback: length-sim only
-
-**Tier 3 (Research):**
-- Abstract noun detection
-- Syntactic role similarity
-- Configurable feature weights
-
-**Config additions:**
-```python
-structural_analysis = {
-    "features": {
-        "pos_pattern": {"enabled": True, "weight": 0.4},
-        "syllable_count": {"enabled": True, "weight": 0.3},
-        "word_properties": {"enabled": True, "weight": 0.3}
-    }
-}
-```
-
-#### Semantic Analyzer
-
-**Tier 1 (MVP):**
-- Mean-pooled word embeddings (Word2Vec or GloVe)
-- Cosine similarity: (1 + cos) / 2 mapped to [0,1]
-- Return 0.5 if embeddings unavailable (neutral)
-
-**Tier 2 (Production):**
-- Sentence-level embeddings (all-MiniLM-L6-v2)
-- OOV backoff: try static vectors, then return NaN
-- Antonym detection via polarity check
-- Batch processing for multiple pairs
-- Embedding cache (LRU + disk)
-
-**Tier 3 (Research):**
-- Transformer-based embeddings (BERT, RoBERTa)
-- WordNet antonym relationships
-- Negation handling
-- GPU acceleration
-
-**Config additions:**
-```python
-semantic_analysis = {
-    "model": "all-MiniLM-L6-v2",  # Tier 2
-    "use_antonym_detection": False,  # Tier 2
-    "batch_size": 32,
-    "device": "cpu",  # "cuda" for Tier 3
-    "cache_embeddings": True
-}
-```
-
----
-
-### Component 4: Scoring (Enhanced Specs)
-
-#### Weighted Scorer
-
-**Tier 1 (MVP):**
-- Simple weighted sum: w_p * phonetic + w_s * structural + w_sem * semantic
-- Fixed weights: {phonetic: 0.33, structural: 0.33, semantic: 0.33}
-- NaN handling: treat as 0
-- Clip to [0,1]
-
-**Tier 2 (Production):**
-- Configurable weights with normalization
-- Missing data strategies: 'zero' or 'renorm'
-- Pair confidence multipliers from ClausePair metadata
-- Per-analyzer on/off flags
-
-**Tier 3 (Research):**
-- Calibration curves (piecewise linear, sigmoid)
-- Zone length penalties
-- Rule-type boosts
-
-**Config additions:**
-```python
-scoring = {
-    "weights": {
-        "phonetic": 0.33,
-        "structural": 0.33,
-        "semantic": 0.33
-    },
-    "missing_data_strategy": "zero",  # or "renorm" in Tier 2
-    "use_pair_confidence": False,  # Tier 2
-    "calibration": None  # Tier 3: {"type": "sigmoid", "params": {...}}
-}
-```
-
-#### Document Aggregator
-
-**Tier 1 (MVP):**
-- Simple mean of all pair scores
-- Return 0.0 if no pairs
-- Emit warning for empty input
-
-**Tier 2 (Production):**
-- Multiple strategies: mean, median, trimmed_mean
-- Outlier detection via IQR or z-score
-- Return statistics: n_pairs, mean, median, std, p25/p75
-- Optional pair weighting by confidence
-
-**Tier 3 (Research):**
-- Winsorized mean
-- Weighted aggregation
-- Adaptive outlier removal
-
-**Config additions:**
-```python
-aggregation = {
-    "strategy": "mean",  # Tier 1; add median/trimmed for Tier 2
-    "trim_percent": 0.1,  # if strategy="trimmed_mean"
-    "outlier_removal": False,  # Tier 2
-    "return_statistics": True  # Tier 2
-}
-```
-
----
-
-### Component 5: Statistical Validator (Enhanced Specs)
-
-**Tier 1 (MVP):**
-- Load pre-computed baseline (human_mean, human_std)
-- Simple z-score: (score - mean) / std
-- Basic confidence: use scipy.stats.norm.cdf
-
-**Tier 2 (Production):**
-- Baseline builder with progress tracking
-- Multiple corpus sources
-- Caching with version control
-- Robust error handling
-
-**Tier 3 (Research):**
-- Online baseline updates
-- Corpus stratification
-- Distribution fitting (not just normal)
-
----
-
-## Updated Configuration Strategy
-
-Replace the current config section with this profile-based approach:
-```python
-# config.py
-
-from dataclasses import dataclass, field
-from typing import Dict, Any, Literal
-
-@dataclass
-class SpecHOConfig:
-    """Three-tier configuration system."""
+  implementation:
+    - file: docs/TASKS.md
+      purpose: All 32 task specifications (APIs, libraries, deliverables)
+      read_when: Starting any new task
     
-    profile: Literal["simple", "robust", "research"] = "simple"
+    - file: docs/SPECS.md
+      purpose: Detailed tier specifications for each component
+      read_when: Implementing component features
+  
+  post_tier1:
+    - file: docs/DEPLOYMENT.md
+      purpose: Web interface and Docker deployment
+      read_when: Tier 1 complete and validated
     
-    # Component-specific configs
-    clause_detection: Dict[str, Any] = field(default_factory=dict)
-    pair_rules: Dict[str, Any] = field(default_factory=dict)
-    zone_extraction: Dict[str, Any] = field(default_factory=dict)
-    phonetic_analysis: Dict[str, Any] = field(default_factory=dict)
-    structural_analysis: Dict[str, Any] = field(default_factory=dict)
-    semantic_analysis: Dict[str, Any] = field(default_factory=dict)
-    scoring: Dict[str, Any] = field(default_factory=dict)
-    aggregation: Dict[str, Any] = field(default_factory=dict)
-    validation: Dict[str, Any] = field(default_factory=dict)
-
-# Predefined profiles
-PROFILES = {
-    "simple": {
-        # Tier 1: MVP
-        "scoring": {
-            "weights": {"phonetic": 0.33, "structural": 0.33, "semantic": 0.33},
-            "missing_data_strategy": "zero"
-        },
-        "aggregation": {
-            "strategy": "mean"
-        },
-        "phonetic_analysis": {
-            "algorithm": "levenshtein"
-        },
-        "semantic_analysis": {
-            "model": "static",  # Word2Vec/GloVe
-            "device": "cpu"
-        }
-    },
-    
-    "robust": {
-        # Tier 2: Production
-        "scoring": {
-            "weights": {"phonetic": 0.4, "structural": 0.3, "semantic": 0.3},
-            "missing_data_strategy": "renorm",
-            "use_pair_confidence": True
-        },
-        "aggregation": {
-            "strategy": "trimmed_mean",
-            "trim_percent": 0.1,
-            "outlier_removal": True,
-            "return_statistics": True
-        },
-        "phonetic_analysis": {
-            "algorithm": "rime",
-            "top_k_matches": 2,
-            "length_penalty": 0.1
-        },
-        "semantic_analysis": {
-            "model": "all-MiniLM-L6-v2",
-            "batch_size": 32,
-            "cache_embeddings": True,
-            "device": "cpu"
-        }
-    },
-    
-    "research": {
-        # Tier 3: Experimental
-        # All Tier 2 features plus:
-        "phonetic_analysis": {
-            "algorithm": "hungarian",
-            "use_stress_patterns": True
-        },
-        "semantic_analysis": {
-            "model": "sentence-transformers/all-mpnet-base-v2",
-            "use_antonym_detection": True,
-            "device": "cuda"
-        },
-        "scoring": {
-            "calibration": {
-                "type": "sigmoid",
-                "params": {"k": 10, "x0": 0.5}
-            }
-        }
-    }
-}
-
-def load_config(profile: str = "simple", overrides: Dict[str, Any] = None) -> SpecHOConfig:
-    """Load a configuration profile with optional overrides."""
-    base_config = PROFILES.get(profile, PROFILES["simple"])
-    
-    if overrides:
-        # Deep merge overrides
-        # ... implementation ...
-    
-    return SpecHOConfig(profile=profile, **base_config)
+    - file: docs/PHILOSOPHY.md
+      purpose: Design rationale and tradeoffs
+      read_when: User requests context on decisions
 ```
 
-## Part 2: Project Organization Strategy
+---
 
-### Directory Structure
+## TIER_SYSTEM
+
+```yaml
+tier_1_mvp:
+  duration: Weeks 1-12
+  scope: Tasks 1-32
+  constraints:
+    - Implement ONLY Tier 1 specifications
+    - Use simple algorithms
+    - No premature optimization
+  deliverable: Working CLI-based detector
+  
+tier_2_production:
+  duration: Weeks 13-17
+  trigger: Tier 1 validation complete (see TIER_TRANSITION_CHECKLIST)
+  scope: Selected enhancements based on measured limitations
+  deliverable: Production-ready system
+  
+tier_3_research:
+  duration: Week 18+
+  trigger: Tier 2 deployed with 2+ weeks production data
+  scope: Advanced algorithms with proven ROI
+  deliverable: Optimized research-grade system
+```
+
+---
+
+## TASK_SEQUENCE
+
+```yaml
+foundation:
+  task_1.1: {file: SpecHO/models.py, dataclasses: [Token, Clause, ClausePair, EchoScore, DocumentAnalysis]}
+  task_1.2: {file: SpecHO/config.py, implements: three-tier config system}
+  task_7.3: {file: SpecHO/utils.py, functions: [load_text_file, save_analysis, setup_logging]}
+
+preprocessor:
+  task_2.1: {file: SpecHO/preprocessor/tokenizer.py, class: Tokenizer, library: spacy}
+  task_2.2: {file: SpecHO/preprocessor/pos_tagger.py, class: POSTagger, library: spacy}
+  task_2.3: {file: SpecHO/preprocessor/dependency_parser.py, class: DependencyParser, library: spacy}
+  task_2.4: {file: SpecHO/preprocessor/phonetic.py, class: PhoneticTranscriber, library: pronouncing}
+  task_2.5: {file: SpecHO/preprocessor/pipeline.py, class: LinguisticPreprocessor}
+  task_8.1: {file: tests/test_preprocessor.py, framework: pytest}
+
+clause_identifier:
+  task_3.1: {file: SpecHO/clause_identifier/boundary_detector.py, class: ClauseBoundaryDetector}
+  task_3.2: {file: SpecHO/clause_identifier/pair_rules.py, class: PairRulesEngine}
+  task_3.3: {file: SpecHO/clause_identifier/zone_extractor.py, class: ZoneExtractor}
+  task_3.4: {file: SpecHO/clause_identifier/pipeline.py, class: ClauseIdentifier}
+  task_8.2: {file: tests/test_clause_identifier.py, framework: pytest}
+
+echo_engine:
+  task_4.1: {file: SpecHO/echo_engine/phonetic_analyzer.py, class: PhoneticEchoAnalyzer, library: python-Levenshtein}
+  task_4.2: {file: SpecHO/echo_engine/structural_analyzer.py, class: StructuralEchoAnalyzer}
+  task_4.3: {file: SpecHO/echo_engine/semantic_analyzer.py, class: SemanticEchoAnalyzer, library: gensim}
+  task_4.4: {file: SpecHO/echo_engine/pipeline.py, class: EchoAnalysisEngine}
+  task_8.3: {file: tests/test_echo_analyzers.py, framework: pytest}
+
+scoring:
+  task_5.1: {file: SpecHO/scoring/weighted_scorer.py, class: WeightedScorer, library: numpy}
+  task_5.2: {file: SpecHO/scoring/aggregator.py, class: DocumentAggregator}
+  task_5.3: {file: SpecHO/scoring/pipeline.py, class: ScoringModule}
+  task_8.4: {file: tests/test_scoring.py, framework: pytest}
+
+validator:
+  task_6.1: {file: SpecHO/validator/baseline_builder.py, class: BaselineCorpusProcessor}
+  task_6.2: {file: SpecHO/validator/z_score.py, class: ZScoreCalculator, library: scipy.stats}
+  task_6.3: {file: SpecHO/validator/confidence.py, class: ConfidenceConverter, library: scipy.stats}
+  task_6.4: {file: SpecHO/validator/pipeline.py, class: StatisticalValidator}
+  task_8.5: {file: tests/test_validator.py, framework: pytest}
+
+integration:
+  task_7.1: {file: SpecHO/detector.py, class: SpecHODetector}
+  task_7.2: {file: scripts/cli.py, implements: argparse CLI}
+  task_7.4: {file: scripts/build_baseline.py, implements: corpus processor}
+  task_8.6: {file: tests/test_integration.py, framework: pytest}
+```
+
+---
+
+## DIRECTORY_STRUCTURE
 
 ```
 SpecHO/
-├── SpecHO/                          # Main package
-│   ├── __init__.py
-│   ├── models.py                     # Core data structures
-│   ├── config.py                     # Configuration management
-│   │
-│   ├── preprocessor/                 # Component 1
-│   │   ├── __init__.py
+├── SpecHO/              # Implementation files
+│   ├── models.py        # Task 1.1 - START HERE
+│   ├── config.py        # Task 1.2
+│   ├── utils.py         # Task 7.3
+│   ├── detector.py      # Task 7.1
+│   ├── preprocessor/
 │   │   ├── tokenizer.py
 │   │   ├── pos_tagger.py
 │   │   ├── dependency_parser.py
 │   │   ├── phonetic.py
-│   │   └── pipeline.py               # Orchestrator
-│   │
-│   ├── clause_identifier/            # Component 2
-│   │   ├── __init__.py
+│   │   └── pipeline.py
+│   ├── clause_identifier/
 │   │   ├── boundary_detector.py
 │   │   ├── pair_rules.py
 │   │   ├── zone_extractor.py
-│   │   └── pipeline.py               # Orchestrator
-│   │
-│   ├── echo_engine/                  # Component 3
-│   │   ├── __init__.py
+│   │   └── pipeline.py
+│   ├── echo_engine/
 │   │   ├── phonetic_analyzer.py
 │   │   ├── structural_analyzer.py
 │   │   ├── semantic_analyzer.py
-│   │   └── pipeline.py               # Orchestrator
-│   │
-│   ├── scoring/                      # Component 4
-│   │   ├── __init__.py
+│   │   └── pipeline.py
+│   ├── scoring/
 │   │   ├── weighted_scorer.py
 │   │   ├── aggregator.py
-│   │   └── pipeline.py               # Orchestrator
-│   │
-│   ├── validator/                    # Component 5
-│   │   ├── __init__.py
-│   │   ├── baseline_builder.py
-│   │   ├── z_score.py
-│   │   ├── confidence.py
-│   │   └── pipeline.py               # Orchestrator
-│   │
-│   ├── detector.py                   # Main SpecHODetector class
-│   └── utils.py                      # Utility functions
-│
-├── scripts/
-│   ├── build_baseline.py             # Build baseline corpus statistics
-│   └── cli.py                        # Command-line interface
-│
+│   │   └── pipeline.py
+│   └── validator/
+│       ├── baseline_builder.py
+│       ├── z_score.py
+│       ├── confidence.py
+│       └── pipeline.py
 ├── tests/
-│   ├── __init__.py
-│   ├── test_preprocessor.py
-│   ├── test_clause_identifier.py
-│   ├── test_echo_analyzers.py
-│   ├── test_scoring.py
-│   ├── test_validator.py
-│   ├── test_integration.py
-│   └── fixtures/                     # Test data
-│       ├── sample_texts.py
-│       └── mock_baseline.pkl
-│
+│   └── [test files matching above structure]
+├── scripts/
+│   ├── cli.py
+│   └── build_baseline.py
 ├── data/
-│   ├── baseline/                     # Baseline corpus statistics
-│   │   └── baseline_stats.pkl
-│   ├── models/                       # Pre-trained models
-│   │   └── word2vec.bin
-│   └── corpus/                       # Training/validation data
-│
-├── docs/
-│   ├── architecture.md
-│   ├── api_reference.md
-│   └── usage_guide.md
-│
-├── requirements.txt
-├── setup.py
-├── README.md
-├── CLAUDE.md
-└── .gitignore
+│   ├── baseline/
+│   ├── models/
+│   └── corpus/
+└── docs/
+    ├── QUICKSTART.md
+    ├── TASKS.md
+    ├── SPECS.md
+    ├── DEPLOYMENT.md
+    └── PHILOSOPHY.md
 ```
 
-### Data Flow Strategy
+---
 
-**Using Python Dataclasses for Pipeline Communication:**
+## DATA_FLOW
 
-1. **Input Stage**: Raw text (string) → `LinguisticPreprocessor`
-2. **After Preprocessing**: `List[Token]` + `spacy.Doc` → `ClauseIdentifier`
-3. **After Clause Identification**: `List[ClausePair]` → `EchoAnalysisEngine`
-4. **After Echo Analysis**: `List[EchoScore]` → `ScoringModule`
-5. **After Scoring**: `float` (document_score) → `StatisticalValidator`
-6. **Final Output**: `DocumentAnalysis` dataclass containing all results
-
-**Benefits of this approach:**
-- Type hints make data flow explicit and IDE-friendly
-- Easy to serialize for caching/debugging (using `dataclasses.asdict()`)
-- Clear contracts between components
-- Simplified unit testing with mock data
-
-### Implementation Order (Based on Dependencies)
-
-**All tasks below use Tier 1 specifications unless noted. Complete Tier 1 fully before considering Tier 2.**
-
-**Foundation & Core Data**
-1. Task 1.1 (Data Models) - FIRST, everything depends on this
-2. Task 1.2 (Configuration)
-3. Task 7.3 (Utilities)
-
-**Linguistic Preprocessor**
-4. Task 2.1 (Tokenizer)
-5. Task 2.2 (POS Tagger)
-6. Task 2.3 (Dependency Parser)
-7. Task 2.4 (Phonetic Transcriber)
-8. Task 2.5 (Preprocessor Orchestrator)
-9. Task 8.1 (Unit Tests for Preprocessor)
-
-**Clause Identifier**
-10. Task 3.1 (Clause Boundary Detector)
-11. Task 3.2 (Pair Rules Engine)
-12. Task 3.3 (Zone Extractor)
-13. Task 3.4 (Clause Identifier Orchestrator)
-14. Task 8.2 (Unit Tests for Clause Identifier)
-
-**Echo Analysis Engine**
-15. Task 4.1 (Phonetic Analyzer)
-16. Task 4.2 (Structural Analyzer)
-17. Task 4.3 (Semantic Analyzer) - can be parallel with 4.1-4.2
-18. Task 4.4 (Echo Engine Orchestrator)
-19. Task 8.3 (Unit Tests for Echo Analyzers)
-
-**Scoring Module**
-20. Task 5.1 (Weighted Scorer)
-21. Task 5.2 (Document Aggregator)
-22. Task 5.3 (Scoring Orchestrator)
-23. Task 8.4 (Unit Tests for Scoring)
-
-**Statistical Validator**
-24. Task 6.1 (Baseline Corpus Processor)
-25. Task 6.2 (Z-Score Calculator)
-26. Task 6.3 (Confidence Converter)
-27. Task 6.4 (Statistical Validator Orchestrator)
-28. Task 8.5 (Unit Tests for Validator)
-
-**Integration & Polish**
-29. Task 7.1 (Main Pipeline)
-30. Task 7.2 (CLI Interface)
-31. Task 7.4 (Baseline Builder Script)
-32. Task 8.6 (Integration Tests)
-
-### Development Guidelines
-
-#### Starting a New Component
-
-1. **Read the spec first**: Check "Implementation Specifications" for your component
-2. **Start with Tier 1**: Implement only MVP features initially
-3. **Write tests immediately**: Don't move to next task without tests
-4. **Use simple profile**: Set `config.profile = "simple"` in tests
-5. **Validate end-to-end**: Run full pipeline after each component
-
-#### When to Add Tier 2 Features
-
-Only add Tier 2 after:
-- Tier 1 works correctly on test data
-- You have >5 integration tests passing
-- You've identified actual bottlenecks/failures
-
-Don't add features "just in case" - let real usage drive complexity.
-
-#### Configuration Philosophy
-```python
-# GOOD: Simple, explicit
-config = load_config("simple")
-detector = SpecHODetector(config)
-
-# GOOD: Override specific params
-config = load_config("simple", overrides={
-    "scoring": {"weights": {"phonetic": 0.5, "structural": 0.3, "semantic": 0.2}}
-})
-
-# BAD: Over-configured from the start
-config = SpecHOConfig(
-    clause_detection={"min_length": 2, "max_length": 100, ...},  # 50 parameters
-    pair_rules={...},  # Another 30 parameters
-    # ... this becomes unmaintainable
-)
+```yaml
+pipeline:
+  input: "str (raw text)"
+  
+  stage_1_preprocessor:
+    output: "List[Token] + spacy.Doc"
+    
+  stage_2_clause_identifier:
+    input: "List[Token] + spacy.Doc"
+    output: "List[ClausePair]"
+    
+  stage_3_echo_engine:
+    input: "List[ClausePair]"
+    output: "List[EchoScore]"
+    
+  stage_4_scoring:
+    input: "List[EchoScore]"
+    output: "float (document_score)"
+    
+  stage_5_validator:
+    input: "float (document_score)"
+    output: "Tuple[float (z_score), float (confidence)]"
+    
+  final_output: "DocumentAnalysis dataclass"
 ```
 
-#### Testing Strategy by Tier
+---
 
-**Tier 1 Tests:**
-- Happy path only
-- Known good inputs
-- Simple edge cases (empty, single item)
+## TIER_TRANSITION_CHECKLIST
 
-**Tier 2 Tests:**
-- All edge cases from spec
-- Stress tests (very long inputs)
-- Malformed inputs
-- Performance benchmarks
+```yaml
+tier_1_to_tier_2:
+  required:
+    - All 32 tasks complete
+    - Unit tests passing with >80% coverage
+    - 5+ integration tests passing
+    - Baseline corpus processed and validated
+    - CLI functional on real documents
+    - 2-3 real limitations identified through actual usage
+    - False positive/negative rate measured on 50+ documents
+    - Performance benchmarked
+    - "simple" config profile stable
+  
+  blockers:
+    - Adding features without proven need
+    - Unfixed bugs in Tier 1
+    - No real-world testing
+    - Failing or skipped tests
 
-**Tier 3 Tests:**
-- Comparative benchmarks (algorithm A vs B)
-- Ablation studies
-- Cross-validation
-
-### Testing Strategy
-
-**Unit Testing Approach:**
-
-1. **Test Each Component in Isolation**: Mock dependencies using `pytest-mock` or `unittest.mock`
-2. **Use Fixtures**: Create reusable test data in `tests/fixtures/`
-   - Sample sentences with known structure
-   - Pre-computed phonetic transcriptions
-   - Mock baseline statistics
-3. **Test Edge Cases**: Empty inputs, single-word clauses, non-English text, malformed data
-4. **Coverage Target**: Aim for 80%+ code coverage using `pytest-cov`
-
-**Integration Testing Approach:**
-
-1. **End-to-End Tests**: Use complete sample texts
-2. **Known Watermarked Text**: Create synthetic examples with deliberate echoes
-3. **Known Human Text**: Use excerpts from public domain literature
-4. **Performance Tests**: Measure throughput on documents of varying lengths
-5. **Regression Tests**: Save analysis results and ensure consistency across refactors
-
-**Testing Commands:**
-```bash
-# Run all tests
-pytest
-
-# Run with coverage
-pytest --cov=SpecHO --cov-report=html
-
-# Run specific test file
-pytest tests/test_preprocessor.py
-
-# Run integration tests only
-pytest tests/test_integration.py -v
+tier_2_to_tier_3:
+  required:
+    - Tier 2 deployed for 2+ weeks
+    - Performance bottlenecks documented with profiling
+    - False positive/negative rate < 5%
+    - Specific Tier 3 features identified with ROI
+    - "robust" config profile tuned
+    - User feedback collected
+    - Code review complete
+  
+  blockers:
+    - Adding complexity for novelty
+    - No measurement of Tier 2 effectiveness
+    - Using Tier 3 to fix Tier 2 bugs
+    - No production data justifying advanced algorithms
 ```
 
-### Key Dependencies (requirements.txt)
+---
 
-```
-# NLP Core
-spacy>=3.7.0
-en-core-web-sm  # or en-core-web-lg for better accuracy
+## IMPLEMENTATION_RULES
 
-# Phonetic Processing
-pronouncing>=0.2.0
-# OR
-g2p-en>=2.1.0
+```yaml
+during_tier_1:
+  do:
+    - Implement exactly what Tier 1 specifies
+    - Write tests before moving to next task
+    - Document assumptions and simplifications
+    - Use "simple" config profile
+    - Follow task sequence strictly
+  
+  do_not:
+    - Add Tier 2 features even if easy
+    - Optimize prematurely
+    - Skip tests
+    - Jump ahead in task sequence
+    - Implement features without specification
 
-# String Similarity
-python-Levenshtein>=0.21.0
-jellyfish>=1.0.0
+when_user_requests_task:
+  step_1: Read docs/TASKS.md for task specification
+  step_2: Read docs/SPECS.md for tier-specific details
+  step_3: Implement Tier 1 version only
+  step_4: Create corresponding test file
+  step_5: Validate implementation before proceeding
 
-# Semantic Analysis
-gensim>=4.3.0
-numpy>=1.24.0
-scipy>=1.11.0
-
-# Data Structures
-pydantic>=2.0.0
-
-# Testing
-pytest>=7.4.0
-pytest-cov>=4.1.0
-pytest-mock>=3.11.0
-
-# CLI & Utilities
-rich>=13.0.0
-tqdm>=4.66.0
-
-# Optional: Advanced semantic models
-# sentence-transformers>=2.2.0
+when_user_requests_clarification:
+  step_1: Check docs/SPECS.md for detailed specification
+  step_2: Check architecture.md for algorithm context
+  step_3: Provide clear explanation referencing source document
+  step_4: Offer code example if helpful
 ```
 
-### Quick Start Development Workflow
+---
 
-1. **Set up environment**:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # or venv\Scripts\activate on Windows
-   pip install -r requirements.txt
-   python -m spacy download en_core_web_sm
-   ```
+## DEPENDENCIES
 
-2. **Start with data models** (`models.py`):
-   - Define all dataclasses first
-   - This provides type hints and structure for everything else
+```yaml
+required:
+  nlp:
+    - spacy>=3.7.0
+    - en-core-web-sm
+  
+  phonetic:
+    - pronouncing>=0.2.0
+    # OR g2p-en>=2.1.0
+  
+  similarity:
+    - python-Levenshtein>=0.21.0
+    - jellyfish>=1.0.0
+  
+  semantic:
+    - gensim>=4.3.0
+    - numpy>=1.24.0
+    - scipy>=1.11.0
+  
+  config:
+    - pydantic>=2.0.0
+  
+  testing:
+    - pytest>=7.4.0
+    - pytest-cov>=4.1.0
+    - pytest-mock>=3.11.0
+  
+  cli:
+    - rich>=13.0.0
+    - tqdm>=4.66.0
 
-3. **Build bottom-up**:
-   - Implement each component's individual functions
-   - Test each function before moving to orchestrators
-   - Use TDD (Test-Driven Development) where possible
+optional_tier_2:
+  - sentence-transformers>=2.2.0
+```
 
-4. **Create integration points**:
-   - Each orchestrator (`pipeline.py`) should accept and return dataclasses
-   - Keep orchestrators thin (mostly just calling sub-components)
+---
 
-5. **Iterate on configuration**:
-   - Start with placeholder weights/thresholds
-   - Tune after basic pipeline works end-to-end
+## FIRST_SESSION_INSTRUCTIONS
 
-This roadmap gives you a clear path from empty repository to working detector. Start with Task 1.1 and work sequentially, testing as you go. The modular structure allows multiple developers to work in parallel once the data models are established.
+When user starts first Claude Code session:
+
+1. Read docs/QUICKSTART.md for environment setup
+2. Implement Task 1.1 (SpecHO/models.py)
+3. Create all 5 dataclasses with type hints and docstrings
+4. Use Python 3.11+ features
+5. No processing logic - data structures only
+
+Example first prompt to expect:
+"Read QUICKSTART.md and help me implement Task 1.1: Create Core Data Models"
+
+---
+
+## REFERENCE_DOCUMENT_USAGE
+
+```yaml
+TASKS.md:
+  read_when: Starting any task
+  contains: Task number, file path, class name, key libraries, specific deliverables
+  
+SPECS.md:
+  read_when: Implementing component features
+  contains: Tier 1/2/3 specifications, config examples, API signatures
+  
+architecture.md:
+  read_when: Need algorithm context
+  contains: Original Echo Rule design, component purposes, methodology
+  
+DEPLOYMENT.md:
+  read_when: Tier 1 complete
+  contains: Web interface, Docker setup, deployment guidelines
+```
+
+---
+
+## RESPONSE_PATTERNS
+
+When asked to implement a task:
+1. Acknowledge task number
+2. Reference relevant documentation
+3. State tier level being implemented
+4. Create file with complete implementation
+5. Suggest next task or test creation
+
+When asked for clarification:
+1. Reference specific section in documentation
+2. Provide concrete example
+3. Explain in context of overall architecture
+
+When user deviates from plan:
+1. Acknowledge request
+2. Note if it conflicts with tier system
+3. Suggest alternative if premature
+4. Implement if reasonable
+
+---
+
+END OF MACHINE-READABLE SPECIFICATION
