@@ -4,8 +4,6 @@
 **Purpose:** Detailed implementation specs for each component  
 **Usage:** Reference when implementing component features
 
----
-
 ## TIER_SYSTEM_OVERVIEW
 
 ```yaml
@@ -71,6 +69,95 @@ tier_3:
     - Sophisticated trimming (sentence-initial adverbials, list detection)
     - Tie-breakers for overlapping spans
 ```
+---
+## Testing Engine
+
+### Testing Strategy
+```
+Unit Testing Approach:
+`Test Each Component in Isolation: Mock dependencies using pytest-mock or unittest.mock`
+`Use Fixtures: Create reusable test data in tests/fixtures/`
+
+`Sample sentences with known structure`
+`Pre-computed phonetic transcriptions`
+`Mock baseline statistics`
+
+`Test Edge Cases: Empty inputs, single-word clauses, non-English text, malformed data`
+`Coverage Target: Aim for 80%+ code coverage using pytest-cov`
+
+`Integration Testing Approach:`
+
+`End-to-End Tests: Use complete sample texts`
+`Known Watermarked Text: Create synthetic examples with deliberate echoes`
+`Known Human Text: Use excerpts from public domain literature`
+`Performance Tests: Measure throughput on documents of varying lengths`
+`Regression Tests: Save analysis results and ensure consistency across refactors`
+
+`Testing Commands:`
+`bash Run all tests`
+`pytest`
+
+ `Run with coverage`
+
+`pytest --cov=specter --cov-report=html`
+
+ `Run specific test file`
+
+`pytest tests/test_preprocessor.py`
+
+ `Run integration tests only`
+
+`pytest tests/test_integration.py -v`
+
+```
+ Key Dependencies (requirements.txt)
+```
+
+ `NLP Core`
+
+`spacy>=3.7.0`
+`en-core-web-sm   or en-core-web-lg for better accuracy`
+
+ `Phonetic Processing`
+
+`pronouncing>=0.2.0`
+
+ `OR`
+
+`g2p-en>=2.1.0`
+
+ `String Similarity`
+
+`python-Levenshtein>=0.21.0`
+`jellyfish>=1.0.0`
+
+ `Semantic Analysis`
+
+`gensim>=4.3.0`
+`numpy>=1.24.0`
+`scipy>=1.11.0`
+
+ `Data Structures`
+
+`pydantic>=2.0.0`
+
+ `Testing`
+
+`pytest>=7.4.0`
+`pytest-cov>=4.1.0`
+`pytest-mock>=3.11.0`
+
+ `CLI & Utilities`
+
+`rich>=13.0.0`
+`tqdm>=4.66.0`
+
+ `Optional: Advanced semantic models`
+
+ `sentence-transformers>=2.2.0`
+```
+---
+
 
 ### PAIR_RULES_ENGINE
 
