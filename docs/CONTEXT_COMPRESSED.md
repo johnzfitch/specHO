@@ -7,31 +7,31 @@
 ## META
 ```yaml
 project: SpecHO - AI text watermark detector (Echo Rule algorithm)
-version: 0.40 (13/32 tasks complete)
+version: 0.42 (14/32 tasks complete)
 tier: 1_mvp (weeks 1-12, simple algorithms only)
 language: Python 3.11+
-current_task: 4.1 (PhoneticEchoAnalyzer) ✅ COMPLETE
-next_task: 4.2 (StructuralEchoAnalyzer)
+current_task: 4.2 (StructuralEchoAnalyzer) ✅ COMPLETE
+next_task: 4.3 (SemanticEchoAnalyzer)
 ```
 
 ---
 
 ## PROGRESS
 ```yaml
-completed: [1.1, 1.2, 7.3, 2.1, 2.2, 2.3, 2.4, 2.5, 3.1, 3.2, 3.3, 3.4, 8.2, 4.1]
-tests: {total: 611, passing: 611, coverage: ~85%}
+completed: [1.1, 1.2, 7.3, 2.1, 2.2, 2.3, 2.4, 2.5, 3.1, 3.2, 3.3, 3.4, 8.2, 4.1, 4.2]
+tests: {total: 650, passing: 650, coverage: ~85%}
 
 component_status:
   C1_preprocessor: ✅ 100% (300 tests, 1260 LOC)
   C2_clause_identifier: ✅ 100% (244 tests, ~1400 LOC)
-  C3_echo_engine: 🔄 25% (1/4 tasks, 28 tests, 177 LOC)
+  C3_echo_engine: 🔄 50% (2/4 tasks, 67 tests, 327 LOC)
   C4_scoring: ⏳ 0/3
   C5_validator: ⏳ 0/4
   integration: ⏳ 0/3
 
 files_created:
-  impl: [models.py, config.py, utils.py, preprocessor/*.py(5), clause_identifier/*.py(4), echo_engine/*.py(1)]
-  tests: [test_models.py, test_config.py, test_utils.py, test_preprocessor*.py(5), test_clause*.py(4), test_phonetic*.py(1)]
+  impl: [models.py, config.py, utils.py, preprocessor/*.py(5), clause_identifier/*.py(4), echo_engine/*.py(2)]
+  tests: [test_models.py, test_config.py, test_utils.py, test_preprocessor*.py(5), test_clause*.py(4), test_phonetic*.py(1), test_structural*.py(1)]
   scripts: [analyze_sample.py, test_pipeline.py]
 ```
 
@@ -284,7 +284,7 @@ class ClauseIdentifier:
 
 ---
 
-## COMPONENT 3: ECHO_ENGINE (25% Complete)
+## COMPONENT 3: ECHO_ENGINE (50% Complete)
 
 ### Task 4.1: PhoneticEchoAnalyzer (✅ 28 tests, 177 LOC)
 ```python
@@ -299,10 +299,25 @@ class ClauseIdentifier:
 #   5. Average across all token pairs
 # Edge cases: empty zones → 0.0, None phonetics → skip, clipped to [0,1]
 # Lib: python-Levenshtein==0.27.1
-# Real-world test: AI essay (5,825 words) → 0.376 avg similarity (no watermark)
+# Real-world test: AI essay → 0.376 avg similarity (no watermark)
 ```
 
-### Task 4.2: StructuralEchoAnalyzer
+### Task 4.2: StructuralEchoAnalyzer (✅ 39 tests, 150 LOC)
+```python
+# File: SpecHO/echo_engine/structural_analyzer.py
+# API: analyze(zone_a, zone_b) → float
+#      compare_pos_patterns(zone_a, zone_b) → float
+#      compare_syllable_counts(zone_a, zone_b) → float
+# T1 Algorithm:
+#   1. POS pattern comparison: exact match of POS tag sequences (1.0 or 0.0)
+#   2. Syllable similarity: 1 - (abs_diff / max_count)
+#   3. Combined score: 0.5 * pos_sim + 0.5 * syllable_sim
+# Edge cases: empty zones → 0.0, None values → skip, clipped to [0,1]
+# Lib: None (uses Token.pos_tag and Token.syllable_count)
+# Real-world test: AI essay → 0.393 avg similarity (no watermark)
+```
+
+### Task 4.3: SemanticEchoAnalyzer (⏳ NEXT)
 ```python
 # API: analyze(zone_a, zone_b) → float
 # T1: POS pattern exact match + syllable similarity
@@ -419,6 +434,22 @@ Lessons:
 - Low field population = expected for markdown headers
 - Defensive programming = warnings without failures
 - Pipeline robust and production-ready at Tier 1
+```
+
+### S6: Task 4.2 (StructuralEchoAnalyzer)
+```
+Created: Task 4.2: StructuralEchoAnalyzer (150 LOC, 39 tests)
+Algorithm:
+- POS pattern comparison: exact match of POS tag sequences
+- Syllable count similarity: normalized absolute difference
+- Combined: 0.5 * pos_sim + 0.5 * syllable_sim
+Tests: 39 (100% passing), organized in 6 test classes
+Real-world: AI essay → 0.393 avg similarity (consistent with no watermark)
+Lessons:
+- Token dataclass requires ALL fields (text, pos_tag, phonetic, is_content_word, syllable_count)
+- Simple exact-match POS comparison effective for Tier 1
+- Syllable similarity provides complementary structural signal
+- Echo Engine 50% complete (2/4 analyzers implemented)
 ```
 
 ---
