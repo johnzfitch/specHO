@@ -10,4 +10,14 @@ Components:
 - pipeline.py: Orchestrates clause identification process
 """
 
-__all__ = ["ClauseBoundaryDetector"]
+from specHO.clause_identifier.boundary_detector import ClauseBoundaryDetector
+from specHO.clause_identifier.pair_rules import PairRulesEngine
+from specHO.clause_identifier.zone_extractor import ZoneExtractor
+from specHO.clause_identifier.pipeline import ClauseIdentifier
+
+__all__ = [
+    "ClauseBoundaryDetector",
+    "PairRulesEngine",
+    "ZoneExtractor",
+    "ClauseIdentifier"
+]

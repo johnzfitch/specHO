@@ -59,21 +59,23 @@ class TestClause:
             Token("the", "DET", "DH AH", False, 1),
             Token("cat", "NOUN", "K AE T", True, 1),
         ]
-        clause = Clause(tokens=tokens, start_idx=0, end_idx=2, clause_type="main")
+        clause = Clause(tokens=tokens, start_idx=0, end_idx=2, clause_type="main", head_idx=1)
         assert len(clause.tokens) == 2
         assert clause.start_idx == 0
         assert clause.end_idx == 2
         assert clause.clause_type == "main"
+        assert clause.head_idx == 1
 
     def test_clause_subordinate_type(self):
         """Test Clause with subordinate type."""
         tokens = [Token("although", "SCONJ", "AO L DH OW", False, 2)]
-        clause = Clause(tokens, 5, 10, "subordinate")
+        clause = Clause(tokens, 5, 10, "subordinate", 5)
         assert clause.clause_type == "subordinate"
+        assert clause.head_idx == 5
 
     def test_clause_empty_tokens(self):
         """Test Clause with empty token list."""
-        clause = Clause([], 0, 0, "fragment")
+        clause = Clause([], 0, 0, "fragment", 0)
         assert len(clause.tokens) == 0
 
 
@@ -85,8 +87,8 @@ class TestClausePair:
         token1 = Token("test", "NOUN", "T EH S T", True, 1)
         token2 = Token("word", "NOUN", "W ER D", True, 1)
 
-        clause_a = Clause([token1], 0, 1, "main")
-        clause_b = Clause([token2], 2, 3, "main")
+        clause_a = Clause([token1], 0, 1, "main", 0)
+        clause_b = Clause([token2], 2, 3, "main", 2)
 
         pair = ClausePair(
             clause_a=clause_a,
@@ -105,7 +107,7 @@ class TestClausePair:
     def test_clause_pair_types(self):
         """Test different pair types."""
         token = Token("test", "NOUN", "T EH S T", True, 1)
-        clause = Clause([token], 0, 1, "main")
+        clause = Clause([token], 0, 1, "main", 0)
 
         for pair_type in ["punctuation", "conjunction", "transition"]:
             pair = ClausePair(clause, clause, [token], [token], pair_type)
@@ -116,7 +118,7 @@ class TestClausePair:
         tokens_a = [Token(f"word{i}", "NOUN", "W ER D", True, 1) for i in range(3)]
         tokens_b = [Token(f"test{i}", "VERB", "T EH S T", True, 1) for i in range(2)]
 
-        clause = Clause(tokens_a, 0, 3, "main")
+        clause = Clause(tokens_a, 0, 3, "main", 1)
         pair = ClausePair(clause, clause, tokens_a, tokens_b, "conjunction")
 
         assert len(pair.zone_a_tokens) == 3
@@ -164,7 +166,7 @@ class TestDocumentAnalysis:
     def test_document_analysis_creation(self):
         """Test basic DocumentAnalysis instantiation."""
         token = Token("test", "NOUN", "T EH S T", True, 1)
-        clause = Clause([token], 0, 1, "main")
+        clause = Clause([token], 0, 1, "main", 0)
         pair = ClausePair(clause, clause, [token], [token], "punctuation")
         score = EchoScore(0.8, 0.7, 0.9, 0.8)
 
@@ -200,7 +202,7 @@ class TestDocumentAnalysis:
     def test_document_analysis_multiple_pairs(self):
         """Test DocumentAnalysis with multiple clause pairs and scores."""
         token = Token("test", "NOUN", "T EH S T", True, 1)
-        clause = Clause([token], 0, 1, "main")
+        clause = Clause([token], 0, 1, "main", 0)
 
         pairs = [
             ClausePair(clause, clause, [token], [token], "punctuation"),
@@ -230,7 +232,7 @@ class TestDocumentAnalysis:
     def test_document_analysis_high_confidence(self):
         """Test DocumentAnalysis with high watermark confidence."""
         token = Token("test", "NOUN", "T EH S T", True, 1)
-        clause = Clause([token], 0, 1, "main")
+        clause = Clause([token], 0, 1, "main", 0)
         pair = ClausePair(clause, clause, [token], [token], "punctuation")
         score = EchoScore(0.95, 0.92, 0.98, 0.95)
 
@@ -266,8 +268,8 @@ class TestDataModelIntegration:
         ]
 
         # Create clauses
-        clause_a = Clause(tokens_a, 0, 3, "main")
-        clause_b = Clause(tokens_b, 4, 7, "main")
+        clause_a = Clause(tokens_a, 0, 3, "main", 1)
+        clause_b = Clause(tokens_b, 4, 7, "main", 5)
 
         # Create clause pair
         pair = ClausePair(
