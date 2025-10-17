@@ -33,6 +33,10 @@ navigation_files:
     - file: architecture.md
       purpose: Original watermark design specification
       read_when: Need context on Echo Rule algorithm
+      
+    - file: summary.md
+      purpose: All of the work we have done so far, summarized. You are returning from a /clear command and must catch 	     			  yourself back up to where we are in our project. 
+      read_when: Returning from a /clear command
   
   implementation:
     - file: docs/TASKS.md
