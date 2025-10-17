@@ -643,3 +643,177 @@ Perfect! I've successfully created all three summary documents. Let me provide y
   The preprocessor module is complete and thoroughly validated. You now have comprehensive documentation that will
   allow seamless continuation of the project even after context clears!
 
+ ★ Insight ─────────────────────────────────────
+  Implementation Strategy Success
+
+  Dependency-Based Detection: Rather than using regex or rule-based text patterns, we leveraged spaCy's dependency
+  parse tree. The key insight is that dependency labels (ROOT, conj, advcl, ccomp) directly encode clause
+  relationships, making detection straightforward and linguistically sound.
+
+  Subtree Extraction: The _get_subtree_indices() method recursively walks the dependency tree to find all tokens
+  belonging to a clause. This ensures clauses include all their dependents (subjects, objects, modifiers) without
+  manual span calculation.
+
+  Three Clause Types: Main clauses (ROOT verbs), coordinate clauses (conj relations), and subordinate clauses
+  (advcl/ccomp) cover the vast majority of English clause structures in Tier 1. More complex types (relative
+  clauses, participial phrases) are deferred to Tier 2.
+  ─────────────────────────────────────────────────
+
+  What Was Implemented
+
+  File Created: SpecHO/clause_identifier/boundary_detector.py (320 lines)
+
+  Class: ClauseBoundaryDetector
+  - Stateless detector (no configuration needed in Tier 1)
+  - Main method: identify_clauses(doc, tokens) -> List[Clause]
+  - Helper method: _build_clause_from_anchor() - builds Clause objects
+  - Helper method: _get_subtree_indices() - recursive subtree extraction
+
+  Algorithm (Tier 1 Simple Heuristics):
+  1. Find all ROOT verbs → main clauses
+  2. Find all conj relations → coordinate clauses
+  3. Find all advcl/ccomp relations → subordinate clauses
+  4. For each anchor, extract subtree span (leftmost to rightmost child)
+  5. Create Clause dataclass with tokens, indices, and type
+  6. Sort clauses by start_idx
+
+  Test Coverage: 33 comprehensive tests (100% passing)
+
+  Test Categories
+
+| Category                 | Tests | Coverage                                   |
+| ------------------------ | ----- | ------------------------------------------ |
+| Initialization           | 2     | Basic setup                                |
+| Simple Sentences (Main)  | 3     | Single main clauses                        |
+| Coordinated Clauses      | 4     | "and", "but", "or"                         |
+| Subordinate Clauses      | 4     | "when", "because", "although", ccomp       |
+| Complex Sentences        | 2     | Multiple clause types                      |
+| Edge Cases               | 4     | Empty, single word, fragments, punctuation |
+| Clause Spans             | 3     | Span validity, token coverage              |
+| Sorting                  | 1     | Clauses sorted by position                 |
+| Real-World Text          | 3     | News, conversation, literary               |
+| Integration              | 2     | Full preprocessor integration              |
+| Clause Type Distribution | 2     | Type variety validation                    |
+| Performance              | 2     | Short and medium text                      |
+| TOTAL                    | 33    | All passing ✓                              |
+
+  Test Execution Results
+
+  ============================= 33 passed in 20.00s =========================
+  - 33/33 tests PASSING (100%)
+  - Test execution time: ~20 seconds
+  - No failures or errors
+  - Integration with preprocessor validated
+
+  Integration Validated
+
+  ✅ With LinguisticPreprocessor: Receives fully enriched Token objects and spaCy Doc
+  ✅ Token Field Preservation: All Token fields (text, pos_tag, phonetic, is_content_word, syllable_count) preserved
+   in Clause objects
+  ✅ Clause Types Detected: Main, coordinate, and subordinate clauses correctly identified
+  ✅ Real-World Text: Works on news, conversational, and literary text
+
+  Example Usage
+
+  from specHO.clause_identifier.boundary_detector import ClauseBoundaryDetector
+  from specHO.preprocessor.pipeline import LinguisticPreprocessor
+
+  # Initialize components
+  preprocessor = LinguisticPreprocessor()
+  detector = ClauseBoundaryDetector()
+
+  # Process text
+  text = "The cat sat, and the dog ran."
+  tokens, doc = preprocessor.process(text)
+
+  # Detect clauses
+  clauses = detector.identify_clauses(doc, tokens)
+
+  # Results:
+  # clauses[0]: main clause - "The cat sat"
+  # clauses[1]: coordinate clause - "the dog ran"
+
+  Key Design Decisions
+
+  1. Stateless Detector: No configuration needed in Tier 1 (simple heuristics only)
+  2. Subtree-Based Spans: Uses dependency tree recursion, not token counting
+  3. Three Clause Types: Main/coordinate/subordinate covers most cases
+  4. Sorted Output: Clauses always returned in document order
+
+  Ready for Next Task
+
+  Task 3.2: PairRulesEngine - Uses these Clause objects to identify thematic pairs based on punctuation,
+  conjunctions, and transitions.
+
+  Current Status: Task 3.1 complete and validated ✓
+
+  Would you like me to proceed to Task 3.2 (PairRulesEngine), or would you prefer to review the implementation
+  first?
+
+✅ Task 3.1 Complete: ClauseBoundaryDetector - Fully Validated
+
+  ★ Insight ─────────────────────────────────────
+  Real-World Validation Success
+
+  Comprehensive Coverage: 59 total tests covering unit tests (33) + real-world samples (26) across 5 diverse
+  categories: News, Conversational, Literary, Technical, and Complex structures.
+
+  Clause Distribution: From 25 real-world samples, detected 47 total clauses with realistic distribution: Main
+  (53.2%), Subordinate (29.8%), Coordinate (17.0%). This aligns with linguistic research on English clause
+  frequency.
+
+  Robustness Confirmed: The detector handles contractions, punctuation variety (semicolons, commas, em dashes),
+  multiple clause types in single sentences, and technical vocabulary - all without errors.
+  ─────────────────────────────────────────────────
+
+  Final Test Summary
+
+  Test Execution: 59 passed in 36.04s
+
+  | Test Suite                 | Tests | Status | Coverage
+         |
+  |----------------------------|-------|--------|-------------------------------------------------------------------
+  -------|
+  | Unit Tests                 | 33    | ✅ 100% | Initialization, simple/complex sentences, edge cases, spans,
+  integration |
+  | Real-World: News           | 5     | ✅ 100% | Breaking news, political, financial, sports, science
+          |
+  | Real-World: Conversational | 5     | ✅ 100% | Chat, dialogue, storytelling, planning, advice
+          |
+  | Real-World: Literary       | 5     | ✅ 100% | Descriptive, narrative, atmospheric, introspection, action
+          |
+  | Real-World: Technical      | 5     | ✅ 100% | Documentation, research, methodology, tutorial, spec
+          |
+  | Real-World: Complex        | 5     | ✅ 100% | Subordination, coordination chains, mixed types, embedded,
+  conditional   |
+  | Summary Test               | 1     | ✅ 100% | All 25 samples analyzed together
+          |
+  | TOTAL                      | 59    | ✅ 100% | Comprehensive validation complete
+          |
+
+  Real-World Metrics (from Summary Test)
+
+  - Samples Analyzed: 25 diverse real-world text samples
+  - Total Clauses Detected: 47 clauses
+  - Clause Distribution:
+    - Main clauses: 25 (53.2%)
+    - Subordinate clauses: 14 (29.8%)
+    - Coordinate clauses: 8 (17.0%)
+  - Average per Sample: 1.9 clauses per text sample
+
+  Task 3.1 Deliverables ✅
+
+  - Implementation: ClauseBoundaryDetector class (320 lines)
+  - API: identify_clauses(doc, tokens) -> List[Clause]
+  - Algorithm: Dependency-based detection (ROOT, conj, advcl, ccomp)
+  - Clause Types: Main, coordinate, subordinate
+  - Unit Tests: 33 tests (100% passing)
+  - Real-World Tests: 26 tests across 5 categories (100% passing)
+  - Integration: Validated with LinguisticPreprocessor
+  - Documentation: Comprehensive docstrings and examples
+
+---
+  Task 3.1 Status: ✅ COMPLETE AND FULLY VALIDATED
+
+  Would you like me to proceed to Task 3.2: PairRulesEngine, or would you prefer to review the implementation and
+  update project documentation first?
