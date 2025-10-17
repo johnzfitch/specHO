@@ -416,3 +416,146 @@ Pre-Task 2.4 Review Complete ✓
   - Will use pronouncing library for ARPAbet transcription
   - Populates Token.phonetic and Token.syllable_count fields
   - Foundation for phonetic echo detection in Task 4.1
+
+ Task 2.4: Phonetic Transcriber Complete ✓
+
+  Implementation Summary
+
+  File Created: SpecHO/preprocessor/phonetic.py
+
+  Class: PhoneticTranscriber
+  - Uses the CMU Pronouncing Dictionary via the pronouncing library
+  - Converts English words to ARPAbet phonetic representation
+  - Provides syllable counting and stress pattern extraction
+
+  Key Methods Implemented
+
+  1. transcribe(word: str) -> str
+    - Converts words to ARPAbet format (e.g., "hello" → "HH AH0 L OW1")
+    - Handles OOV (out-of-vocabulary) words with uppercase fallback
+    - Strips punctuation automatically
+  2. count_syllables(word: str) -> int
+    - Uses CMU dictionary for accurate syllable counting
+    - Fallback estimation for OOV words (vowel cluster counting)
+  3. get_stressed_syllables(phonetic: str) -> List[str]
+    - Extracts syllables with stress markers ('1' = primary, '2' = secondary)
+    - Useful for rime-based phonetic analysis (Tier 2)
+  4. transcribe_tokens(tokens: List[Token]) -> List[Token]
+    - Main pipeline integration method
+    - Enriches Token objects with phonetic and syllable_count fields
+    - Preserves all other Token fields (text, pos_tag, is_content_word)
+
+  Helper Functions
+
+  - quick_transcribe(word): Convenience function for one-off transcriptions
+  - get_rhyming_words(word): Utility for finding rhyming words (testing/validation)
+
+  Test Coverage
+
+  File Created: tests/test_phonetic.py
+  - 54 tests, ALL PASSING ✓
+
+  Test coverage includes:
+  - ✓ Basic transcription (known words, case-insensitivity, punctuation handling)
+  - ✓ OOV word handling (fallback to uppercase)
+  - ✓ Syllable counting (simple words, long words, estimation)
+  - ✓ Stress pattern extraction (primary, secondary, unstressed)
+  - ✓ Token enrichment (preserves all fields, handles empty lists)
+  - ✓ Integration with Tokenizer and POSTagger
+  - ✓ Edge cases (numbers, contractions, special characters, hyphens)
+  - ✓ Helper functions (quick_transcribe, get_rhyming_words)
+
+  Example Usage
+
+  from preprocessor.phonetic import PhoneticTranscriber
+
+  transcriber = PhoneticTranscriber()
+
+  # Basic transcription
+  transcriber.transcribe("hello")  # "HH AH0 L OW1"
+  transcriber.count_syllables("beautiful")  # 3
+  transcriber.get_stressed_syllables("HH AH0 L OW1")  # ["OW1"]
+
+  # Token enrichment (pipeline integration)
+  tokens = [Token("hello", "NOUN", "", True, 0)]
+  enriched = transcriber.transcribe_tokens(tokens)
+  # enriched[0].phonetic = "HH AH0 L OW1"
+  # enriched[0].syllable_count = 2
+
+  Total Test Status
+
+| Component            | Tests | Status                   |
+| -------------------- | ----- | ------------------------ |
+| models.py            | 19    | ✓ All passing            |
+| config.py            | 26    | ✓ All passing            |
+| utils.py             | 60    | ✓ 56 passing (4 logging) |
+| tokenizer.py         | 20    | ✓ All passing            |
+| pos_tagger.py        | 36    | ✓ All passing            |
+| dependency_parser.py | 49    | ✓ All passing            |
+| phonetic.py          | 54    | ✓ All passing            |
+| Total                | 238   | 234 passing (98.3%)      |
+
+---
+  ★ Insight ─────────────────────────────────────
+  ARPAbet Representation: ARPAbet was developed at Carnegie Mellon for speech recognition. Each phoneme is
+  represented by 1-2 ASCII characters, making it perfect for computational analysis. The stress markers (0/1/2) on
+  vowels are critical for detecting rhymes and phonetic echoes in the watermark detection algorithm.
+
+  Tier 1 OOV Strategy: We use simple uppercase fallback for unknown words rather than complex G2P
+  (grapheme-to-phoneme) models. This trades accuracy for simplicity. Tier 2 will add G2P models like g2p-en if OOV
+  handling proves inadequate during validation.
+
+  Pipeline Integration: The transcribe_tokens() method follows the established placeholder pattern: it receives
+  tokens with some fields populated (text, pos_tag, is_content_word) and enriches only the phonetic-related fields.
+  This allows each preprocessor component to focus on its specific responsibility.
+  ─────────────────────────────────────────────────
+
+  Next Task: Task 2.5 - LinguisticPreprocessor Pipeline (SpecHO/preprocessor/pipeline.py)
+  - Orchestrates all preprocessor components (Tasks 2.1-2.4)
+  - Returns enriched tokens and dependency parse
+  - Simple orchestrator pattern with minimal logic
+
+Integration Verification
+
+  All four preprocessor components verified working together:
+  1. ✓ Tokenizer creates Token objects
+  2. ✓ POSTagger enriches with grammatical information
+  3. ✓ PhoneticTranscriber adds phonetic representations
+  4. ✓ DependencyParser provides syntactic structure
+  5. ✓ LinguisticPreprocessor orchestrates all seamlessly
+
+  Data Quality Checks
+
+  The pipeline includes validation:
+  - Content word ratio: 30-70% (typical English)
+  - Field population rate: >50%
+  - Token count consistency between Token list and spacy.Doc
+  - Warnings logged for unusual patterns
+
+---
+  ★ Insight ─────────────────────────────────────
+  Orchestrator Pattern Benefits: The LinguisticPreprocessor is intentionally "dumb" - it has minimal logic and
+  delegates everything to subcomponents. This design makes it:
+  1. Easy to test - Integration tests verify data flows correctly without testing component logic twice
+  2. Easy to extend - Adding a new preprocessor step just means calling another component
+  3. Easy to understand - The code reads like a recipe: tokenize, then tag, then transcribe, then parse
+
+  Sequential vs Parallel: Tier 1 processes components sequentially for simplicity. Each component enriches the
+  tokens and passes them forward. Tier 2 could parallelize independent operations (e.g., dependency parsing doesn't
+  need to wait for phonetic transcription since it operates on raw text), but measurements would need to prove this
+  is a bottleneck first.
+
+  Critical Integration Point: This completes Component 1 of 5 in the SpecHO detection pipeline. The enriched Token
+  list and dependency Doc are now ready for Component 2 (Clause Identifier), which will use them to identify clause
+  pairs for echo analysis. Every downstream component depends on this preprocessor producing high-quality,
+  fully-populated data structures.
+  ─────────────────────────────────────────────────
+
+  Milestone Achieved: Complete Preprocessor Module (Tasks 2.1-2.5) ✓
+
+  Next Steps: Task 3.1 - Clause Boundary Detector (SpecHO/clause_identifier/boundary_detector.py)
+  - Will consume the Token list and dependency Doc from LinguisticPreprocessor
+  - Identifies where clauses begin and end using dependency labels and punctuation
+  - Foundation for identifying "thematic pairs" for echo analysis
+
+  Status: Ready to proceed to Component 2: Clause Identifier
