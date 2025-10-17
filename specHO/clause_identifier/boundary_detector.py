@@ -163,6 +163,10 @@ class ClauseBoundaryDetector:
         # Sort clauses by start position
         clauses.sort(key=lambda c: c.start_idx)
 
+        # Tier 1 Fix: Make spans non-overlapping
+        # This prevents downstream issues in zone extraction and pairing
+        clauses = self._make_spans_non_overlapping(clauses, doc, tokens)
+
         logging.info(f"Identified {len(clauses)} clauses ({sum(1 for c in clauses if c.clause_type == 'main')} main, "
                     f"{sum(1 for c in clauses if c.clause_type == 'coordinate')} coordinate, "
                     f"{sum(1 for c in clauses if c.clause_type == 'subordinate')} subordinate)")
@@ -227,7 +231,8 @@ class ClauseBoundaryDetector:
             tokens=clause_tokens,
             start_idx=start_idx,
             end_idx=end_idx,
-            clause_type=clause_type
+            clause_type=clause_type,
+            head_idx=anchor.i
         )
 
     def _get_subtree_indices(self, token: SpacyToken) -> Set[int]:
@@ -258,6 +263,125 @@ class ClauseBoundaryDetector:
             indices.update(self._get_subtree_indices(child))
 
         return indices
+
+    def _make_spans_non_overlapping(
+        self,
+        clauses: List[Clause],
+        doc: SpacyDoc,
+        tokens: List[Token]
+    ) -> List[Clause]:
+        """Make clause spans non-overlapping by trimming at separators.
+
+        Tier 1 Minimal Fix: Handle overlapping spans from dependency subtrees
+        by trimming them at strong punctuation marks and ensuring clean boundaries.
+
+        Algorithm:
+        1. For each adjacent pair of clauses (sorted by start_idx)
+        2. If they overlap, find separator punctuation in overlap region
+        3. Split at separator: clause_a ends before it, clause_b starts after it
+        4. If no separator, split at midpoint of overlap
+
+        This ensures:
+        - No token belongs to multiple clauses
+        - Zone extraction (Task 3.3) gets clean boundaries
+        - Pairing logic doesn't need to handle overlaps
+
+        Args:
+            clauses: List of potentially overlapping Clause objects
+            doc: spaCy Doc for reference
+            tokens: List[Token] for reconstructing clause tokens
+
+        Returns:
+            List of Clause objects with non-overlapping spans
+        """
+        if len(clauses) <= 1:
+            return clauses
+
+        # Strong separator punctuation
+        SEPARATORS = {";", ":", "—", ",", ".", "?", "!"}
+
+        result = []
+        i = 0
+
+        while i < len(clauses):
+            current_clause = clauses[i]
+
+            # Check if this clause overlaps with the next one
+            if i + 1 < len(clauses):
+                next_clause = clauses[i + 1]
+
+                # Check for overlap
+                if current_clause.end_idx >= next_clause.start_idx:
+                    # Overlap detected
+                    overlap_start = next_clause.start_idx
+                    overlap_end = min(current_clause.end_idx, next_clause.end_idx)
+
+                    logging.debug(f"Overlap detected between clause {i} and {i+1}: "
+                                 f"overlap region [{overlap_start}, {overlap_end}]")
+
+                    # Find separator in overlap region
+                    # Prefer strong separators (; : —) over weak ones (, .)
+                    STRONG_SEPARATORS = {";", ":", "—"}
+                    separator_idx = None
+
+                    # First pass: look for strong separators
+                    for idx in range(overlap_start, overlap_end + 1):
+                        if idx < len(tokens) and tokens[idx].text in STRONG_SEPARATORS:
+                            separator_idx = idx
+                            break
+
+                    # Second pass: if no strong separator, look for any separator
+                    if separator_idx is None:
+                        for idx in range(overlap_start, overlap_end + 1):
+                            if idx < len(tokens) and tokens[idx].text in SEPARATORS:
+                                separator_idx = idx
+                                break
+
+                    if separator_idx is not None:
+                        # Split at separator: clause_a gets tokens up to (not including) separator
+                        # clause_b gets tokens after separator
+                        new_current_end = separator_idx - 1
+                        new_next_start = separator_idx + 1
+
+                        logging.debug(f"Splitting at separator '{tokens[separator_idx].text}' "
+                                     f"(idx {separator_idx})")
+                    else:
+                        # No separator found, split at midpoint
+                        midpoint = (overlap_start + overlap_end) // 2
+                        new_current_end = midpoint
+                        new_next_start = midpoint + 1
+
+                        logging.debug(f"No separator found, splitting at midpoint {midpoint}")
+
+                    # Rebuild current clause with new end
+                    if new_current_end >= current_clause.start_idx:
+                        new_current_tokens = tokens[current_clause.start_idx:new_current_end + 1]
+                        current_clause = Clause(
+                            tokens=new_current_tokens,
+                            start_idx=current_clause.start_idx,
+                            end_idx=new_current_end,
+                            clause_type=current_clause.clause_type,
+                            head_idx=current_clause.head_idx
+                        )
+
+                    # Rebuild next clause with new start
+                    if new_next_start <= next_clause.end_idx:
+                        new_next_tokens = tokens[new_next_start:next_clause.end_idx + 1]
+                        next_clause = Clause(
+                            tokens=new_next_tokens,
+                            start_idx=new_next_start,
+                            end_idx=next_clause.end_idx,
+                            clause_type=next_clause.clause_type,
+                            head_idx=next_clause.head_idx
+                        )
+                        # Update the next clause in the list
+                        clauses[i + 1] = next_clause
+
+            result.append(current_clause)
+            i += 1
+
+        logging.debug(f"Span normalization complete: {len(result)} non-overlapping clauses")
+        return result
 
 
 # Convenience function for quick clause detection

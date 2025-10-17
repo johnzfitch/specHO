@@ -20,7 +20,7 @@ for i, clause in enumerate(clauses):
     print(f"  Last token: '{clause.tokens[-1].text}'" if clause.tokens else "  (empty)")
 
 print()
-pairs = e.apply_rule_a(clauses)
+pairs = e.apply_rule_a(clauses, tokens)
 print(f"Rule A pairs: {len(pairs)}")
 
 # Test Rule B (conjunction)
@@ -35,5 +35,5 @@ for i, clause in enumerate(clauses2):
     clause_text = ' '.join(t.text for t in clause.tokens)
     print(f"Clause {i}: {clause_text}")
 
-pairs2 = e.apply_rule_b(clauses2)
+pairs2 = e.apply_rule_b(clauses2, tokens2)
 print(f"\nRule B pairs: {len(pairs2)}")

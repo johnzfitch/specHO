@@ -56,11 +56,13 @@ class Clause:
         start_idx: Starting token index in the document
         end_idx: Ending token index in the document (exclusive)
         clause_type: Classification (e.g., 'main', 'subordinate', 'coordinate')
+        head_idx: Token index of the clause anchor/head (ROOT, conj, advcl, ccomp verb)
     """
     tokens: List[Token]
     start_idx: int
     end_idx: int
     clause_type: str
+    head_idx: int
 
 
 @dataclass

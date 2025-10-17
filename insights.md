@@ -817,3 +817,40 @@ Perfect! I've successfully created all three summary documents. Let me provide y
 
   Would you like me to proceed to Task 3.2: PairRulesEngine, or would you prefer to review the implementation and
   update project documentation first?
+
+---
+
+## Task 3.2 Complete: PairRulesEngine - Head-Order Pairing ✅
+
+**Implementation Challenge**: Initial span-based Rule A (semicolon/em-dash pairing) failed due to spaCy dependency parse quirks creating unexpected clause structures.
+
+**Solution Implemented**: Head-order based pairing for Rule A
+- Instead of checking punctuation between clause **spans**, check between clause **head positions**
+- Added `head_idx` field to Clause dataclass to store anchor token position
+- Implemented three helper functions:
+  - `_get_anchors_in_order()`: Sort clauses by head position
+  - `_get_adjacent_anchor_pairs()`: Generate adjacent pairs by head order
+  - `_has_strong_punct_between()`: Scan tokens + dependency fallback for punctuation
+
+**Three Rules Implemented**:
+1. **Rule A (Punctuation)**: `;` `:` `—` `–` `--` using head-order logic
+2. **Rule B (Conjunction)**: `and`, `but`, `or` using span-based logic
+3. **Rule C (Transition)**: `However,`, `Therefore,`, `Thus,` at clause start
+
+**Priority-Based Deduplication**: Rule A > Rule B > Rule C (strongest signal wins)
+
+**Test Results**: 36/36 tests passing (100%)
+
+**Key Insight**: When working with dependency parsers, leverage syntactic structure (head relationships) rather than linear token positions for robustness.
+
+**Files Created**:
+- `specHO/clause_identifier/pair_rules.py` (553 lines)
+- `tests/test_pair_rules.py` (577 lines, 36 tests)
+
+**Files Modified**:
+- `specHO/models.py`: Added `head_idx: int` to Clause dataclass
+- `specHO/clause_identifier/boundary_detector.py`: Store and preserve head_idx
+
+**Next Task**: Task 3.3 - ZoneExtractor (extract terminal/initial zones from clause pairs)
+
+For complete implementation details, architectural decisions, and lessons learned, see `docs/Sessions/session3.md`.
