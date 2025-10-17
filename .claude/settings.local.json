@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(python:*)",
-      "Bash(pytest:*)"
+      "Bash(pytest:*)",
+      "Bash(pip install:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
