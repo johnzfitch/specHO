@@ -2,56 +2,72 @@
 
 This module implements the semantic dimension of the Echo Rule watermark
 detection. It measures semantic similarity between clause zones using
-word embeddings (Word2Vec or GloVe via gensim).
+word embeddings (Word2Vec, GloVe via gensim, or Sentence Transformers).
 
 Tier: 1 (MVP)
 Task: 4.3
 Dependencies: Task 1.1 (Token dataclass)
 """
 
-from typing import List
+from typing import List, Union
 import numpy as np
-from SpecHO.models import Token
+from specHO.models import Token
 
 
 class SemanticEchoAnalyzer:
     """Analyzes semantic similarity between clause zones using word embeddings.
 
-    Uses mean-pooled word embeddings (Word2Vec or GloVe) to represent each zone
-    as a single vector, then calculates cosine similarity between the zone vectors.
+    Uses embeddings to represent each zone, then calculates cosine similarity.
     This captures whether the zones express semantically related concepts, even
     when phonetic and structural similarities are low.
 
     Tier 1 Implementation:
-    - Pre-trained Word2Vec or GloVe embeddings via gensim
-    - Mean pooling across zone tokens
+    - Pre-trained embeddings via gensim (Word2Vec/GloVe) or Sentence Transformers
+    - Mean pooling across zone tokens (for gensim models)
+    - Direct sentence encoding (for Sentence Transformers)
     - Cosine similarity mapped to [0,1] range
     - Fallback to 0.5 (neutral) if embeddings unavailable
 
     Attributes:
-        model: Gensim KeyedVectors model (Word2Vec or GloVe)
+        model: Embedding model (gensim KeyedVectors or SentenceTransformer)
                None if embeddings could not be loaded
+        model_type: Type of model ('gensim' or 'sentence_transformer')
     """
 
     def __init__(self, model_path: str = None):
         """Initialize semantic analyzer with word embeddings.
 
         Args:
-            model_path: Path to gensim-compatible embeddings file
+            model_path: Path to gensim-compatible embeddings file, OR
+                       name of Sentence Transformer model (e.g., 'all-MiniLM-L6-v2')
                        If None, operates in fallback mode (returns 0.5)
         """
         self.model = None
+        self.model_type = None
 
         if model_path:
+            # Try Sentence Transformers first (if model_path looks like a model name)
+            if '/' not in model_path and '\\' not in model_path and not model_path.endswith('.txt'):
+                try:
+                    from sentence_transformers import SentenceTransformer
+                    self.model = SentenceTransformer(model_path)
+                    self.model_type = 'sentence_transformer'
+                    return
+                except Exception:
+                    pass  # Fall through to try gensim
+
+            # Try gensim KeyedVectors (for file paths)
             try:
                 from gensim.models import KeyedVectors
                 self.model = KeyedVectors.load_word2vec_format(
                     model_path,
                     binary=False
                 )
+                self.model_type = 'gensim'
             except Exception:
                 # Fallback mode: embeddings unavailable
                 self.model = None
+                self.model_type = None
 
     def analyze(self, zone_a: List[Token], zone_b: List[Token]) -> float:
         """Calculate semantic similarity between two clause zones.
@@ -98,33 +114,49 @@ class SemanticEchoAnalyzer:
         return similarity
 
     def _get_zone_vector(self, zone: List[Token]) -> np.ndarray:
-        """Compute mean-pooled embedding vector for a zone.
+        """Compute embedding vector for a zone.
+
+        For gensim models: Uses mean-pooled word embeddings.
+        For Sentence Transformers: Encodes the full text sequence.
 
         Args:
             zone: List of tokens to embed
 
         Returns:
-            Mean-pooled embedding vector, or None if no tokens have embeddings
+            Embedding vector, or None if no tokens have embeddings
         """
-        vectors = []
+        if self.model_type == 'sentence_transformer':
+            # Use Sentence Transformer to encode the full text
+            text = ' '.join(token.text for token in zone)
+            if not text.strip():
+                return None
+            return self.model.encode(text, convert_to_numpy=True)
 
-        for token in zone:
-            # Get lowercase version for embedding lookup
-            word = token.text.lower()
+        elif self.model_type == 'gensim':
+            # Use gensim word embeddings with mean pooling
+            vectors = []
 
-            try:
-                if word in self.model:
-                    vectors.append(self.model[word])
-            except Exception:
-                # Token not in vocabulary, skip it
-                continue
+            for token in zone:
+                # Get lowercase version for embedding lookup
+                word = token.text.lower()
 
-        # No embeddings found
-        if not vectors:
+                try:
+                    if word in self.model:
+                        vectors.append(self.model[word])
+                except Exception:
+                    # Token not in vocabulary, skip it
+                    continue
+
+            # No embeddings found
+            if not vectors:
+                return None
+
+            # Mean pooling
+            return np.mean(vectors, axis=0)
+
+        else:
+            # Unknown model type
             return None
-
-        # Mean pooling
-        return np.mean(vectors, axis=0)
 
     def _calculate_cosine_similarity(
         self,
