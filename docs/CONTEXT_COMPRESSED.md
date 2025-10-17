@@ -591,28 +591,28 @@ config: research profile
 
 ## NEXT STEPS
 
-### Immediate: Task 4.2 (StructuralEchoAnalyzer)
+### Immediate: Task 4.3 (SemanticEchoAnalyzer)
 ```python
-File: SpecHO/echo_engine/structural_analyzer.py
-Class: StructuralEchoAnalyzer
+File: SpecHO/echo_engine/semantic_analyzer.py
+Class: SemanticEchoAnalyzer
 Method: analyze(zone_a, zone_b) → float
-Tests: Add to tests/test_echo_analyzers.py (or create new file)
+Tests: Create tests/test_semantic_analyzer.py
 
 Implementation (Tier 1):
-1. POS pattern comparison: extract POS sequences, compare patterns
-2. Syllable similarity: compare syllable counts
-3. Combined score: pattern_sim * 0.5 + syllable_sim * 0.5
-4. Edge cases: empty zones → 0.0, normalize to [0,1]
+1. Mean-pooled Word2Vec/GloVe embeddings
+2. Cosine similarity between mean vectors
+3. Map to [0,1]: (1 + cos) / 2
+4. Fallback: 0.5 if embeddings unavailable
+5. Edge cases: empty zones → 0.0, normalize to [0,1]
 
-No external libraries needed (uses Token.pos_tag and Token.syllable_count)
-Reference: PhoneticEchoAnalyzer (S5) for similar pattern
+Library: gensim (for Word2Vec/GloVe)
+Reference: PhoneticEchoAnalyzer (S5) and StructuralEchoAnalyzer (S6)
 ```
 
-### After 4.2: Complete Echo Engine
+### After 4.3: Complete Echo Engine
 ```
-Task 4.3: SemanticEchoAnalyzer (Word2Vec mean-pooling + cosine)
-Task 4.4: EchoAnalysisEngine (orchestrator)
-Task 8.3: Echo analyzers test suite
+Task 4.4: EchoAnalysisEngine (orchestrator combining all 3 analyzers)
+Task 8.3: Echo analyzers unified test suite
 ```
 
 ---
@@ -638,12 +638,14 @@ specHO/
 │   ├── echo_engine/
 │   │   ├── __init__.py                     # ✅ S5
 │   │   ├── phonetic_analyzer.py            # ✅ S5 (177 LOC)
-│   │   └── structural_analyzer.py          # ⏳ NEXT
+│   │   ├── structural_analyzer.py          # ✅ S6 (150 LOC)
+│   │   └── semantic_analyzer.py            # ⏳ NEXT
 │   ├── scoring/                            # ⏳ Not started
 │   └── validator/                          # ⏳ Not started
-├── tests/                                  # 611 tests, 100% passing
+├── tests/                                  # 650 tests, 100% passing
 │   ├── test_clause_identifier.py           # ✅ S5 (39 tests, unified suite)
 │   ├── test_phonetic_analyzer.py           # ✅ S5 (28 tests)
+│   ├── test_structural_analyzer.py         # ✅ S6 (39 tests)
 │   └── [other test files...]
 ├── scripts/
 │   ├── analyze_sample.py                   # ✅ S5 (real-world analysis)
@@ -721,15 +723,15 @@ Real-world performance:
 
 ### Progress Summary
 ```
-Total: 13/32 tasks complete (40.6%)
-Tests: 611 passing (100% pass rate)
-Components: C1 ✅, C2 ✅, C3 25%, C4-C5 pending
-Ready for: Task 4.2 (StructuralEchoAnalyzer)
+Total: 14/32 tasks complete (43.8%)
+Tests: 650 passing (100% pass rate)
+Components: C1 ✅, C2 ✅, C3 50%, C4-C5 pending
+Ready for: Task 4.3 (SemanticEchoAnalyzer)
 ```
 
 ---
 
 END OF CONTEXT_COMPRESSED.md
-Version: 1.1 (Post-Session 5)
+Version: 1.2 (Post-Session 6)
 Token reduction: ~85% (3500 → 650 lines)
-Last updated: Task 4.1 complete, Task 4.2 ready to implement
+Last updated: Task 4.2 complete, Task 4.3 ready to implement

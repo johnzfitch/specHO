@@ -37,6 +37,7 @@ User working on multi-session project (SpecHO watermark detector):
 ```
 
 **Purpose**: Build mental model of:
+
 - What's already implemented vs pending
 - Critical decisions vs implementation details
 - Architecture patterns vs one-off code
