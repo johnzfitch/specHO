@@ -57,9 +57,37 @@
 
 ---
 
+## Post-Reset Resumption Guide
+
+### 🚨 Context Window Closure Note
+Session 3 experienced an **unexpected context window closure** mid-session due to extended bug fixing of Task 3.2 (PairRulesEngine). Multiple implementation iterations were required to solve spaCy dependency parse quirks. Future sessions should create documentation checkpoints when debugging becomes extensive.
+
+### 📚 Reference Documents Quick Guide
+
+**Always read documents in this order when resuming**:
+
+| Priority | Document | When to Read | What It Contains |
+|----------|----------|-------------|------------------|
+| **1** | `docs/summary2.md` (this file) | **START HERE** every session | Current status, next task, quick context |
+| **2** | `docs/TASKS.md` | Starting any new task | Task specifications, APIs, deliverables |
+| **3** | `docs/SPECS.md` | Implementing features | Tier 1/2/3 algorithms, config details |
+| 4 | `CLAUDE.md` | Need architecture guidance | Task sequence, directory structure, rules |
+| 5 | `docs/PHILOSOPHY.md` | Questioning design choices | Rationale for tier system, tradeoffs |
+| 6 | `docs/Sessions/sessionN.md` | Deep implementation details | Historical decisions, code patterns |
+| 7 | `insights.md` | During implementation | Running notes, lessons learned |
+
+**Tier 1 Discipline**: Before adding any feature, check `docs/SPECS.md` to verify it's Tier 1. If not listed, document idea in `insights.md` and defer.
+
+---
+
 ## What To Do Next
 
 ### Immediate Next Task: Task 3.3 - ZoneExtractor
+
+**BEFORE CODING - READ THESE**:
+1. **`docs/TASKS.md` lines 155-165** - Full Task 3.3 specification
+2. **`docs/SPECS.md` lines 200-250** - Zone extraction algorithm (Tier 1)
+3. **`specHO/models.py`** - Review ClausePair and Token dataclass structure
 
 **File**: `SpecHO/clause_identifier/zone_extractor.py`
 **Objective**: Extract terminal and initial zones from clause pairs for echo analysis
@@ -67,7 +95,7 @@
 **Input**: List[ClausePair] from PairRulesEngine
 **Output**: Same pairs with `zone_a_tokens` and `zone_b_tokens` populated
 
-**Algorithm** (Tier 1 Simple):
+**Algorithm** (Tier 1 Simple - from SPECS.md):
 ```python
 class ZoneExtractor:
     def extract_zones(self, pairs: List[ClausePair], window_size: int = 3) -> List[ClausePair]:
@@ -81,11 +109,12 @@ class ZoneExtractor:
         pass
 ```
 
-**Key Requirements**:
+**Key Requirements** (from SPECS.md Tier 1):
 - Extract only **content words** (Token.is_content_word == True)
 - Terminal zone: Last N content words from clause_a (reading left-to-right)
 - Initial zone: First N content words from clause_b (reading left-to-right)
 - Handle edge cases: clauses with < N content words
+- **DO NOT ADD**: Dynamic window sizing (Tier 2), zone overlap detection (Tier 2), phonetic pre-filtering (Tier 3)
 
 **Integration**:
 ```python
@@ -110,13 +139,15 @@ pairs_with_zones = extractor.extract_zones(pairs)
 ```
 
 **Development Steps**:
-1. Read Task 3.3 in [`docs/TASKS.md`](TASKS.md)
-2. Read Zone Extraction specs in [`docs/SPECS.md`](SPECS.md)
+1. ✅ Read Task 3.3 in [`docs/TASKS.md`](TASKS.md) lines 155-165
+2. ✅ Read Zone Extraction specs in [`docs/SPECS.md`](SPECS.md) lines 200-250
 3. Create `specHO/clause_identifier/zone_extractor.py`
-4. Implement ZoneExtractor with content word filtering
-5. Create `tests/test_zone_extractor.py`
-6. Test with pairs from PairRulesEngine
-7. Proceed to Task 3.4 (ClauseIdentifier pipeline)
+4. Implement ZoneExtractor with content word filtering (Tier 1 only)
+5. Create `tests/test_zone_extractor.py` with 30+ tests
+6. Test with pairs from PairRulesEngine (integration test)
+7. Update `insights.md` with any discoveries
+8. Update this file's task count (11/32 complete)
+9. Proceed to Task 3.4 (ClauseIdentifier pipeline)
 
 ---
 
