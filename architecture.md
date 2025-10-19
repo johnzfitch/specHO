@@ -250,7 +250,7 @@ More sophisticated approaches (Tier 2 and beyond) can address these limitations.
 
 ### Data Flow and Output
 
-The Statistical Validator receives the document_echo_score from the Scoring Module and has the baseline statistics pre-loaded. It calculates the z_score and converts it to a confidence percentage. It produces a tuple of (z_score, confidence) as its primary output.
+The Statistical Validator receives the document_echo_score from the Scoring Module and has the **baseline statistics pre-loaded**. It calculates the z_score and converts it to a confidence percentage. It produces a tuple of (z_score, confidence) as its primary output.
 
 In the full pipeline, these values get incorporated into the final DocumentAnalysis object along with all the intermediate results, giving users a complete view of how the detection verdict was reached.
 

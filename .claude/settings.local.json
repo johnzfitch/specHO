@@ -10,5 +10,6 @@
   "enabledMcpjsonServers": [
     "memory"
   ],
-  "outputStyle": "default"
+  "outputStyle": "Explanatory",
+  "spinnerTipsEnabled": false
 }
