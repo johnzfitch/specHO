@@ -15,5 +15,13 @@ Tasks: 6.1, 6.2, 6.3, 6.4
 """
 
 from .baseline_builder import BaselineCorpusProcessor
+from .z_score import ZScoreCalculator
+from .confidence import ConfidenceConverter
+from .pipeline import StatisticalValidator
 
-__all__ = ['BaselineCorpusProcessor']
+__all__ = [
+    'BaselineCorpusProcessor',
+    'ZScoreCalculator',
+    'ConfidenceConverter',
+    'StatisticalValidator'
+]
