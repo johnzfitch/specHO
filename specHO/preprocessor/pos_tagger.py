@@ -81,7 +81,7 @@ class POSTagger:
                 f"Run: python -m spacy download {model_name}"
             ) from e
 
-    def tag(self, tokens: List[Token]) -> List[Token]:
+    def tag(self, tokens: List[Token], spacy_doc=None) -> List[Token]:
         """Enrich tokens with POS tags and content word identification.
 
         Takes a list of Token objects (typically from Tokenizer) and enriches
@@ -95,6 +95,8 @@ class POSTagger:
 
         Args:
             tokens: List of Token objects to enrich
+            spacy_doc: Optional pre-existing spaCy Doc to use for POS tagging.
+                      If provided, skips creating a new doc (ensures alignment).
 
         Returns:
             List of Token objects with pos_tag and is_content_word fields populated
@@ -118,21 +120,26 @@ class POSTagger:
             logging.warning("Received empty token list for POS tagging")
             return []
 
-        # Reconstruct text from tokens for spaCy processing
-        # This ensures alignment between our tokens and spaCy's tokens
-        text = " ".join(t.text for t in tokens)
+        # Use provided spaCy doc if available, otherwise create new one
+        if spacy_doc is not None:
+            doc = spacy_doc
+            logging.debug(f"Using provided spaCy doc for POS tagging ({len(doc)} tokens)")
+        else:
+            # Reconstruct text from tokens for spaCy processing
+            # This ensures alignment between our tokens and spaCy's tokens
+            text = " ".join(t.text for t in tokens)
 
-        # Process with spaCy
-        doc = self.nlp(text)
+            # Process with spaCy
+            doc = self.nlp(text)
 
         # Verify alignment (spaCy might tokenize differently)
         if len(doc) != len(tokens):
             logging.warning(
                 f"Token count mismatch: input={len(tokens)}, spaCy={len(doc)}. "
-                f"Using direct processing instead."
+                f"Using text-based matching."
             )
-            # Fall back to direct processing if counts don't match
-            return self._tag_with_direct_processing(tokens)
+            # Fall back to text-based matching if counts don't match
+            return self._tag_with_text_matching(tokens, doc)
 
         # Enrich our Token objects with spaCy's POS tags
         enriched_tokens = []
@@ -149,38 +156,49 @@ class POSTagger:
         logging.debug(f"Tagged {len(enriched_tokens)} tokens with POS")
         return enriched_tokens
 
-    def _tag_with_direct_processing(self, tokens: List[Token]) -> List[Token]:
+    def _tag_with_text_matching(self, tokens: List[Token], doc) -> List[Token]:
         """Fallback method for POS tagging when token alignment fails.
 
-        Processes the original full text through spaCy and attempts to match
-        tokens based on text content.
+        Uses text-based matching to align tokens with spaCy doc when token
+        counts don't match. Tries to match tokens by text content with
+        position as a tiebreaker.
 
         Args:
             tokens: List of Token objects
+            doc: spaCy Doc to extract POS tags from
 
         Returns:
             List of enriched Token objects
         """
-        # Reconstruct full text with spaces
-        text = " ".join(t.text for t in tokens)
-        doc = self.nlp(text)
-
-        # Create a mapping of spaCy tokens
-        spacy_tokens_map = {(st.text, i): st for i, st in enumerate(doc)}
+        # Create list of spaCy tokens for matching
+        spacy_tokens_list = list(doc)
 
         enriched_tokens = []
-        for i, token in enumerate(tokens):
-            # Try to find matching spaCy token
-            spacy_token = spacy_tokens_map.get((token.text, i))
+        spacy_idx = 0  # Track position in spaCy doc
 
-            if spacy_token:
-                pos_tag = spacy_token.pos_
-                is_content = self.is_content_word_from_pos(pos_tag)
-            else:
-                # Default to empty if no match found
+        for token in tokens:
+            # Try to find matching spaCy token starting from current position
+            matched = False
+
+            # Search forward in spaCy doc for matching text
+            for offset in range(min(3, len(spacy_tokens_list) - spacy_idx)):
+                if spacy_idx + offset < len(spacy_tokens_list):
+                    spacy_token = spacy_tokens_list[spacy_idx + offset]
+
+                    # Match if text is the same (case-insensitive)
+                    if spacy_token.text.lower() == token.text.lower():
+                        pos_tag = spacy_token.pos_
+                        is_content = self.is_content_word_from_pos(pos_tag)
+                        spacy_idx += offset + 1  # Move past matched token
+                        matched = True
+                        break
+
+            if not matched:
+                # No match found - use empty defaults
                 pos_tag = ""
                 is_content = False
                 logging.debug(f"No POS match for token: {token.text}")
+                spacy_idx += 1  # Still advance position
 
             enriched_token = Token(
                 text=token.text,

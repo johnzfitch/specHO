@@ -1,0 +1,135 @@
+WARNING:root:Token count mismatch: input=4899, spaCy=4905. Using direct processing instead.
+WARNING:root:Token count mismatch: input=4899, spaCy=4905. Using direct processing instead.
+WARNING:root:Low field population rate: 9.1%
+WARNING:root:Unusual content word rate: 4.9%
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\Zachary\specHO\scripts\diagnose_preprocessing.py", line 307, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\Zachary\specHO\scripts\diagnose_preprocessing.py", line 303, in main
+    diagnose_preprocessing(text)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Zachary\specHO\scripts\diagnose_preprocessing.py", line 188, in diagnose_preprocessing
+    clause_pairs = clause_identifier.identify_clause_pairs(full_tokens, spacy_doc)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ClauseIdentifier' object has no attribute 'identify_clause_pairs'
+Loading: C:\Users\Zachary\specHO\specHO\sample.txt
+Text length: 27586 characters
+Text preview: # The Additive Innovator: A Portrait of a Builder Who Asks Different Questions
+
+There's a question that most people in technology never think to ask. When they encounter a problem, a broken system, an...
+
+================================================================================
+PREPROCESSING DIAGNOSTICS
+================================================================================
+
+STAGE 1: TOKENIZATION
+--------------------------------------------------------------------------------
+Total tokens: 4899
+First 10 tokens: ['#', 'The', 'Additive', 'Innovator', ':', 'A', 'Portrait', 'of', 'a', 'Builder']
+Sample tokens (every 500th):
+  [0] '#' | pos= | is_content=False | phonetic=
+  [500] 'patterns' | pos= | is_content=False | phonetic=
+  [1000] 'the' | pos= | is_content=False | phonetic=
+  [1500] 'judgment' | pos= | is_content=False | phonetic=
+  [2000] 'a' | pos= | is_content=False | phonetic=
+  [2500] 'and' | pos= | is_content=False | phonetic=
+  [3000] 'the' | pos= | is_content=False | phonetic=
+  [3500] 'which' | pos= | is_content=False | phonetic=
+  [4000] 'the' | pos= | is_content=False | phonetic=
+  [4500] 'We' | pos= | is_content=False | phonetic=
+
+STAGE 2: POS TAGGING
+--------------------------------------------------------------------------------
+POS tag distribution (top 10):
+  : 4387 (89.5%)
+  NOUN: 110 (2.2%)
+  PUNCT: 65 (1.3%)
+  VERB: 65 (1.3%)
+  PRON: 51 (1.0%)
+  DET: 48 (1.0%)
+  ADP: 42 (0.9%)
+  ADJ: 36 (0.7%)
+  AUX: 28 (0.6%)
+  SCONJ: 17 (0.3%)
+
+Content word analysis:
+  Total content words: 238
+  Content word rate: 4.9%
+  Expected: 30-70%
+  [X] CRITICAL: Content word rate too low! (4.9%)
+
+Sample content words:
+  [0] '#' (pos=NOUN)
+  [1] 'Additive' (pos=PROPN)
+  [2] 'Innovator' (pos=PROPN)
+  [3] 'Portrait' (pos=NOUN)
+  [4] 'Builder' (pos=NOUN)
+  [5] 'Asks' (pos=VERB)
+  [6] 'Different' (pos=ADJ)
+  [7] 'Questions' (pos=PROPN)
+  [8] 'question' (pos=NOUN)
+  [9] 'most' (pos=ADJ)
+  [10] 'people' (pos=NOUN)
+  [11] 'technology' (pos=NOUN)
+  [12] 'never' (pos=ADV)
+  [13] 'think' (pos=VERB)
+  [14] 'ask' (pos=VERB)
+  [15] 'encounter' (pos=VERB)
+  [16] 'problem' (pos=NOUN)
+  [17] 'broken' (pos=ADJ)
+  [18] 'system' (pos=NOUN)
+  [19] 'inefficiency' (pos=NOUN)
+
+Field population:
+  Populated tokens: 512 / 4899
+  Population rate: 10.5%
+  Expected: >80%
+  [X] CRITICAL: Field population too low! (10.5%)
+
+STAGE 3: PHONETIC TRANSCRIPTION
+--------------------------------------------------------------------------------
+Phonetic coverage: 4337 / 4899 (88.5%)
+Expected: >50% (content words should have phonetic)
+
+Sample phonetic transcriptions:
+  '#' -> # (syllables: 1)
+  'The' -> DH AH0 (syllables: 1)
+  'Additive' -> AE1 D AH0 T IH0 V (syllables: 3)
+  'Innovator' -> IH1 N AH0 V EY2 T ER0 (syllables: 4)
+  'A' -> AH0 (syllables: 1)
+  'Portrait' -> P AO1 R T R AH0 T (syllables: 2)
+  'of' -> AH1 V (syllables: 1)
+  'a' -> AH0 (syllables: 1)
+  'Builder' -> B IH1 L D ER0 (syllables: 2)
+  'Who' -> HH UW1 (syllables: 1)
+  'Asks' -> AE1 S K S (syllables: 1)
+  'Different' -> D IH1 F ER0 AH0 N T (syllables: 3)
+  'Questions' -> K W EH1 S CH AH0 N Z (syllables: 2)
+  'There' -> DH EH1 R (syllables: 1)
+  ''s' -> EH1 S (syllables: 1)
+  'a' -> AH0 (syllables: 1)
+  'question' -> K W EH1 S CH AH0 N (syllables: 2)
+  'that' -> DH AE1 T (syllables: 1)
+
+STAGE 4: FULL PIPELINE
+--------------------------------------------------------------------------------
+Token alignment check:
+  Custom tokens: 4899
+  spaCy tokens: 4899
+  Difference: 0
+
+Full enrichment status:
+  Fully populated: 448 / 4899 (9.1%)
+  Expected: >80%
+  [X] CRITICAL: Full population too low! (9.1%)
+
+Final content word analysis:
+  Content words: 238 / 4899 (4.9%)
+  Expected: 30-70%
+  [X] CRITICAL: Content word rate too low! (4.9%)
+
+STAGE 5: CLAUSE IDENTIFICATION & ZONES
+--------------------------------------------------------------------------------

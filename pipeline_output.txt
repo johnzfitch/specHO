@@ -1,0 +1,160 @@
+Traceback (most recent call last):
+  File "C:\Users\Zachary\specHO\scripts\demo_full_pipeline.py", line 277, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\Zachary\specHO\scripts\demo_full_pipeline.py", line 233, in main
+    total_time = preprocess_time + clause_time + echo_time + scoring_time + aggregation_time
+                                                                            ^^^^^^^^^^^^^^^^
+NameError: name 'aggregation_time' is not defined
+================================================================================
+  FULL PIPELINE DEMONSTRATION
+  SpecHO Watermark Detection System
+  Components: Preprocessor -> Clause Identifier -> Echo Engine -> Scoring
+================================================================================
+
+================================================================================
+  STEP 0: LOADING SAMPLE TEXT
+================================================================================
+
+File: specHO/sample.txt
+Lines: 121
+Words: 4153
+Characters: 27586
+
+First 200 characters:
+  # The Additive Innovator: A Portrait of a Builder Who Asks Different Questions
+
+There's a question that most people in technology never think to ask. When they encounter a problem, a broken system, an...
+
+================================================================================
+  STEP 1: LINGUISTIC PREPROCESSING
+================================================================================
+
+Initializing preprocessor...
+Processing text (tokenization, POS tagging, dependencies, phonetics)...
+
+[COMPLETE] Preprocessing finished in 0.95s
+  Total tokens: 4899
+  Content words: 2382
+  Sentences: 255
+
+Sample tokens (first 10):
+  Text            POS      Phonetic             Content  Syllables 
+  ---------------------------------------------------------------------------
+  #               NOUN     #                    Yes      1         
+  The             DET      DH AH0               No       1         
+  Additive        PROPN    AE1 D AH0 T IH0 V    Yes      3         
+  Innovator       PROPN    IH1 N AH0 V EY2 T ER0 Yes      4         
+  :               PUNCT    N/A                  No       0         
+  A               DET      AH0                  No       1         
+  Portrait        NOUN     P AO1 R T R AH0 T    Yes      2         
+  of              ADP      AH1 V                No       1         
+  a               DET      AH0                  No       1         
+  Builder         NOUN     B IH1 L D ER0        Yes      2         
+
+================================================================================
+  STEP 2: CLAUSE IDENTIFICATION
+================================================================================
+
+Initializing clause identifier...
+Identifying clause pairs (boundaries, pairing rules, zone extraction)...
+
+[COMPLETE] Clause identification finished in 0.01s
+  Clause pairs identified: 280
+
+Sample clause pairs (first 3):
+
+  Pair 1 (Type: punctuation):
+    Zone A (1 tokens): #...
+    Zone B (3 tokens): Additive Innovator Portrait...
+
+  Pair 2 (Type: punctuation):
+    Zone A (3 tokens): never think ask...
+    Zone B (1 tokens): problem...
+
+  Pair 3 (Type: punctuation):
+    Zone A (2 tokens): Silicon Valley...
+    Zone B (3 tokens): gospel preaches replacement...
+
+================================================================================
+  STEP 3: ECHO ANALYSIS
+================================================================================
+
+Initializing echo analysis engine...
+Analyzing echo patterns (phonetic, structural, semantic)...
+
+[COMPLETE] Echo analysis finished in 0.00s
+  Echo scores computed: 280
+
+Sample echo scores (first 5):
+  Pair       Phonetic   Structural   Semantic
+  ---------------------------------------------
+  Pair 1        0.000        0.056      0.500
+  Pair 2        0.255        0.250      0.500
+  Pair 3        0.460        0.357      0.500
+  Pair 4        0.411        0.500      0.500
+  Pair 5        0.219        0.200      0.500
+
+Average scores across all pairs:
+  Phonetic:   0.394
+  Structural: 0.310
+  Semantic:   0.487
+
+================================================================================
+  STEP 4: SCORING MODULE (Task 5.3)
+================================================================================
+
+Initializing ScoringModule orchestrator...
+  WeightedScorer: WeightedScorer
+  DocumentAggregator: DocumentAggregator
+
+Using weights: Phonetic=0.33, Structural=0.33, Semantic=0.34
+
+Scoring document (weighted scoring + aggregation)...
+
+[COMPLETE] Scoring finished in 0.00s
+
+  Pair scores computed: 280
+
+Sample pair scores (first 10):
+  Pair        Score
+  --------------------
+  Pair 1      0.188
+  Pair 2      0.337
+  Pair 3      0.440
+  Pair 4      0.471
+  Pair 5      0.308
+  Pair 6      0.378
+  Pair 7      0.419
+  Pair 8      0.357
+  Pair 9      0.354
+  Pair 10     0.492
+
+Score distribution:
+  Low (< 0.3):      33 pairs (11.8%)
+  Medium (0.3-0.7):  242 pairs (86.4%)
+  High (>= 0.7):     5 pairs (1.8%)
+
+================================================================================
+  FINAL RESULTS
+================================================================================
+
+Document Score: 0.3982
+
+Score Statistics:
+  Number of pairs: 280
+  Mean:            0.3982
+  Median:          0.4018
+  Minimum:         0.0000
+  Maximum:         0.8300
+  Std Deviation:   0.1142
+
+Classification:
+  Classification: UNWATERMARKED AI
+  Interpretation: Likely AI-generated but no watermark
+
+================================================================================
+  PERFORMANCE SUMMARY
+================================================================================
+
+[ERROR] Pipeline failed: name 'aggregation_time' is not defined

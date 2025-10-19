@@ -41,19 +41,20 @@ class LinguisticPreprocessor:
 
     Architecture Pattern: Orchestrator
     - Minimal orchestration logic, delegates all work to subcomponents
-    - Simple sequential chaining: Tokenizer → POSTagger → PhoneticTranscriber
+    - Sequential chaining: DependencyParser → Tokenizer → POSTagger → PhoneticTranscriber
     - Returns both Token list and spaCy Doc for downstream use
+    - DependencyParser runs FIRST to create canonical spaCy doc for POS tagging alignment
 
     Data Flow:
         Raw text (str)
             ↓
+        DependencyParser: text → spacy.Doc (dependency tree, canonical tokenization)
+            ↓
         Tokenizer: text → List[Token] (text populated only)
             ↓
-        POSTagger: tokens → List[Token] (+pos_tag, +is_content_word)
+        POSTagger: tokens + spacy.Doc → List[Token] (+pos_tag, +is_content_word)
             ↓
         PhoneticTranscriber: tokens → List[Token] (+phonetic, +syllable_count)
-            ↓
-        DependencyParser: text → spacy.Doc (dependency tree)
             ↓
         Output: (List[Token], spacy.Doc)
 
@@ -111,10 +112,10 @@ class LinguisticPreprocessor:
         and dependency parse trees.
 
         Processing Steps:
-        1. Tokenization: Split text into Token objects
-        2. POS Tagging: Add part-of-speech tags and identify content words
-        3. Phonetic Transcription: Add phonetic representations and syllable counts
-        4. Dependency Parsing: Build syntactic dependency tree
+        1. Dependency Parsing: Build syntactic dependency tree (creates canonical spaCy doc)
+        2. Tokenization: Split text into Token objects
+        3. POS Tagging: Add part-of-speech tags using canonical doc (ensures alignment)
+        4. Phonetic Transcription: Add phonetic representations and syllable counts
 
         Args:
             text: Raw text string to process
@@ -163,26 +164,25 @@ class LinguisticPreprocessor:
 
         logging.debug(f"Processing text: {len(text)} characters, {len(text.split())} words")
 
-        # Step 1: Tokenization
+        # Step 1: Dependency Parsing (FIRST to create canonical spaCy doc)
+        # Creates spaCy Doc with full syntactic analysis that will be shared
+        dependency_doc = self.dependency_parser.parse(text)
+        logging.debug(f"Dependency Parsing: {len(list(dependency_doc.sents))} sentences")
+
+        # Step 2: Tokenization
         # Creates Token objects with only 'text' field populated
         tokens = self.tokenizer.tokenize(text)
         logging.debug(f"Tokenization: {len(tokens)} tokens")
 
-        # Step 2: POS Tagging
+        # Step 3: POS Tagging (using dependency_doc for perfect alignment)
         # Enriches tokens with 'pos_tag' and 'is_content_word' fields
-        tagged_tokens = self.pos_tagger.tag(tokens)
+        tagged_tokens = self.pos_tagger.tag(tokens, spacy_doc=dependency_doc)
         logging.debug(f"POS Tagging: {sum(1 for t in tagged_tokens if t.is_content_word)} content words")
 
-        # Step 3: Phonetic Transcription
+        # Step 4: Phonetic Transcription
         # Enriches tokens with 'phonetic' and 'syllable_count' fields
         enriched_tokens = self.phonetic_transcriber.transcribe_tokens(tagged_tokens)
         logging.debug(f"Phonetic Transcription: {sum(t.syllable_count for t in enriched_tokens)} total syllables")
-
-        # Step 4: Dependency Parsing
-        # Creates spaCy Doc with full syntactic analysis
-        # Note: This operates on original text, not the Token list
-        dependency_doc = self.dependency_parser.parse(text)
-        logging.debug(f"Dependency Parsing: {len(list(dependency_doc.sents))} sentences")
 
         # Verify data quality (Tier 1: simple checks only)
         self._validate_output(enriched_tokens, dependency_doc)
