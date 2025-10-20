@@ -17,7 +17,7 @@ Dependencies: Task 1.1 (models.py), pronouncing library
 """
 
 import logging
-from typing import List, Optional
+from typing import List, Optional, Dict
 import pronouncing
 
 import sys
@@ -25,6 +25,35 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from models import Token
+
+# ============================================================================
+# CONTRACTION MAPPINGS
+# ============================================================================
+
+# Mapping of contraction fragments to ARPAbet phonetics
+# These are common fragments created by spaCy tokenization that don't exist
+# in the CMU Pronouncing Dictionary
+#
+# Note: These represent the REDUCED forms heard in contractions, not the full words
+# For example, "have" is "HH AE1 V" fully pronounced, but "'ve" is just "V"
+CONTRACTION_PHONETICS: Dict[str, str] = {
+    # Negative contractions
+    "n't": "AH0 N T",  # not (as in "don't", "can't", "won't") - reduced from "N AA1 T"
+
+    # Pronoun/verb contractions (reduced forms)
+    "'m": "AH0 M",     # am (as in "I'm") - already in CMU dict
+    "'re": "ER0",      # are (as in "you're", "they're") - reduced from "AA1 R"
+    "'ve": "V",        # have (as in "I've", "they've") - reduced from "HH AE1 V"
+    "'ll": "AH0 L",    # will (as in "I'll", "you'll") - reduced from "W IH1 L"
+    "'d": "D",         # would/had (as in "I'd", "you'd") - just the final consonant
+
+    # Possessive/is contractions (already in CMU dict, but included for completeness)
+    "'s": "Z",         # is/possessive (as in "it's", "John's") - often realized as [z]
+
+    # Less common
+    "'t": "T",         # it (as in "'twas")
+    "n'": "AH0 N",     # and (as in "rock 'n' roll")
+}
 
 
 class PhoneticTranscriber:
@@ -55,11 +84,12 @@ class PhoneticTranscriber:
         """Initialize the PhoneticTranscriber.
 
         No setup required for Tier 1 - uses pronouncing library directly.
+        Contraction mappings are defined as a class constant.
 
         Examples:
             >>> transcriber = PhoneticTranscriber()
         """
-        logging.info("Initialized PhoneticTranscriber (Tier 1 - CMU Dict only)")
+        logging.info("Initialized PhoneticTranscriber (Tier 1 - CMU Dict + contractions)")
 
     def transcribe(self, word: str) -> str:
         """Convert a word to ARPAbet phonetic representation.
@@ -67,10 +97,15 @@ class PhoneticTranscriber:
         Uses the CMU Pronouncing Dictionary to look up the phonetic form of
         a word. If the word has multiple pronunciations, returns the first one.
 
-        Tier 1 Fallback Strategy:
-        - If word not in dictionary, return uppercase text
-        - No complex G2P (grapheme-to-phoneme) model
-        - Tier 2 will add G2P fallback for better OOV handling
+        BUGFIX (2025-10-19): Added contraction handling
+        - Checks CONTRACTION_PHONETICS mapping before CMU dict lookup
+        - Handles spaCy tokenization artifacts: "n't", "'re", "'ve", "'ll", etc.
+        - Prevents invalid phonetics like "N'T" for contraction fragments
+
+        Tier 1 Lookup Strategy:
+        1. Check contraction mapping (for spaCy artifacts)
+        2. Check CMU Pronouncing Dictionary
+        3. Fallback: return uppercase text for true OOV words
 
         Args:
             word: English word to transcribe (any casing)
@@ -84,7 +119,11 @@ class PhoneticTranscriber:
             'HH AH0 L OW1'
             >>> transcriber.transcribe("cat")
             'K AE1 T'
-            >>> transcriber.transcribe("xyz123")  # OOV word
+            >>> transcriber.transcribe("n't")  # Contraction fragment
+            'AH0 N T'
+            >>> transcriber.transcribe("'re")  # Another fragment
+            'AA1 R'
+            >>> transcriber.transcribe("xyz123")  # True OOV word
             'XYZ123'
 
         Notes:
@@ -99,12 +138,19 @@ class PhoneticTranscriber:
         # Clean the word (remove punctuation, convert to lowercase for lookup)
         cleaned_word = word.strip().lower()
 
-        # Remove common punctuation that might be attached
-        for punct in ".,!?;:\"'":
-            cleaned_word = cleaned_word.replace(punct, "")
+        # Strip trailing punctuation (but preserve apostrophes for now)
+        for punct in ".,!?;:\"":
+            cleaned_word = cleaned_word.rstrip(punct)
 
         if not cleaned_word:
             return ""
+
+        # BUGFIX: Check contraction mappings (after punctuation strip, preserving apostrophes)
+        # This handles spaCy tokenization artifacts like "n't", "'re", etc.
+        if cleaned_word in CONTRACTION_PHONETICS:
+            phonetic = CONTRACTION_PHONETICS[cleaned_word]
+            logging.debug(f"Contraction '{word}' -> '{phonetic}' (from mapping)")
+            return phonetic
 
         # Look up pronunciation in CMU dict
         phones_list = pronouncing.phones_for_word(cleaned_word)

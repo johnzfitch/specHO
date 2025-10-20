@@ -127,6 +127,7 @@ class DocumentAnalysis:
 
     Attributes:
         text: Original input text that was analyzed
+        tokens: All tokens from preprocessing (for debugging/display)
         clause_pairs: All thematic clause pairs identified in the document
         echo_scores: Similarity scores for each clause pair
         final_score: Aggregated document-level echo score (0.0-1.0)
@@ -139,3 +140,9 @@ class DocumentAnalysis:
     final_score: float
     z_score: float
     confidence: float
+    tokens: List[Token] = None  # Optional, added for UI display
+
+    @property
+    def document_score(self) -> float:
+        """Alias for final_score for backward compatibility."""
+        return self.final_score
