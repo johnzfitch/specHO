@@ -65,7 +65,7 @@ print(f"Z-Score: {result.z_score:.2f}")
 
 ## License
 
-[Your License Here]
+MIT
 
 ## Contributing
 
