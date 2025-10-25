@@ -9,8 +9,12 @@ import pytest
 import pickle
 import tempfile
 import numpy as np
+import sys
 from pathlib import Path
 from unittest.mock import Mock, patch
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from specHO.validator.baseline_builder import BaselineCorpusProcessor
 from specHO.preprocessor.pipeline import LinguisticPreprocessor

@@ -1,0 +1,49 @@
+Loading file: test_sample_human.txt
+Initializing detector with 'simple' config...
+Warning: Baseline file not found.
+Expected location: data/baseline/baseline_stats.pkl
+Z-scores and confidence will not be available.
+Run: python scripts/build_baseline.py --corpus data/corpus/ --output 
+{baseline_path}
+
+Created temporary baseline for testing purposes.
+
+Analyzing text...
+
+
++------------------------------------+
+| SpecHO Watermark Detection Results |
++------------------------------------+
+
++---------------------------------------------+
+| Document Score | 0.303                      |
+| Z-Score        | 0.02                       |
+| Confidence     | 50.9%                      |
+| Verdict        | LOW - Likely human-written |
++---------------------------------------------+
+
+Detailed Breakdown:
+
+  Clause Pairs Analyzed: 6
+  Echo Scores Computed: 6
+
+           Sample Echo Scores (first 10)           
++-------------------------------------------------+
+| # | Phonetic | Structural | Semantic | Combined |
+|---+----------+------------+----------+----------|
+| 1 |    0.444 |      0.400 |    0.500 |    0.000 |
+| 2 |    0.000 |      0.000 |    0.000 |    0.000 |
+| 3 |    0.244 |      0.188 |    0.500 |    0.000 |
+| 4 |    0.310 |      0.250 |    0.500 |    0.000 |
+| 5 |    0.244 |      0.188 |    0.500 |    0.000 |
+| 6 |    0.504 |      0.167 |    0.500 |    0.000 |
++-------------------------------------------------+
+
++-------------------------+
+| Mean Echo Score | 0.000 |
+| Max Echo Score  | 0.000 |
+| Min Echo Score  | 0.000 |
++-------------------------+
+
+SpecHO v1.0 (Tier 1 MVP) - Echo Rule Watermark Detector
+
