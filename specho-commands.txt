@@ -1,0 +1,433 @@
+
+● 📚 SpecHO Scripts - Student Guide
+
+  Let me explain each script like you're learning this for the first time!
+
+  ---
+  🎯 Overview: What Are These Scripts For?
+
+  Think of SpecHO like a lie detector for AI-generated text. It looks for a special "watermark" pattern that AI
+  models might leave behind (called the "Echo Rule").
+
+  You have 2 main scripts:
+  1. cli.py - The actual detector (analyzes text)
+  2. build_baseline.py - The calibrator (teaches the detector what "normal" looks like)
+
+  ---
+  📊 Script #1: build_baseline.py (Run This First!)
+
+  What It Does
+
+  Imagine you're a doctor trying to detect if someone has a fever. First, you need to know what a "normal"
+  temperature is (98.6°F). Similarly, the detector needs to know what "normal" human text looks like before it can
+  detect watermarks.
+
+  build_baseline.py reads a bunch of human-written text and calculates what's "normal".
+
+  How It Works (Step-by-Step)
+
+  python scripts/build_baseline.py \
+      --corpus data/corpus/ \
+      --output data/baseline/baseline_stats.pkl
+
+  Breaking down the command:
+
+  | Part                                      | What It Means                          |
+  |-------------------------------------------|----------------------------------------|
+  | python                                    | Run Python program                     |
+  | scripts/build_baseline.py                 | The script to run                      |
+  | --corpus data/corpus/                     | Where to find human-written text files |
+  | --output data/baseline/baseline_stats.pkl | Where to save the results              |
+
+  What happens inside:
+
+  Step 1: Find all .txt files in data/corpus/
+          ├── essay1.txt
+          ├── essay2.txt
+          ├── news_article.txt
+          └── ... (50-100 files recommended)
+
+  Step 2: Analyze each file
+          For each file:
+          ├── Read the text
+          ├── Break into clauses
+          ├── Find clause pairs
+          ├── Calculate "echo scores"
+          └── Record the score (e.g., 0.142)
+
+  Step 3: Calculate statistics
+          All scores: [0.142, 0.156, 0.131, 0.189, ...]
+          ├── Mean (average): 0.150
+          ├── Std Dev (spread): 0.085
+          └── Count: 50 documents
+
+  Step 4: Save to file
+          Creates: data/baseline/baseline_stats.pkl
+          Contains: {
+            'human_mean': 0.150,
+            'human_std': 0.085,
+            'n_documents': 50
+          }
+
+  Example Output
+
+  ========================================
+  SpecHO Baseline Builder
+  ========================================
+
+  Corpus directory: data/corpus/
+  Output file: data/baseline/baseline_stats.pkl
+  Configuration: simple
+
+  Scanning corpus directory...
+  Found 50 files to process
+
+  Processing corpus files...
+  Reading files: 100%|████████| 50/50 [00:05<00:00]
+  Processing 50 documents through pipeline...
+
+  ========================================
+  BASELINE STATISTICS
+  ========================================
+
+    Documents processed: 50
+    Mean score:          0.1500
+    Std deviation:       0.0850
+
+  Baseline statistics saved successfully
+
+  What this means:
+  - Human text typically gets an echo score around 0.15
+  - Most scores fall within ±0.085 of that
+  - This becomes your "reference point" for comparison
+
+  Command Options Explained
+
+  python scripts/build_baseline.py \
+      --corpus data/corpus/              # Required: folder with .txt files
+      --output data/baseline/stats.pkl   # Required: where to save results
+      --limit 100                        # Optional: only process first 100 files
+      --verbose                          # Optional: show detailed progress
+      --config simple                    # Optional: use 'simple' or 'robust' config
+
+  When to use each option:
+  - --limit 50: Testing with small corpus
+  - --verbose: Want to see what's happening
+  - --config robust: Using advanced settings
+
+  ---
+  🔍 Script #2: cli.py (The Detector)
+
+  What It Does
+
+  After you've built the baseline, cli.py is the actual watermark detector. It analyzes new text and compares it to
+  the baseline to determine if it's watermarked.
+
+  Think of it like this:
+  - Baseline says: "Normal human text scores around 0.15"
+  - New document scores: 0.75
+  - Detector says: "That's WAY higher than normal! Probably watermarked!"
+
+  Method 1: Analyze Text Directly
+
+  python scripts/cli.py --text "The sky darkened. But hope remained."
+
+  What happens:
+  Input: Your text string
+     ↓
+  [Preprocessor] → Breaks into words, tags parts of speech
+     ↓
+  [Clause Identifier] → Finds clause pairs
+     ↓
+  [Echo Engine] → Calculates phonetic/structural/semantic similarity
+     ↓
+  [Scorer] → Combines into single score
+     ↓
+  [Validator] → Compares to baseline, calculates z-score
+     ↓
+  Output: Pretty table with results
+
+  Example Output:
+  +------------------------------------+
+  | SpecHO Watermark Detection Results |
+  +------------------------------------+
+
+  | Document Score | 0.612                           |  ← How "echoey" the text is
+  | Z-Score        | 2.08                            |  ← How many std devs from normal
+  | Confidence     | 98.1%                           |  ← How sure we are
+  | Verdict        | MODERATE - Possibly watermarked |  ← Final judgment
+
+  Reading the results:
+
+  | Metric         | What It Means                     | Example                        |
+  |----------------|-----------------------------------|--------------------------------|
+  | Document Score | Echo level (0-1)                  | 0.612 = Moderate echoes found  |
+  | Z-Score        | Standard deviations from baseline | 2.08 = Much higher than normal |
+  | Confidence     | Statistical certainty             | 98.1% = Very confident         |
+  | Verdict        | Plain English summary             | "Possibly watermarked"         |
+
+  Verdict meanings:
+  - LOW - Likely human → Score < 0.5 (normal)
+  - MODERATE - Possibly watermarked → Score 0.5-0.7 (suspicious)
+  - HIGH - Likely watermarked → Score > 0.7 (very suspicious)
+
+  Method 2: Analyze a File
+
+  python scripts/cli.py --file document.txt
+
+  Use this when:
+  - You have a saved document
+  - Text is too long to type in command
+  - Analyzing multiple documents in a script
+
+  What's different:
+  - Reads text from file instead of command line
+  - Everything else identical to --text mode
+
+  Method 3: Verbose Mode (See Details)
+
+  python scripts/cli.py --file document.txt --verbose
+
+  Shows extra information:
+  Detailed Breakdown:
+
+    Clause Pairs Analyzed: 5
+    Echo Scores Computed: 5
+
+             Sample Echo Scores (first 10)
+  +-------------------------------------------------+
+  | # | Phonetic | Structural | Semantic | Combined |
+  |---+----------+------------+----------+----------|
+  | 1 |    0.339 |      1.000 |    0.500 |    0.612 |
+  | 2 |    0.421 |      0.875 |    0.615 |    0.637 |
+  | 3 |    0.256 |      0.950 |    0.480 |    0.562 |
+  ...
+
+  Understanding echo scores:
+  - Phonetic: Do words sound similar? (rhyming, alliteration)
+  - Structural: Do sentences have same grammatical pattern?
+  - Semantic: Do words mean similar things?
+  - Combined: Weighted average of all three
+
+  When to use verbose:
+  - Debugging why score is high/low
+  - Learning how the detector works
+  - Writing research papers about results
+
+  Method 4: JSON Mode (For Automation)
+
+  python scripts/cli.py --file document.txt --json
+
+  Output:
+  {
+    "document_score": 0.612,
+    "z_score": 2.08,
+    "confidence": 0.981,
+    "verdict": "possibly_watermarked",
+    "metadata": {
+      "clause_pairs": 5,
+      "echo_scores_count": 5
+    },
+    "echo_scores": {
+      "mean": 0.612,
+      "max": 0.750,
+      "min": 0.480
+    }
+  }
+
+  When to use JSON:
+  - Building a web app that calls the detector
+  - Analyzing 100s of files in a batch script
+  - Saving results to a database
+  - Any automation/programming task
+
+  Example automation:
+  import subprocess
+  import json
+
+  result = subprocess.run(
+      ['python', 'scripts/cli.py', '--file', 'document.txt', '--json'],
+      capture_output=True,
+      text=True
+  )
+  data = json.loads(result.stdout)
+
+  if data['document_score'] > 0.7:
+      print("WARNING: High watermark signal detected!")
+
+  ---
+  🎓 Complete Workflow for Students
+
+  Scenario: You want to detect watermarks in student essays
+
+  Step 1: Gather a baseline corpus
+  # Collect 50-100 essays you KNOW are human-written
+  mkdir data/corpus
+  # Copy files: essay1.txt, essay2.txt, ... into data/corpus/
+
+  Step 2: Build the baseline
+  python scripts/build_baseline.py \
+      --corpus data/corpus/ \
+      --output data/baseline/baseline_stats.pkl \
+      --verbose
+
+  Output: Baseline file created (tells detector what "normal" looks like)
+
+  Step 3: Analyze a suspicious essay
+  python scripts/cli.py --file suspicious_essay.txt --verbose
+
+  Output:
+  | Document Score | 0.812                      |
+  | Z-Score        | 4.41                       |
+  | Confidence     | 99.9%                      |
+  | Verdict        | HIGH - Likely watermarked  |
+
+  Step 4: Make a decision
+  - High score (>0.7): Investigate further, likely AI-generated
+  - Moderate score (0.5-0.7): Unclear, need more evidence
+  - Low score (<0.5): Probably human-written
+
+  ---
+  🔬 How The Detection Actually Works
+
+  Let me explain the Echo Rule algorithm simply:
+
+  The Watermark Pattern
+
+  AI models might be forced to write with "echoes" between sentences:
+
+  "The cat sat quietly."  →  "The dog rested peacefully."
+   ↓          ↓                ↓          ↓
+   animal   action            animal    action
+
+  Phonetic:    cat ↔ dog      (different sounds)
+  Structural:  [article noun verb adverb] ↔ [article noun verb adverb] (SAME!)
+  Semantic:    cat ↔ dog      (both animals - similar!)
+
+  Combined echo score: 0.67 (high structural + semantic similarity)
+
+  Human Writing Example
+
+  "The cat sat quietly."  →  "It started raining heavily."
+   ↓          ↓                ↓      ↓        ↓
+  animal    action          pronoun  verb    adverb
+
+  Phonetic:    Different sounds
+  Structural:  Different grammar patterns
+  Semantic:    Unrelated concepts
+
+  Combined echo score: 0.12 (low - no echoes!)
+
+  Why This Matters
+
+  - Human text: Naturally varied, low echo scores (~0.15)
+  - Watermarked AI text: Forced echoes, high scores (~0.7-0.9)
+  - Detector: Spots the difference statistically
+
+  ---
+  📊 Understanding the Statistics
+
+  Z-Score Explained
+
+  Formula: z_score = (document_score - baseline_mean) / baseline_std
+
+  Example:
+  Baseline: mean=0.15, std=0.10
+  Document score: 0.45
+
+  z_score = (0.45 - 0.15) / 0.10 = 3.0
+
+  What it means:
+  - z-score = 0: Normal (right at average)
+  - z-score = 1: Slightly high (1 std dev above average)
+  - z-score = 2: High (2 std devs above - unusual!)
+  - z-score = 3: Very high (3 std devs - very unusual!)
+  - z-score = 4+: Extremely high (almost certainly watermarked)
+
+  Confidence Explained
+
+  Confidence = "What % of human text scores LOWER than this?"
+
+  Score: 0.45, Z-Score: 3.0
+  Confidence: 99.87%
+
+  This means:
+  → 99.87% of human text scores below 0.45
+  → Only 0.13% scores this high naturally
+  → Very unlikely to be human-written!
+
+  ---
+  🛠️ Common Issues & Solutions
+
+  Issue 1: "Baseline file not found"
+
+  Error: Baseline statistics file not found
+
+  Solution: Run build_baseline.py first!
+  python scripts/build_baseline.py \
+      --corpus data/corpus/ \
+      --output data/baseline/baseline_stats.pkl
+
+  Issue 2: "No files found in corpus"
+
+  Error: No files with extensions ['.txt', '.md'] found in data/corpus/
+
+  Solution: Add text files to the corpus folder
+  # Create folder
+  mkdir -p data/corpus
+
+  # Add files (copy your human-written text files here)
+  cp my_essays/*.txt data/corpus/
+
+  Issue 3: "Empty text provided"
+
+  Error: Empty text provided
+
+  Solution: Make sure your file isn't empty or text isn't blank
+  # Check file has content
+  cat document.txt
+
+  # If using --text, make sure you have quotes
+  python scripts/cli.py --text "Your text here"  # ✓ Correct
+  python scripts/cli.py --text Your text here    # ✗ Wrong
+
+  ---
+  🎯 Quick Cheat Sheet
+
+  | Task             | Command
+      |
+  |------------------|----------------------------------------------------------------------------------------------
+  ----|
+  | Build baseline   | python scripts/build_baseline.py --corpus data/corpus/ --output
+  data/baseline/baseline_stats.pkl |
+  | Analyze text     | python scripts/cli.py --text "Your text"
+      |
+  | Analyze file     | python scripts/cli.py --file document.txt
+      |
+  | See details      | python scripts/cli.py --file document.txt --verbose
+      |
+  | Get JSON         | python scripts/cli.py --file document.txt --json
+      |
+  | Test with sample | python scripts/cli.py --text "The sky darkened. But hope remained."
+      |
+
+  ---
+  📝 Practice Exercise
+
+  Try these commands to learn:
+
+  # 1. Create a test file
+  echo "The cat sat on the mat. The dog ran in the yard." > test.txt
+
+  # 2. Analyze it
+  python scripts/cli.py --file test.txt
+
+  # 3. Try verbose mode
+  python scripts/cli.py --file test.txt --verbose
+
+  # 4. Get JSON output
+  python scripts/cli.py --file test.txt --json
+
+  ---
+  Questions? The scripts are designed to be beginner-friendly with helpful error messages. If something doesn't
+  work, read the error message carefully - it usually tells you exactly what to fix! 🎓

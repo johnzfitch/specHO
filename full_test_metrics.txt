@@ -1,0 +1,51 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.9, pytest-8.4.1, pluggy-1.6.0 -- C:\Users\Zachary\AppData\Local\Programs\Python\Python313\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Zachary\specHO
+configfile: pytest.ini
+testpaths: tests
+plugins: anyio-4.11.0, mock-3.14.1
+collecting ... collected 830 items
+
+tests/test_aggregator.py::TestInitialization::test_default_initialization PASSED [  0%]
+tests/test_aggregator.py::TestInitialization::test_stateless_design PASSED [  0%]
+tests/test_aggregator.py::TestBasicAggregation::test_single_score PASSED [  0%]
+tests/test_aggregator.py::TestBasicAggregation::test_two_scores PASSED   [  0%]
+tests/test_aggregator.py::TestBasicAggregation::test_typical_scores PASSED [  0%]
+tests/test_aggregator.py::TestBasicAggregation::test_low_scores PASSED   [  0%]
+tests/test_aggregator.py::TestBasicAggregation::test_high_scores PASSED  [  0%]
+tests/test_aggregator.py::TestBasicAggregation::test_mixed_scores PASSED [  0%]
+tests/test_aggregator.py::TestBasicAggregation::test_uniform_scores PASSED [  1%]
+tests/test_aggregator.py::TestEmptyInput::test_empty_list_returns_zero PASSED [  1%]
+tests/test_aggregator.py::TestEmptyInput::test_empty_list_emits_warning PASSED [  1%]
+tests/test_aggregator.py::TestEmptyInput::test_warning_message_content PASSED [  1%]
+tests/test_aggregator.py::TestEdgeCases::test_all_zeros PASSED           [  1%]
+tests/test_aggregator.py::TestEdgeCases::test_all_ones PASSED            [  1%]
+tests/test_aggregator.py::TestEdgeCases::test_very_small_scores PASSED   [  1%]
+tests/test_aggregator.py::TestEdgeCases::test_scores_near_one PASSED     [  1%]
+tests/test_aggregator.py::TestEdgeCases::test_extreme_variance PASSED    [  2%]
+tests/test_aggregator.py::TestEdgeCases::test_large_number_of_scores PASSED [  2%]
+tests/test_aggregator.py::TestKnownValues::test_known_value_1 PASSED     [  2%]
+tests/test_aggregator.py::TestKnownValues::test_known_value_2 PASSED     [  2%]
+tests/test_aggregator.py::TestKnownValues::test_known_value_3 PASSED     [  2%]
+tests/test_aggregator.py::TestOutputRange::test_output_bounded_typical PASSED [  2%]
+tests/test_aggregator.py::TestOutputRange::test_output_bounded_mixed PASSED [  2%]
+tests/test_aggregator.py::TestOutputRange::test_output_bounded_extremes PASSED [  2%]
+tests/test_aggregator.py::TestComparisons::test_higher_pairs_higher_document PASSED [  3%]
+tests/test_aggregator.py::TestComparisons::test_ordering_preserved PASSED [  3%]
+tests/test_aggregator.py::TestComparisons::test_mean_sensitive_to_all_scores PASSED [  3%]
+tests/test_aggregator.py::TestGetStatistics::test_statistics_with_typical_scores PASSED [  3%]
+tests/test_aggregator.py::TestGetStatistics::test_statistics_empty_input PASSED [  3%]
+tests/test_aggregator.py::TestGetStatistics::test_statistics_single_score PASSED [  3%]
+tests/test_aggregator.py::TestGetStatistics::test_statistics_uniform_scores PASSED [  3%]
+tests/test_aggregator.py::TestGetStatistics::test_statistics_high_variance PASSED [  3%]
+tests/test_aggregator.py::TestIntegration::test_aggregator_stateless_multiple_calls PASSED [  3%]
+tests/test_aggregator.py::TestIntegration::test_consistent_results PASSED [  4%]
+tests/test_aggregator.py::TestIntegration::test_order_independence PASSED [  4%]
+tests/test_baseline_builder.py::test_initialization PASSED               [  4%]
+tests/test_baseline_builder.py::test_has_required_methods PASSED         [  4%]
+tests/test_baseline_builder.py::test_process_corpus_valid_directory PASSED [  4%]
+tests/test_baseline_builder.py::test_process_corpus_nonexistent_directory PASSED [  4%]
+tests/test_baseline_builder.py::test_process_corpus_empty_directory PASSED [  4%]
+tests/test_baseline_builder.py::test_process_corpus_ignores_non_txt_files PASSED [  4%]
+tests/test_baseline_builder.py::test_process_corpus_returns_statistics_dict 

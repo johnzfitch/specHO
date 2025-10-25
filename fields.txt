@@ -1,0 +1,9 @@
+    clause_detection: 
+	ClauseDetectionConfig = field(default_factory=ClauseDetectionConfig)
+    pair_rules: PairRulesConfig = field(default_factory=PairRulesConfig)
+    zone_extraction: ZoneExtractionConfig = field(default_factory=ZoneExtractionConfig)
+    phonetic_analysis: PhoneticAnalysisConfig = field(default_factory=PhoneticAnalysisConfig)
+    structural_analysis: StructuralAnalysisConfig = field(default_factory=StructuralAnalysisConfig)
+    semantic_analysis: SemanticAnalysisConfig = field(default_factory=SemanticAnalysisConfig)
+    scoring: ScoringConfig = field(default_factory=ScoringConfig)
+    validation: ValidationConfig = field(default_factory=ValidationConfig)
