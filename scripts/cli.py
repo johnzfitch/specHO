@@ -309,9 +309,12 @@ def main():
             import pickle
             Path(baseline_path).parent.mkdir(parents=True, exist_ok=True)
             # Baseline is a simple dict with mean, std, n_documents
+            # Typical human text echo score and standard deviation, based on preliminary analysis.
+            TEMP_HUMAN_MEAN = 0.3   # Chosen as a representative mean echo score for human text.
+            TEMP_HUMAN_STD = 0.15   # Chosen as a representative standard deviation for human text.
             temp_baseline = {
-                'human_mean': 0.3,  # Typical human text echo score
-                'human_std': 0.15,   # Typical std deviation
+                'human_mean': TEMP_HUMAN_MEAN,
+                'human_std': TEMP_HUMAN_STD,
                 'n_documents': 0      # No corpus processed
             }
             with open(baseline_path, 'wb') as f:
