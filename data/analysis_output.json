@@ -1,0 +1,4913 @@
+{
+  "text_length": 5084,
+  "word_count": 835,
+  "sentence_count": 30,
+  "clause_pairs_found": 46,
+  "average_phonetic": 0.2223853235702717,
+  "average_structural": 0.2608695652173913,
+  "average_semantic": 0.1391304347826087,
+  "final_score": 0.20895412942810873,
+  "verdict": "LIKELY_HUMAN",
+  "confidence": 0.3910458705718912,
+  "reasoning": [
+    "Very low echo score (0.209) - consistent with human writing"
+  ],
+  "echo_scores": [
+    {
+      "phonetic": 0.20565464786937449,
+      "structural": 0.3333333333333333,
+      "semantic": 0.0,
+      "combined": 0.18226185914774978,
+      "details": {
+        "clause_a": "And it's easy to understand their appeal: Ask a qu...",
+        "clause_b": "it feels like effortless learning.",
+        "separator": "\u2013",
+        "zone_a": [
+          "polished",
+          "synthesis",
+          "move"
+        ],
+        "zone_b": [
+          "feels",
+          "like",
+          "effortless"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.3641366196734362,
+          "initial_echo": 0.0,
+          "final_echo": 0.2,
+          "best_matches": [
+            [
+              "synthesis",
+              "effortless",
+              "S IH1 N TH AH0 S AH0 S",
+              "EH1 F ER0 T L AH0 S",
+              0.5853658536585367
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "polished",
+              "P AA1 L IH0 SH T"
+            ],
+            [
+              "synthesis",
+              "S IH1 N TH AH0 S AH0 S"
+            ],
+            [
+              "move",
+              "M UW1 V"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "feels",
+              "F IY1 L Z"
+            ],
+            [
+              "like",
+              "L AY1 K"
+            ],
+            [
+              "effortless",
+              "EH1 F ER0 T L AH0 S"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "VERB",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "ADJ"
+          ],
+          "bigrams_a": [
+            [
+              "VERB",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "ADJ"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.3333333333333333
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "communication"
+          ],
+          "zone_b_categories": [
+            "cognitive"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.13118355155454495,
+      "structural": 0.5,
+      "semantic": 0.0,
+      "combined": 0.20247342062181797,
+      "details": {
+        "clause_a": "And it's easy to understand their appeal",
+        "clause_b": "Ask a question, get a polished synthesis and move ...",
+        "separator": ":",
+        "zone_a": [
+          "easy",
+          "understand",
+          "appeal"
+        ],
+        "zone_b": [
+          "ask",
+          "question",
+          "get"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.3279588788863623,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [],
+          "zone_a_phonetics": [
+            [
+              "easy",
+              "IY1 Z IY0"
+            ],
+            [
+              "understand",
+              "AH2 N D ER0 S T AE1 N D"
+            ],
+            [
+              "appeal",
+              "AH0 P IY1 L"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "ask",
+              "AE1 S K"
+            ],
+            [
+              "question",
+              "K W EH1 S CH AH0 N"
+            ],
+            [
+              "get",
+              "G EH1 T"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "ADJ"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "ADJ"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.5
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "learning"
+          ],
+          "zone_b_categories": [],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.1428395061728395,
+      "structural": 0.5,
+      "semantic": 0.2,
+      "combined": 0.2671358024691358,
+      "details": {
+        "clause_a": "And it's easy to underst",
+        "clause_b": "their appeal: Ask a question, get a polished synth...",
+        "separator": "and",
+        "zone_a": [
+          "easy",
+          "underst"
+        ],
+        "zone_b": [
+          "appeal",
+          "ask",
+          "question"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.35709876543209873,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [],
+          "zone_a_phonetics": [
+            [
+              "easy",
+              "IY1 Z IY0"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "appeal",
+              "AH0 P IY1 L"
+            ],
+            [
+              "ask",
+              "AE1 S K"
+            ],
+            [
+              "question",
+              "K W EH1 S CH AH0 N"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "ADJ",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "ADJ",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.5
+        },
+        "semantic": {
+          "method": "no_overlap",
+          "note": "No semantic data"
+        }
+      }
+    },
+    {
+      "phonetic": 0.13232054479672606,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.05292821791869043,
+      "details": {
+        "clause_a": "And it's easy to understand their appeal: Ask a qu...",
+        "clause_b": "move on \u2013 it feels like effortless learning.",
+        "separator": "and",
+        "zone_a": [
+          "get",
+          "polished",
+          "synthesis"
+        ],
+        "zone_b": [
+          "move",
+          "feels",
+          "like"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.33080136199181515,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [],
+          "zone_a_phonetics": [
+            [
+              "get",
+              "G EH1 T"
+            ],
+            [
+              "polished",
+              "P AA1 L IH0 SH T"
+            ],
+            [
+              "synthesis",
+              "S IH1 N TH AH0 S AH0 S"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "move",
+              "M UW1 V"
+            ],
+            [
+              "feels",
+              "F IY1 L Z"
+            ],
+            [
+              "like",
+              "L AY1 K"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "VERB",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "VERB"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "communication"
+          ],
+          "zone_b_categories": [],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.1593443551441488,
+      "structural": 0.0,
+      "semantic": 0.2,
+      "combined": 0.12373774205765951,
+      "details": {
+        "clause_a": "However, a new paper I co-authored offers experime...",
+        "clause_b": "When people rely on large language models to summa...",
+        "separator": ":",
+        "zone_a": [
+          "ease",
+          "come",
+          "cost"
+        ],
+        "zone_b": [
+          "people",
+          "rely",
+          "large"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.39836088786037194,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "cost",
+              "large",
+              "K AA1 S T",
+              "L AA1 R JH",
+              0.631578947368421
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "ease",
+              "IY1 Z"
+            ],
+            [
+              "come",
+              "K AH1 M"
+            ],
+            [
+              "cost",
+              "K AA1 S T"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "people",
+              "P IY1 P AH0 L"
+            ],
+            [
+              "rely",
+              "R IH0 L AY1"
+            ],
+            [
+              "large",
+              "L AA1 R JH"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "ADV",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "ADV"
+            ],
+            [
+              "ADV",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "method": "no_overlap",
+          "note": "No semantic data"
+        }
+      }
+    },
+    {
+      "phonetic": 0.25250057307528573,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.1010002292301143,
+      "details": {
+        "clause_a": "However, a new paper I co-authored offers experime...",
+        "clause_b": "them, they tend to develop shallower knowledge abo...",
+        "separator": "or",
+        "zone_a": [
+          "summarize",
+          "information",
+          "topic"
+        ],
+        "zone_b": [
+          "tend",
+          "develop",
+          "shallower"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.44375143268821426,
+          "initial_echo": 0.25,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "summarize",
+              "shallower",
+              "S AH1 M ER0 AY2 Z",
+              "SH AE1 L OW0 ER0",
+              0.5454545454545454
+            ],
+            [
+              "information",
+              "develop",
+              "IH2 N F ER0 M EY1 SH AH0 N",
+              "D IH0 V EH1 L AH0 P",
+              0.5777777777777777
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "summarize",
+              "S AH1 M ER0 AY2 Z"
+            ],
+            [
+              "information",
+              "IH2 N F ER0 M EY1 SH AH0 N"
+            ],
+            [
+              "topic",
+              "T AA1 P IH0 K"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "tend",
+              "T EH1 N D"
+            ],
+            [
+              "develop",
+              "D IH0 V EH1 L AH0 P"
+            ],
+            [
+              "shallower",
+              "SH AE1 L OW0 ER0"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "VERB",
+            "NOUN",
+            "ADJ"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "ADJ"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "learning"
+          ],
+          "zone_b_categories": [
+            "comparison"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.14924572276073947,
+      "structural": 0.0,
+      "semantic": 0.2,
+      "combined": 0.11969828910429578,
+      "details": {
+        "clause_a": "Co-author Jin Ho Yun",
+        "clause_b": "I, both professors of marketing, reported this fin...",
+        "separator": "and",
+        "zone_a": [
+          "author",
+          "jin",
+          "yun"
+        ],
+        "zone_b": [
+          "professors",
+          "marketing",
+          "reported"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.37311430690184866,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [],
+          "zone_a_phonetics": [
+            [
+              "author",
+              "AO1 TH ER0"
+            ],
+            [
+              "jin",
+              "JH IH1 N"
+            ],
+            [
+              "yun",
+              "Y AH1 N"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "professors",
+              "P R AH0 F EH1 S ER0 Z"
+            ],
+            [
+              "marketing",
+              "M AA1 R K AH0 T IH0 NG"
+            ],
+            [
+              "reported",
+              "R IY2 P AO1 R T IH0 D"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "VERB",
+            "VERB"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "VERB",
+              "VERB"
+            ],
+            [
+              "NOUN",
+              "VERB"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "method": "no_overlap",
+          "note": "No semantic data"
+        }
+      }
+    },
+    {
+      "phonetic": 0.14921409657783408,
+      "structural": 0.3333333333333333,
+      "semantic": 0.0,
+      "combined": 0.1596856386311336,
+      "details": {
+        "clause_a": "Most of the studies used the same basic paradigm: ...",
+        "clause_b": "such as how to grow a vegetable garden",
+        "separator": "\u2013",
+        "zone_a": [
+          "asked",
+          "learn",
+          "topic"
+        ],
+        "zone_b": [
+          "grow",
+          "vegetable",
+          "garden"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.37303524144458516,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "topic",
+              "garden",
+              "T AA1 P IH0 K",
+              "G AA1 R D AH0 N",
+              0.6428571428571428
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "asked",
+              "AE1 S K T"
+            ],
+            [
+              "learn",
+              "L ER1 N"
+            ],
+            [
+              "topic",
+              "T AA1 P IH0 K"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "grow",
+              "G R OW1"
+            ],
+            [
+              "vegetable",
+              "V EH1 JH T AH0 B AH0 L"
+            ],
+            [
+              "garden",
+              "G AA1 R D AH0 N"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "VERB",
+            "NOUN",
+            "ADJ"
+          ],
+          "pos_b": [
+            "NOUN",
+            "ADJ",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "ADJ"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "ADJ"
+            ],
+            [
+              "ADJ",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "ADJ"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.3333333333333333
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "learning"
+          ],
+          "zone_b_categories": [],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.16615267117271929,
+      "structural": 0.0,
+      "semantic": 0.2,
+      "combined": 0.12646106846908772,
+      "details": {
+        "clause_a": "such as how to grow a vegetable garden",
+        "clause_b": "and were randomly assigned to do so by using eithe...",
+        "separator": "\u2013",
+        "zone_a": [
+          "grow",
+          "vegetable",
+          "garden"
+        ],
+        "zone_b": [
+          "randomly",
+          "assigned",
+          "using"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4153816779317982,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "vegetable",
+              "randomly",
+              "V EH1 JH T AH0 B AH0 L",
+              "R AE1 N D AH0 M L IY0",
+              0.5581395348837209
+            ],
+            [
+              "garden",
+              "randomly",
+              "G AA1 R D AH0 N",
+              "R AE1 N D AH0 M L IY0",
+              0.6111111111111112
+            ],
+            [
+              "garden",
+              "using",
+              "G AA1 R D AH0 N",
+              "Y UW1 Z IH0 NG",
+              0.5517241379310345
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "grow",
+              "G R OW1"
+            ],
+            [
+              "vegetable",
+              "V EH1 JH T AH0 B AH0 L"
+            ],
+            [
+              "garden",
+              "G AA1 R D AH0 N"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "randomly",
+              "R AE1 N D AH0 M L IY0"
+            ],
+            [
+              "assigned",
+              "AH0 S AY1 N D"
+            ],
+            [
+              "using",
+              "Y UW1 Z IH0 NG"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "ADJ",
+            "NOUN"
+          ],
+          "pos_b": [
+            "ADV",
+            "VERB",
+            "VERB"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "ADJ"
+            ],
+            [
+              "ADJ",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "ADV",
+              "VERB"
+            ],
+            [
+              "VERB",
+              "VERB"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "method": "no_overlap",
+          "note": "No semantic data"
+        }
+      }
+    },
+    {
+      "phonetic": 0.22621152921152926,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.09048461168461171,
+      "details": {
+        "clause_a": "Most of the studies used the same basic paradigm",
+        "clause_b": "Participants were asked to learn about a topic \u2013 s...",
+        "separator": ":",
+        "zone_a": [
+          "used",
+          "basic",
+          "paradigm"
+        ],
+        "zone_b": [
+          "participants",
+          "asked",
+          "learn"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.37802882302882307,
+          "initial_echo": 0.25,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "basic",
+              "asked",
+              "B EY1 S IH0 K",
+              "AE1 S K T",
+              0.5454545454545454
+            ],
+            [
+              "paradigm",
+              "participants",
+              "P EH1 R AH0 D AY2 M",
+              "P AA0 R T IH1 S AH0 P AH0 N T S",
+              0.52
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "used",
+              "Y UW1 Z D"
+            ],
+            [
+              "basic",
+              "B EY1 S IH0 K"
+            ],
+            [
+              "paradigm",
+              "P EH1 R AH0 D AY2 M"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "participants",
+              "P AA0 R T IH1 S AH0 P AH0 N T S"
+            ],
+            [
+              "asked",
+              "AE1 S K T"
+            ],
+            [
+              "learn",
+              "L ER1 N"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "VERB",
+            "ADJ",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "VERB",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "ADJ",
+              "NOUN"
+            ],
+            [
+              "VERB",
+              "ADJ"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "VERB"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [],
+          "zone_b_categories": [
+            "research",
+            "learning"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.16615267117271929,
+      "structural": 0.0,
+      "semantic": 0.2,
+      "combined": 0.12646106846908772,
+      "details": {
+        "clause_a": "Most of the studies used the same basic paradigm: ...",
+        "clause_b": "were randomly assigned to do so by using either an...",
+        "separator": "and",
+        "zone_a": [
+          "grow",
+          "vegetable",
+          "garden"
+        ],
+        "zone_b": [
+          "randomly",
+          "assigned",
+          "using"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4153816779317982,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "vegetable",
+              "randomly",
+              "V EH1 JH T AH0 B AH0 L",
+              "R AE1 N D AH0 M L IY0",
+              0.5581395348837209
+            ],
+            [
+              "garden",
+              "randomly",
+              "G AA1 R D AH0 N",
+              "R AE1 N D AH0 M L IY0",
+              0.6111111111111112
+            ],
+            [
+              "garden",
+              "using",
+              "G AA1 R D AH0 N",
+              "Y UW1 Z IH0 NG",
+              0.5517241379310345
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "grow",
+              "G R OW1"
+            ],
+            [
+              "vegetable",
+              "V EH1 JH T AH0 B AH0 L"
+            ],
+            [
+              "garden",
+              "G AA1 R D AH0 N"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "randomly",
+              "R AE1 N D AH0 M L IY0"
+            ],
+            [
+              "assigned",
+              "AH0 S AY1 N D"
+            ],
+            [
+              "using",
+              "Y UW1 Z IH0 NG"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "ADJ",
+            "NOUN"
+          ],
+          "pos_b": [
+            "ADV",
+            "VERB",
+            "VERB"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "ADJ"
+            ],
+            [
+              "ADJ",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "ADV",
+              "VERB"
+            ],
+            [
+              "VERB",
+              "VERB"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "method": "no_overlap",
+          "note": "No semantic data"
+        }
+      }
+    },
+    {
+      "phonetic": 0.15113871635610768,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.06045548654244307,
+      "details": {
+        "clause_a": "Most of the studies used the same basic paradigm: ...",
+        "clause_b": "the \"old-fashioned way,\" by navigating links using...",
+        "separator": "or",
+        "zone_a": [
+          "llm",
+          "like",
+          "chatgpt"
+        ],
+        "zone_b": [
+          "old",
+          "fashioned",
+          "way"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.3778467908902692,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [],
+          "zone_a_phonetics": [
+            [
+              "like",
+              "L AY1 K"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "old",
+              "OW1 L D"
+            ],
+            [
+              "fashioned",
+              "F AE1 SH AH0 N D"
+            ],
+            [
+              "way",
+              "W EY1"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "VERB",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "VERB"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "technology",
+            "technology"
+          ],
+          "zone_b_categories": [],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.16456327985739752,
+      "structural": 0.0,
+      "semantic": 1.0,
+      "combined": 0.365825311942959,
+      "details": {
+        "clause_a": "No restrictions were put on how they used the tool...",
+        "clause_b": "they could search on Google as long as they wanted...",
+        "separator": ";",
+        "zone_a": [
+          "put",
+          "used",
+          "tools"
+        ],
+        "zone_b": [
+          "search",
+          "google",
+          "long"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4114081996434938,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "used",
+              "google",
+              "Y UW1 Z D",
+              "G UW1 G AH0 L",
+              0.5454545454545454
+            ],
+            [
+              "tools",
+              "google",
+              "T UW1 L Z",
+              "G UW1 G AH0 L",
+              0.5454545454545454
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "put",
+              "P UH1 T"
+            ],
+            [
+              "used",
+              "Y UW1 Z D"
+            ],
+            [
+              "tools",
+              "T UW1 L Z"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "search",
+              "S ER1 CH"
+            ],
+            [
+              "google",
+              "G UW1 G AH0 L"
+            ],
+            [
+              "long",
+              "L AO1 NG"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "VERB",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "VERB"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "technology"
+          ],
+          "zone_b_categories": [
+            "technology",
+            "technology"
+          ],
+          "matching_categories": [
+            "technology"
+          ],
+          "method": "category",
+          "similarity": 1.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.159242665530698,
+      "structural": 0.5,
+      "semantic": 1.0,
+      "combined": 0.5136970662122792,
+      "details": {
+        "clause_a": "No restrictions were put on how they used the tool...",
+        "clause_b": "could continue to prompt ChatGPT if they felt they...",
+        "separator": "and",
+        "zone_a": [
+          "google",
+          "long",
+          "wanted"
+        ],
+        "zone_b": [
+          "continue",
+          "prompt",
+          "chatgpt"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.398106663826745,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "wanted",
+              "continue",
+              "W AO1 N T IH0 D",
+              "K AH0 N T IH1 N Y UW0",
+              0.5555555555555556
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "google",
+              "G UW1 G AH0 L"
+            ],
+            [
+              "long",
+              "L AO1 NG"
+            ],
+            [
+              "wanted",
+              "W AO1 N T IH0 D"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "continue",
+              "K AH0 N T IH1 N Y UW0"
+            ],
+            [
+              "prompt",
+              "P R AA1 M P T"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "VERB"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "VERB"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.5
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "technology"
+          ],
+          "zone_b_categories": [
+            "technology"
+          ],
+          "matching_categories": [
+            "technology"
+          ],
+          "method": "category",
+          "similarity": 1.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.23434239880060312,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.09373695952024125,
+      "details": {
+        "clause_a": "The data revealed a consistent pattern",
+        "clause_b": "People who learned about a topic through an LLM ve...",
+        "separator": ":",
+        "zone_a": [
+          "revealed",
+          "consistent",
+          "pattern"
+        ],
+        "zone_b": [
+          "people",
+          "learned",
+          "topic"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4358559970015078,
+          "initial_echo": 0.2,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "pattern",
+              "people",
+              "P AE1 T ER0 N",
+              "P IY1 P AH0 L",
+              0.5384615384615384
+            ],
+            [
+              "pattern",
+              "topic",
+              "P AE1 T ER0 N",
+              "T AA1 P IH0 K",
+              0.5384615384615384
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "revealed",
+              "R IH0 V IY1 L D"
+            ],
+            [
+              "consistent",
+              "K AH0 N S IH1 S T AH0 N T"
+            ],
+            [
+              "pattern",
+              "P AE1 T ER0 N"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "people",
+              "P IY1 P AH0 L"
+            ],
+            [
+              "learned",
+              "L ER1 N D"
+            ],
+            [
+              "topic",
+              "T AA1 P IH0 K"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "VERB",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "VERB",
+            "ADJ"
+          ],
+          "bigrams_a": [
+            [
+              "VERB",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "VERB"
+            ],
+            [
+              "VERB",
+              "ADJ"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [],
+          "zone_b_categories": [
+            "learning"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.48609018445275753,
+      "structural": 0.0,
+      "semantic": 1.0,
+      "combined": 0.494436073781103,
+      "details": {
+        "clause_a": "The data revealed a consistent pattern: People who...",
+        "clause_b": "ultimately wrote advice that was shorter, less fac...",
+        "separator": "and",
+        "zone_a": [
+          "subsequently",
+          "writing",
+          "advice"
+        ],
+        "zone_b": [
+          "ultimately",
+          "wrote",
+          "advice"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4652254611318939,
+          "initial_echo": 0.5,
+          "final_echo": 0.5,
+          "best_matches": [
+            [
+              "subsequently",
+              "ultimately",
+              "S AH1 B S AH0 K W AH0 N T L IY0",
+              "AH1 L T AH0 M AH0 T L IY0",
+              0.7857142857142857
+            ],
+            [
+              "advice",
+              "advice",
+              "AE0 D V AY1 S",
+              "AE0 D V AY1 S",
+              1.0
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "subsequently",
+              "S AH1 B S AH0 K W AH0 N T L IY0"
+            ],
+            [
+              "writing",
+              "R AY1 T IH0 NG"
+            ],
+            [
+              "advice",
+              "AE0 D V AY1 S"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "ultimately",
+              "AH1 L T AH0 M AH0 T L IY0"
+            ],
+            [
+              "wrote",
+              "R OW1 T"
+            ],
+            [
+              "advice",
+              "AE0 D V AY1 S"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "ADV",
+            "VERB",
+            "NOUN"
+          ],
+          "pos_b": [
+            "ADV",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "ADV",
+              "VERB"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "ADV",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "communication"
+          ],
+          "zone_b_categories": [
+            "communication"
+          ],
+          "matching_categories": [
+            "communication"
+          ],
+          "method": "category",
+          "similarity": 1.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.17879448075526508,
+      "structural": 0.5,
+      "semantic": 0.0,
+      "combined": 0.22151779230210603,
+      "details": {
+        "clause_a": "The data revealed a consistent pattern: People who...",
+        "clause_b": "more generic.",
+        "separator": "and",
+        "zone_a": [
+          "shorter",
+          "less",
+          "factual"
+        ],
+        "zone_b": [
+          "generic"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4469862018881627,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [],
+          "zone_a_phonetics": [
+            [
+              "shorter",
+              "SH AO1 R T ER0"
+            ],
+            [
+              "less",
+              "L EH1 S"
+            ],
+            [
+              "factual",
+              "F AE1 K CH UW0 AH0 L"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "generic",
+              "JH AH0 N EH1 R IH0 K"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "ADJ",
+            "ADJ"
+          ],
+          "pos_b": [
+            "ADJ"
+          ],
+          "method": "unigram",
+          "similarity": 0.5
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "comparison"
+          ],
+          "zone_b_categories": [],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.38114062829432854,
+      "structural": 0.0,
+      "semantic": 1.0,
+      "combined": 0.45245625131773143,
+      "details": {
+        "clause_a": "In turn, when this advice was presented to an inde...",
+        "clause_b": "they were less likely to adopt it.",
+        "separator": "and",
+        "zone_a": [
+          "informative",
+          "less",
+          "helpful"
+        ],
+        "zone_b": [
+          "less",
+          "likely",
+          "adopt"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.42785157073582125,
+          "initial_echo": 0.5,
+          "final_echo": 0.2,
+          "best_matches": [
+            [
+              "less",
+              "less",
+              "L EH1 S",
+              "L EH1 S",
+              1.0
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "informative",
+              "IH2 N F AO1 R M AH0 T IH0 V"
+            ],
+            [
+              "less",
+              "L EH1 S"
+            ],
+            [
+              "helpful",
+              "HH EH1 L P F AH0 L"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "less",
+              "L EH1 S"
+            ],
+            [
+              "likely",
+              "L AY1 K L IY0"
+            ],
+            [
+              "adopt",
+              "AH0 D AA1 P T"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "ADJ",
+            "ADJ",
+            "ADJ"
+          ],
+          "pos_b": [
+            "ADJ",
+            "ADV",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "ADJ",
+              "ADJ"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "ADJ",
+              "ADV"
+            ],
+            [
+              "ADV",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "comparison"
+          ],
+          "zone_b_categories": [
+            "comparison"
+          ],
+          "matching_categories": [
+            "comparison"
+          ],
+          "method": "category",
+          "similarity": 1.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.1360377893711227,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.05441511574844909,
+      "details": {
+        "clause_a": "For example, one possible reason LLM users wrote b...",
+        "clause_b": "more generic advice is simply that the LLM results...",
+        "separator": "and",
+        "zone_a": [
+          "users",
+          "wrote",
+          "briefer"
+        ],
+        "zone_b": [
+          "generic",
+          "advice",
+          "simply"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.34009447342780674,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [],
+          "zone_a_phonetics": [
+            [
+              "users",
+              "Y UW1 Z ER0 Z"
+            ],
+            [
+              "wrote",
+              "R OW1 T"
+            ],
+            [
+              "briefer",
+              "B R IY1 F ER0"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "generic",
+              "JH AH0 N EH1 R IH0 K"
+            ],
+            [
+              "advice",
+              "AE0 D V AY1 S"
+            ],
+            [
+              "simply",
+              "S IH1 M P L IY0"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "ADJ",
+            "NOUN",
+            "ADV"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "ADV"
+            ],
+            [
+              "ADJ",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [],
+          "zone_b_categories": [
+            "communication"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.32768115942028986,
+      "structural": 0.5,
+      "semantic": 0.0,
+      "combined": 0.28107246376811595,
+      "details": {
+        "clause_a": "To control f",
+        "clause_b": "this possibility, we conducted an experiment where...",
+        "separator": "or",
+        "zone_a": [
+          "control"
+        ],
+        "zone_b": [
+          "possibility",
+          "conducted",
+          "experiment"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.44420289855072465,
+          "initial_echo": 0.5,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "control",
+              "conducted",
+              "K AH0 N T R OW1 L",
+              "K AH0 N D AH1 K T AH0 D",
+              0.55
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "control",
+              "K AH0 N T R OW1 L"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "possibility",
+              "P AA2 S AH0 B IH1 L AH0 T IY2"
+            ],
+            [
+              "conducted",
+              "K AH0 N D AH1 K T AH0 D"
+            ],
+            [
+              "experiment",
+              "IH0 K S P EH1 R AH0 M AH0 N T"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "VERB",
+            "NOUN"
+          ],
+          "method": "unigram",
+          "similarity": 0.5
+        },
+        "semantic": {
+          "zone_a_categories": [],
+          "zone_b_categories": [
+            "research"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.1933508562325767,
+      "structural": 1.0,
+      "semantic": 0.5,
+      "combined": 0.5273403424930306,
+      "details": {
+        "clause_a": "To control for this possibility, we conducted an e...",
+        "clause_b": "ChatGPT searches.",
+        "separator": "and",
+        "zone_a": [
+          "facts",
+          "results",
+          "google"
+        ],
+        "zone_b": [
+          "chatgpt",
+          "searches"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4833771405814417,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "google",
+              "searches",
+              "G UW1 G AH0 L",
+              "S ER1 CH IH0 Z",
+              0.5185185185185186
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "facts",
+              "F AE1 K T S"
+            ],
+            [
+              "results",
+              "R IH0 Z AH1 L T S"
+            ],
+            [
+              "google",
+              "G UW1 G AH0 L"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "searches",
+              "S ER1 CH IH0 Z"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 1.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "research",
+            "technology"
+          ],
+          "zone_b_categories": [
+            "technology",
+            "technology"
+          ],
+          "matching_categories": [
+            "technology"
+          ],
+          "method": "category",
+          "similarity": 0.5
+        }
+      }
+    },
+    {
+      "phonetic": 0.2166504105213783,
+      "structural": 0.5,
+      "semantic": 0.0,
+      "combined": 0.23666016420855132,
+      "details": {
+        "clause_a": "Likewise, in another experiment we held constant t...",
+        "clause_b": "varied whether participants learned from standard ...",
+        "separator": "and",
+        "zone_a": [
+          "search",
+          "platform",
+          "google"
+        ],
+        "zone_b": [
+          "varied",
+          "whether",
+          "participants"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.3916260263034457,
+          "initial_echo": 0.2,
+          "final_echo": 0.0,
+          "best_matches": [],
+          "zone_a_phonetics": [
+            [
+              "search",
+              "S ER1 CH"
+            ],
+            [
+              "platform",
+              "P L AE1 T F AO2 R M"
+            ],
+            [
+              "google",
+              "G UW1 G AH0 L"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "varied",
+              "V EH1 R IY0 D"
+            ],
+            [
+              "whether",
+              "W EH1 DH ER0"
+            ],
+            [
+              "participants",
+              "P AA0 R T IH1 S AH0 P AH0 N T S"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "VERB",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "VERB",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.5
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "technology",
+            "technology"
+          ],
+          "zone_b_categories": [
+            "research"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.3216726767335286,
+      "structural": 1.0,
+      "semantic": 0.5,
+      "combined": 0.5786690706934114,
+      "details": {
+        "clause_a": "Likewise, in another experiment we held constant t...",
+        "clause_b": "Google's AI Overview feature.",
+        "separator": "or",
+        "zone_a": [
+          "standard",
+          "google",
+          "results"
+        ],
+        "zone_b": [
+          "google",
+          "overview",
+          "feature"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4666816918338216,
+          "initial_echo": 0.25,
+          "final_echo": 0.2,
+          "best_matches": [
+            [
+              "google",
+              "google",
+              "G UW1 G AH0 L",
+              "G UW1 G AH0 L",
+              1.0
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "standard",
+              "S T AE1 N D ER0 D"
+            ],
+            [
+              "google",
+              "G UW1 G AH0 L"
+            ],
+            [
+              "results",
+              "R IH0 Z AH1 L T S"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "google",
+              "G UW1 G AH0 L"
+            ],
+            [
+              "overview",
+              "OW1 V ER0 V Y UW2"
+            ],
+            [
+              "feature",
+              "F IY1 CH ER0"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 1.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "technology",
+            "research"
+          ],
+          "zone_b_categories": [
+            "technology"
+          ],
+          "matching_categories": [
+            "technology"
+          ],
+          "method": "category",
+          "similarity": 0.5
+        }
+      }
+    },
+    {
+      "phonetic": 0.31017443249701315,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.12406977299880527,
+      "details": {
+        "clause_a": "The findings confirmed that, even when holding the...",
+        "clause_b": "platform constant, learning from synthesized LLM r...",
+        "separator": "and",
+        "zone_a": [
+          "confirmed",
+          "holding",
+          "facts"
+        ],
+        "zone_b": [
+          "platform",
+          "constant",
+          "learning"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4754360812425329,
+          "initial_echo": 0.2,
+          "final_echo": 0.2,
+          "best_matches": [
+            [
+              "holding",
+              "learning",
+              "HH OW1 L D IH0 NG",
+              "L ER1 N IH0 NG",
+              0.6451612903225806
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "confirmed",
+              "K AH0 N F ER1 M D"
+            ],
+            [
+              "holding",
+              "HH OW1 L D IH0 NG"
+            ],
+            [
+              "facts",
+              "F AE1 K T S"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "platform",
+              "P L AE1 T F AO2 R M"
+            ],
+            [
+              "constant",
+              "K AA1 N S T AH0 N T"
+            ],
+            [
+              "learning",
+              "L ER1 N IH0 NG"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "VERB",
+            "VERB",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "VERB"
+          ],
+          "bigrams_a": [
+            [
+              "VERB",
+              "VERB"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "VERB"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [],
+          "zone_b_categories": [
+            "learning"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.28143703642641393,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.11257481457056558,
+      "details": {
+        "clause_a": "The findings confirmed that, even when holding the...",
+        "clause_b": "synthesizing information for oneself via standard ...",
+        "separator": "and",
+        "zone_a": [
+          "compared",
+          "gathering",
+          "interpreting"
+        ],
+        "zone_b": [
+          "synthesizing",
+          "information",
+          "oneself"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.5160925910660348,
+          "initial_echo": 0.0,
+          "final_echo": 0.25,
+          "best_matches": [
+            [
+              "compared",
+              "oneself",
+              "K AH0 M P EH1 R D",
+              "W AH2 N S EH1 L F",
+              0.6470588235294117
+            ],
+            [
+              "gathering",
+              "synthesizing",
+              "G AE1 DH ER0 IH0 NG",
+              "S IH1 N TH AH0 S AY2 Z IH0 NG",
+              0.5416666666666667
+            ],
+            [
+              "interpreting",
+              "synthesizing",
+              "IH1 N T ER0 P R EH2 T IH0 NG",
+              "S IH1 N TH AH0 S AY2 Z IH0 NG",
+              0.7017543859649122
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "compared",
+              "K AH0 M P EH1 R D"
+            ],
+            [
+              "gathering",
+              "G AE1 DH ER0 IH0 NG"
+            ],
+            [
+              "interpreting",
+              "IH1 N T ER0 P R EH2 T IH0 NG"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "synthesizing",
+              "S IH1 N TH AH0 S AY2 Z IH0 NG"
+            ],
+            [
+              "information",
+              "IH2 N F ER0 M EY1 SH AH0 N"
+            ],
+            [
+              "oneself",
+              "W AH2 N S EH1 L F"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "VERB",
+            "VERB",
+            "VERB"
+          ],
+          "pos_b": [
+            "VERB",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "VERB",
+              "VERB"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "VERB",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "comparison"
+          ],
+          "zone_b_categories": [
+            "learning"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.25287761747520854,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.10115104699008343,
+      "details": {
+        "clause_a": "The findings confirmed that, even when holding the...",
+        "clause_b": "oneself via standard web links.",
+        "separator": "or",
+        "zone_a": [
+          "interpreting",
+          "synthesizing",
+          "information"
+        ],
+        "zone_b": [
+          "oneself",
+          "via",
+          "standard"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.38219404368802135,
+          "initial_echo": 0.3333333333333333,
+          "final_echo": 0.0,
+          "best_matches": [],
+          "zone_a_phonetics": [
+            [
+              "interpreting",
+              "IH1 N T ER0 P R EH2 T IH0 NG"
+            ],
+            [
+              "synthesizing",
+              "S IH1 N TH AH0 S AY2 Z IH0 NG"
+            ],
+            [
+              "information",
+              "IH2 N F ER0 M EY1 SH AH0 N"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "oneself",
+              "W AH2 N S EH1 L F"
+            ],
+            [
+              "via",
+              "V AY1 AH0"
+            ],
+            [
+              "standard",
+              "S T AE1 N D ER0 D"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "VERB",
+            "VERB",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "VERB",
+              "VERB"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "learning"
+          ],
+          "zone_b_categories": [],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.17164303742081521,
+      "structural": 0.5,
+      "semantic": 0.0,
+      "combined": 0.21865721496832607,
+      "details": {
+        "clause_a": "When we learn about a topic through Google search,...",
+        "clause_b": "We must navigate different web links, read informa...",
+        "separator": ":",
+        "zone_a": [
+          "face",
+          "much",
+          "friction"
+        ],
+        "zone_b": [
+          "navigate",
+          "different",
+          "web"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.429107593552038,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "face",
+              "web",
+              "F EY1 S",
+              "W EH1 B",
+              0.5714285714285714
+            ],
+            [
+              "much",
+              "web",
+              "M AH1 CH",
+              "W EH1 B",
+              0.5333333333333333
+            ],
+            [
+              "friction",
+              "different",
+              "F R IH1 K SH AH0 N",
+              "D IH1 F ER0 AH0 N T",
+              0.6486486486486487
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "face",
+              "F EY1 S"
+            ],
+            [
+              "much",
+              "M AH1 CH"
+            ],
+            [
+              "friction",
+              "F R IH1 K SH AH0 N"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "navigate",
+              "N AE1 V AH0 G EY2 T"
+            ],
+            [
+              "different",
+              "D IH1 F ER0 AH0 N T"
+            ],
+            [
+              "web",
+              "W EH1 B"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "VERB",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "VERB",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.5
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "cognitive"
+          ],
+          "zone_b_categories": [],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.3383787412008503,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.13535149648034014,
+      "details": {
+        "clause_a": "When we learn about a topic through Google search,...",
+        "clause_b": "interpret and synthesize them ourselves.",
+        "separator": "and",
+        "zone_a": [
+          "read",
+          "informational",
+          "sources"
+        ],
+        "zone_b": [
+          "interpret",
+          "synthesize",
+          "ourselves"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.47094685300212585,
+          "initial_echo": 0.5,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "informational",
+              "interpret",
+              "IH2 N F ER0 M EY1 SH AH0 N AH0 L",
+              "IH2 N T ER1 P R AH0 T",
+              0.6415094339622642
+            ],
+            [
+              "informational",
+              "synthesize",
+              "IH2 N F ER0 M EY1 SH AH0 N AH0 L",
+              "S IH1 N TH AH0 S AY2 Z",
+              0.5185185185185186
+            ],
+            [
+              "sources",
+              "synthesize",
+              "S AO1 R S AH0 Z",
+              "S IH1 N TH AH0 S AY2 Z",
+              0.5945945945945945
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "read",
+              "R EH1 D"
+            ],
+            [
+              "informational",
+              "IH2 N F ER0 M EY1 SH AH0 N AH0 L"
+            ],
+            [
+              "sources",
+              "S AO1 R S AH0 Z"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "interpret",
+              "IH2 N T ER1 P R AH0 T"
+            ],
+            [
+              "synthesize",
+              "S IH1 N TH AH0 S AY2 Z"
+            ],
+            [
+              "ourselves",
+              "AW0 ER0 S EH1 L V Z"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "ADJ",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "VERB",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "ADJ"
+            ],
+            [
+              "ADJ",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "VERB"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "communication",
+            "learning",
+            "communication"
+          ],
+          "zone_b_categories": [],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.4990350222543565,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.1996140089017426,
+      "details": {
+        "clause_a": "When we learn about a topic through Google search,...",
+        "clause_b": "synthesize them ourselves.",
+        "separator": "and",
+        "zone_a": [
+          "informational",
+          "sources",
+          "interpret"
+        ],
+        "zone_b": [
+          "synthesize",
+          "ourselves"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.49758755563589124,
+          "initial_echo": 1.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "informational",
+              "synthesize",
+              "IH2 N F ER0 M EY1 SH AH0 N AH0 L",
+              "S IH1 N TH AH0 S AY2 Z",
+              0.5185185185185186
+            ],
+            [
+              "sources",
+              "synthesize",
+              "S AO1 R S AH0 Z",
+              "S IH1 N TH AH0 S AY2 Z",
+              0.5945945945945945
+            ],
+            [
+              "sources",
+              "ourselves",
+              "S AO1 R S AH0 Z",
+              "AW0 ER0 S EH1 L V Z",
+              0.5294117647058824
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "informational",
+              "IH2 N F ER0 M EY1 SH AH0 N AH0 L"
+            ],
+            [
+              "sources",
+              "S AO1 R S AH0 Z"
+            ],
+            [
+              "interpret",
+              "IH2 N T ER1 P R AH0 T"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "synthesize",
+              "S IH1 N TH AH0 S AY2 Z"
+            ],
+            [
+              "ourselves",
+              "AW0 ER0 S EH1 L V Z"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "ADJ",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "VERB",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "ADJ",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "learning",
+            "communication"
+          ],
+          "zone_b_categories": [],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.2750305463483758,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.11001221853935034,
+      "details": {
+        "clause_a": "Rather, our message is that people simply need to ...",
+        "clause_b": "which starts by understanding the domains wherein ...",
+        "separator": "\u2013",
+        "zone_a": [
+          "strategic",
+          "users",
+          "llms"
+        ],
+        "zone_b": [
+          "starts",
+          "understanding",
+          "domains"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4375763658709395,
+          "initial_echo": 0.3333333333333333,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "strategic",
+              "understanding",
+              "S T R AH0 T IY1 JH IH0 K",
+              "AH2 N D ER0 S T AE1 N D IH0 NG",
+              0.5185185185185186
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "strategic",
+              "S T R AH0 T IY1 JH IH0 K"
+            ],
+            [
+              "users",
+              "Y UW1 Z ER0 Z"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "starts",
+              "S T AA1 R T S"
+            ],
+            [
+              "understanding",
+              "AH2 N D ER0 S T AE1 N D IH0 NG"
+            ],
+            [
+              "domains",
+              "D OW0 M EY1 N Z"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "ADJ",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "VERB",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "ADJ",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "VERB"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "technology"
+          ],
+          "zone_b_categories": [
+            "learning"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.22292718276589246,
+      "structural": 0.3333333333333333,
+      "semantic": 0.0,
+      "combined": 0.189170873106357,
+      "details": {
+        "clause_a": "Rather, our message is that people simply need to ...",
+        "clause_b": "more strategic users of LLMs \u2013 which starts by und...",
+        "separator": "or",
+        "zone_a": [
+          "need",
+          "become",
+          "smarter"
+        ],
+        "zone_b": [
+          "strategic",
+          "users",
+          "llms"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.3698179569147311,
+          "initial_echo": 0.25,
+          "final_echo": 0.0,
+          "best_matches": [],
+          "zone_a_phonetics": [
+            [
+              "need",
+              "N IY1 D"
+            ],
+            [
+              "become",
+              "B IH0 K AH1 M"
+            ],
+            [
+              "smarter",
+              "S M AA1 R T ER0"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "strategic",
+              "S T R AH0 T IY1 JH IH0 K"
+            ],
+            [
+              "users",
+              "Y UW1 Z ER0 Z"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "VERB",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "ADJ",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "VERB",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "ADJ",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.3333333333333333
+        },
+        "semantic": {
+          "zone_a_categories": [],
+          "zone_b_categories": [
+            "technology"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.15166856535277587,
+      "structural": 0.5,
+      "semantic": 0.0,
+      "combined": 0.21066742614111034,
+      "details": {
+        "clause_a": "But if your aim is to develop deep",
+        "clause_b": "generalizable knowledge in an area, relying on LLM...",
+        "separator": "and",
+        "zone_a": [
+          "aim",
+          "develop",
+          "deep"
+        ],
+        "zone_b": [
+          "generalizable",
+          "knowledge",
+          "area"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.37917141338193966,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "develop",
+              "knowledge",
+              "D IH0 V EH1 L AH0 P",
+              "N AA1 L AH0 JH",
+              0.5454545454545454
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "aim",
+              "EY1 M"
+            ],
+            [
+              "develop",
+              "D IH0 V EH1 L AH0 P"
+            ],
+            [
+              "deep",
+              "D IY1 P"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "knowledge",
+              "N AA1 L AH0 JH"
+            ],
+            [
+              "area",
+              "EH1 R IY0 AH0"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "ADJ",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "ADJ",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.5
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "technology",
+            "comparison"
+          ],
+          "zone_b_categories": [
+            "learning"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.30665850131978223,
+      "structural": 0.5,
+      "semantic": 0.0,
+      "combined": 0.2726634005279129,
+      "details": {
+        "clause_a": "As part of my research on the psychology of new te...",
+        "clause_b": "new media, I am also interested in whether it's po...",
+        "separator": "and",
+        "zone_a": [
+          "psychology",
+          "new",
+          "technology"
+        ],
+        "zone_b": [
+          "new",
+          "media",
+          "interested"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.3916462532994555,
+          "initial_echo": 0.25,
+          "final_echo": 0.25,
+          "best_matches": [
+            [
+              "new",
+              "new",
+              "N UW1",
+              "N UW1",
+              1.0
+            ],
+            [
+              "technology",
+              "interested",
+              "T EH0 K N AA1 L AH0 JH IY0",
+              "IH1 N T R AH0 S T IH0 D",
+              0.5306122448979591
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "psychology",
+              "S AY0 K AA1 L AH0 JH IY0"
+            ],
+            [
+              "new",
+              "N UW1"
+            ],
+            [
+              "technology",
+              "T EH0 K N AA1 L AH0 JH IY0"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "new",
+              "N UW1"
+            ],
+            [
+              "media",
+              "M IY1 D IY0 AH0"
+            ],
+            [
+              "interested",
+              "IH1 N T R AH0 S T IH0 D"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "VERB"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "VERB"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.5
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "technology"
+          ],
+          "zone_b_categories": [],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.31615746589158206,
+      "structural": 0.3333333333333333,
+      "semantic": 0.0,
+      "combined": 0.2264629863566328,
+      "details": {
+        "clause_a": "Building on this, in my future research I plan to ...",
+        "clause_b": "specifically, examining which types of guardrails ...",
+        "separator": "\u2013",
+        "zone_a": [
+          "frictions",
+          "learning",
+          "tasks"
+        ],
+        "zone_b": [
+          "specifically",
+          "examining",
+          "types"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4528936647289551,
+          "initial_echo": 0.25,
+          "final_echo": 0.2,
+          "best_matches": [
+            [
+              "learning",
+              "examining",
+              "L ER1 N IH0 NG",
+              "IH0 G Z AE1 M IH0 N IH0 NG",
+              0.6
+            ],
+            [
+              "tasks",
+              "types",
+              "T AE1 S K S",
+              "T AY1 P S",
+              0.7
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "frictions",
+              "F R IH1 K SH AH0 N Z"
+            ],
+            [
+              "learning",
+              "L ER1 N IH0 NG"
+            ],
+            [
+              "tasks",
+              "T AE1 S K S"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "specifically",
+              "S P AH0 S IH1 F IH0 K L IY0"
+            ],
+            [
+              "examining",
+              "IH0 G Z AE1 M IH0 N IH0 NG"
+            ],
+            [
+              "types",
+              "T AY1 P S"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "VERB",
+            "NOUN"
+          ],
+          "pos_b": [
+            "ADV",
+            "VERB",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "VERB"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "ADV",
+              "VERB"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.3333333333333333
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "cognitive",
+            "learning"
+          ],
+          "zone_b_categories": [],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.16810355026443022,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.0672414201057721,
+      "details": {
+        "clause_a": "Building on this, in my future research I plan to ...",
+        "clause_b": "learning tasks \u2013 specifically, examining which typ...",
+        "separator": "or",
+        "zone_a": [
+          "impose",
+          "healthy",
+          "frictions"
+        ],
+        "zone_b": [
+          "learning",
+          "tasks",
+          "specifically"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4202588756610755,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "healthy",
+              "specifically",
+              "HH EH1 L TH IY0",
+              "S P AH0 S IH1 F IH0 K L IY0",
+              0.5238095238095238
+            ],
+            [
+              "frictions",
+              "learning",
+              "F R IH1 K SH AH0 N Z",
+              "L ER1 N IH0 NG",
+              0.5294117647058824
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "impose",
+              "IH2 M P OW1 Z"
+            ],
+            [
+              "healthy",
+              "HH EH1 L TH IY0"
+            ],
+            [
+              "frictions",
+              "F R IH1 K SH AH0 N Z"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "learning",
+              "L ER1 N IH0 NG"
+            ],
+            [
+              "tasks",
+              "T AE1 S K S"
+            ],
+            [
+              "specifically",
+              "S P AH0 S IH1 F IH0 K L IY0"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "VERB",
+            "NOUN",
+            "ADV"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "ADV"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "cognitive"
+          ],
+          "zone_b_categories": [
+            "learning"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.22321015104717593,
+      "structural": 0.3333333333333333,
+      "semantic": 0.2,
+      "combined": 0.24928406041887036,
+      "details": {
+        "clause_a": "Building on this, in my future research I plan to ...",
+        "clause_b": "speed bumps most successfully motivate users to ac...",
+        "separator": "or",
+        "zone_a": [
+          "examining",
+          "types",
+          "guardrails"
+        ],
+        "zone_b": [
+          "speed",
+          "bumps",
+          "successfully"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4080253776179398,
+          "initial_echo": 0.0,
+          "final_echo": 0.2,
+          "best_matches": [
+            [
+              "examining",
+              "successfully",
+              "IH0 G Z AE1 M IH0 N IH0 NG",
+              "S AH0 K S EH1 S F AH0 L IY0",
+              0.5660377358490566
+            ],
+            [
+              "types",
+              "bumps",
+              "T AY1 P S",
+              "B AH1 M P S",
+              0.7
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "examining",
+              "IH0 G Z AE1 M IH0 N IH0 NG"
+            ],
+            [
+              "types",
+              "T AY1 P S"
+            ],
+            [
+              "guardrails",
+              "G AA1 R D R EY2 L Z"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "speed",
+              "S P IY1 D"
+            ],
+            [
+              "bumps",
+              "B AH1 M P S"
+            ],
+            [
+              "successfully",
+              "S AH0 K S EH1 S F AH0 L IY0"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "VERB",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "VERB",
+            "NOUN",
+            "ADV"
+          ],
+          "bigrams_a": [
+            [
+              "VERB",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "ADV"
+            ],
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "VERB",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.3333333333333333
+        },
+        "semantic": {
+          "method": "no_overlap",
+          "note": "No semantic data"
+        }
+      }
+    },
+    {
+      "phonetic": 0.20172295584900632,
+      "structural": 1.0,
+      "semantic": 0.0,
+      "combined": 0.3806891823396025,
+      "details": {
+        "clause_a": "Such tools would seem particularly critical in sec...",
+        "clause_b": "challenge for educators is how best to equip stude...",
+        "separator": "or",
+        "zone_a": [
+          "secondary",
+          "education",
+          "maj"
+        ],
+        "zone_b": [
+          "challenge",
+          "educators",
+          "best"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.5043073896225158,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "secondary",
+              "challenge",
+              "S EH1 K AH0 N D EH2 R IY0",
+              "CH AE1 L AH0 N JH",
+              0.5714285714285714
+            ],
+            [
+              "secondary",
+              "educators",
+              "S EH1 K AH0 N D EH2 R IY0",
+              "EH1 JH AH0 K EY2 T ER0 Z",
+              0.6122448979591837
+            ],
+            [
+              "education",
+              "challenge",
+              "EH2 JH AH0 K EY1 SH AH0 N",
+              "CH AE1 L AH0 N JH",
+              0.5714285714285714
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "secondary",
+              "S EH1 K AH0 N D EH2 R IY0"
+            ],
+            [
+              "education",
+              "EH2 JH AH0 K EY1 SH AH0 N"
+            ],
+            [
+              "maj",
+              "M AE1 JH"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "challenge",
+              "CH AE1 L AH0 N JH"
+            ],
+            [
+              "educators",
+              "EH1 JH AH0 K EY2 T ER0 Z"
+            ],
+            [
+              "best",
+              "B EH1 S T"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 1.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "learning"
+          ],
+          "zone_b_categories": [],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.1790452416289031,
+      "structural": 1.0,
+      "semantic": 0.0,
+      "combined": 0.3716180966515612,
+      "details": {
+        "clause_a": "Such tools would seem particularly critical in sec...",
+        "clause_b": "educators is how best to equip students to develop...",
+        "separator": "or",
+        "zone_a": [
+          "education",
+          "major",
+          "challenge"
+        ],
+        "zone_b": [
+          "educators",
+          "best",
+          "equip"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4476131040722577,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "education",
+              "educators",
+              "EH2 JH AH0 K EY1 SH AH0 N",
+              "EH1 JH AH0 K EY2 T ER0 Z",
+              0.7346938775510203
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "education",
+              "EH2 JH AH0 K EY1 SH AH0 N"
+            ],
+            [
+              "major",
+              "M EY1 JH ER0"
+            ],
+            [
+              "challenge",
+              "CH AE1 L AH0 N JH"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "educators",
+              "EH1 JH AH0 K EY2 T ER0 Z"
+            ],
+            [
+              "best",
+              "B EH1 S T"
+            ],
+            [
+              "equip",
+              "IH0 K W IH1 P"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 1.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "learning"
+          ],
+          "zone_b_categories": [],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.1577829577829578,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.06311318311318313,
+      "details": {
+        "clause_a": "Such tools would seem particularly critical in sec...",
+        "clause_b": "math skills while also preparing for a real world ...",
+        "separator": "and",
+        "zone_a": [
+          "foundational",
+          "reading",
+          "writing"
+        ],
+        "zone_b": [
+          "math",
+          "skills",
+          "while"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.3944573944573945,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "writing",
+              "math",
+              "R AY1 T IH0 NG",
+              "M AE1 TH",
+              0.5454545454545454
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "foundational",
+              "F AW0 N D EY1 SH AH0 N AH0 L"
+            ],
+            [
+              "reading",
+              "R IY1 D IH0 NG"
+            ],
+            [
+              "writing",
+              "R AY1 T IH0 NG"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "math",
+              "M AE1 TH"
+            ],
+            [
+              "skills",
+              "S K IH1 L Z"
+            ],
+            [
+              "while",
+              "W AY1 L"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "ADJ",
+            "VERB",
+            "VERB"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "VERB",
+              "VERB"
+            ],
+            [
+              "ADJ",
+              "VERB"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "communication"
+          ],
+          "zone_b_categories": [
+            "learning"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.2837476678967224,
+      "structural": 0.3333333333333333,
+      "semantic": 0.0,
+      "combined": 0.21349906715868894,
+      "details": {
+        "clause_a": "Such tools would seem particularly critical in sec...",
+        "clause_b": "a real world where LLMs are likely to be an integr...",
+        "separator": "or",
+        "zone_a": [
+          "skills",
+          "while",
+          "preparing"
+        ],
+        "zone_b": [
+          "real",
+          "world",
+          "llms"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.521869169741806,
+          "initial_echo": 0.25,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "skills",
+              "real",
+              "S K IH1 L Z",
+              "R IY1 L",
+              0.5555555555555556
+            ],
+            [
+              "while",
+              "real",
+              "W AY1 L",
+              "R IY1 L",
+              0.7142857142857143
+            ],
+            [
+              "while",
+              "world",
+              "W AY1 L",
+              "W ER1 L D",
+              0.625
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "skills",
+              "S K IH1 L Z"
+            ],
+            [
+              "while",
+              "W AY1 L"
+            ],
+            [
+              "preparing",
+              "P R IY0 P EH1 R IH0 NG"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "real",
+              "R IY1 L"
+            ],
+            [
+              "world",
+              "W ER1 L D"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "VERB"
+          ],
+          "pos_b": [
+            "ADJ",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "VERB"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "ADJ",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.3333333333333333
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "learning"
+          ],
+          "zone_b_categories": [
+            "technology"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.14090319355967348,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.0563612774238694,
+      "details": {
+        "clause_a": "And it's easy to understand their appeal: Ask a qu...",
+        "clause_b": "However, a new paper I co-authored offers experime...",
+        "separator": "however",
+        "zone_a": [
+          "like",
+          "effortless",
+          "learning"
+        ],
+        "zone_b": [
+          "new",
+          "paper",
+          "authored"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.35225798389918367,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [],
+          "zone_a_phonetics": [
+            [
+              "like",
+              "L AY1 K"
+            ],
+            [
+              "effortless",
+              "EH1 F ER0 T L AH0 S"
+            ],
+            [
+              "learning",
+              "L ER1 N IH0 NG"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "new",
+              "N UW1"
+            ],
+            [
+              "paper",
+              "P EY1 P ER0"
+            ],
+            [
+              "authored",
+              "AO1 TH ER0 D"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "ADJ",
+            "VERB"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "VERB"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "ADJ"
+            ],
+            [
+              "ADJ",
+              "VERB"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "VERB"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "cognitive",
+            "learning"
+          ],
+          "zone_b_categories": [
+            "research"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.1648217377416344,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.06592869509665376,
+      "details": {
+        "clause_a": "The data revealed a consistent pattern: People who...",
+        "clause_b": "In turn, when this advice was presented to an inde...",
+        "separator": "in turn",
+        "zone_a": [
+          "less",
+          "factual",
+          "generic"
+        ],
+        "zone_b": [
+          "turn",
+          "advice",
+          "presented"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.41205434435408594,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "less",
+              "turn",
+              "L EH1 S",
+              "T ER1 N",
+              0.5714285714285714
+            ],
+            [
+              "generic",
+              "presented",
+              "JH AH0 N EH1 R IH0 K",
+              "P R IY0 Z EH1 N T IH0 D",
+              0.6046511627906976
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "less",
+              "L EH1 S"
+            ],
+            [
+              "factual",
+              "F AE1 K CH UW0 AH0 L"
+            ],
+            [
+              "generic",
+              "JH AH0 N EH1 R IH0 K"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "turn",
+              "T ER1 N"
+            ],
+            [
+              "advice",
+              "AE0 D V AY1 S"
+            ],
+            [
+              "presented",
+              "P R IY0 Z EH1 N T IH0 D"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "ADJ",
+            "ADJ",
+            "ADJ"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "VERB"
+          ],
+          "bigrams_a": [
+            [
+              "ADJ",
+              "ADJ"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "VERB"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "comparison"
+          ],
+          "zone_b_categories": [
+            "communication"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.1702307364691266,
+      "structural": 0.5,
+      "semantic": 0.2,
+      "combined": 0.2780922945876506,
+      "details": {
+        "clause_a": "We found these differences to be robust across a v...",
+        "clause_b": "For example, one possible reason LLM users wrote b...",
+        "separator": "for example",
+        "zone_a": [
+          "across",
+          "variety",
+          "contexts"
+        ],
+        "zone_b": [
+          "example",
+          "one",
+          "possible"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.42557684117281647,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "variety",
+              "possible",
+              "V ER0 AY1 AH0 T IY0",
+              "P AA1 S AH0 B AH0 L",
+              0.5263157894736843
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "across",
+              "AH0 K R AO1 S"
+            ],
+            [
+              "variety",
+              "V ER0 AY1 AH0 T IY0"
+            ],
+            [
+              "contexts",
+              "K AA1 N T EH2 K S T S"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "example",
+              "IH0 G Z AE1 M P AH0 L"
+            ],
+            [
+              "one",
+              "W AH1 N"
+            ],
+            [
+              "possible",
+              "P AA1 S AH0 B AH0 L"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "ADJ"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "ADJ"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.5
+        },
+        "semantic": {
+          "method": "no_overlap",
+          "note": "No semantic data"
+        }
+      }
+    },
+    {
+      "phonetic": 0.1622173852165833,
+      "structural": 0.5,
+      "semantic": 0.0,
+      "combined": 0.21488695408663333,
+      "details": {
+        "clause_a": "To control for this possibility, we conducted an e...",
+        "clause_b": "Likewise, in another experiment we held constant t...",
+        "separator": "likewise",
+        "zone_a": [
+          "google",
+          "chatgpt",
+          "searches"
+        ],
+        "zone_b": [
+          "likewise",
+          "another",
+          "experiment"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4055434630414582,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [],
+          "zone_a_phonetics": [
+            [
+              "google",
+              "G UW1 G AH0 L"
+            ],
+            [
+              "searches",
+              "S ER1 CH IH0 Z"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "likewise",
+              "L AY1 K W AY2 Z"
+            ],
+            [
+              "another",
+              "AH0 N AH1 DH ER0"
+            ],
+            [
+              "experiment",
+              "IH0 K S P EH1 R AH0 M AH0 N T"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "VERB",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "VERB",
+              "NOUN"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.5
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "technology",
+            "technology",
+            "technology"
+          ],
+          "zone_b_categories": [
+            "research"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.17639841639841644,
+      "structural": 0.0,
+      "semantic": 0.0,
+      "combined": 0.07055936655936658,
+      "details": {
+        "clause_a": "But with LLMs, this entire process is done on the ...",
+        "clause_b": "To be clear, we do not believe the solution to the...",
+        "separator": "to be clear",
+        "zone_a": [
+          "active",
+          "passive",
+          "process"
+        ],
+        "zone_b": [
+          "clear",
+          "believe",
+          "solution"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.44099604099604106,
+          "initial_echo": 0.0,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "active",
+              "clear",
+              "AE1 K T IH0 V",
+              "K L IH1 R",
+              0.5454545454545454
+            ],
+            [
+              "passive",
+              "solution",
+              "P AE1 S IH0 V",
+              "S AH0 L UW1 SH AH0 N",
+              0.5454545454545454
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "active",
+              "AE1 K T IH0 V"
+            ],
+            [
+              "passive",
+              "P AE1 S IH0 V"
+            ],
+            [
+              "process",
+              "P R AA1 S EH2 S"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "clear",
+              "K L IH1 R"
+            ],
+            [
+              "believe",
+              "B IH0 L IY1 V"
+            ],
+            [
+              "solution",
+              "S AH0 L UW1 SH AH0 N"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "ADJ",
+            "ADJ",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "bigrams_a": [
+            [
+              "ADJ",
+              "NOUN"
+            ],
+            [
+              "ADJ",
+              "ADJ"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [],
+          "method": "bigram",
+          "similarity": 0.0
+        },
+        "semantic": {
+          "zone_a_categories": [
+            "cognitive",
+            "cognitive",
+            "cognitive"
+          ],
+          "zone_b_categories": [],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    },
+    {
+      "phonetic": 0.24402762559028546,
+      "structural": 0.5,
+      "semantic": 0.0,
+      "combined": 0.24761105023611418,
+      "details": {
+        "clause_a": "To be clear, we do not believe the solution to the...",
+        "clause_b": "Rather, our message is that people simply need to ...",
+        "separator": "rather",
+        "zone_a": [
+          "offer",
+          "many",
+          "contexts"
+        ],
+        "zone_b": [
+          "message",
+          "people",
+          "simply"
+        ],
+        "phonetic": {
+          "avg_similarity": 0.4225690639757136,
+          "initial_echo": 0.25,
+          "final_echo": 0.0,
+          "best_matches": [
+            [
+              "many",
+              "message",
+              "M EH1 N IY0",
+              "M EH1 S AH0 JH",
+              0.64
+            ],
+            [
+              "many",
+              "simply",
+              "M EH1 N IY0",
+              "S IH1 M P L IY0",
+              0.6153846153846154
+            ]
+          ],
+          "zone_a_phonetics": [
+            [
+              "offer",
+              "AO1 F ER0"
+            ],
+            [
+              "many",
+              "M EH1 N IY0"
+            ],
+            [
+              "contexts",
+              "K AA1 N T EH2 K S T S"
+            ]
+          ],
+          "zone_b_phonetics": [
+            [
+              "message",
+              "M EH1 S AH0 JH"
+            ],
+            [
+              "people",
+              "P IY1 P AH0 L"
+            ],
+            [
+              "simply",
+              "S IH1 M P L IY0"
+            ]
+          ]
+        },
+        "structural": {
+          "pos_a": [
+            "NOUN",
+            "NOUN",
+            "NOUN"
+          ],
+          "pos_b": [
+            "NOUN",
+            "NOUN",
+            "ADV"
+          ],
+          "bigrams_a": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "bigrams_b": [
+            [
+              "NOUN",
+              "ADV"
+            ],
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "matching_bigrams": [
+            [
+              "NOUN",
+              "NOUN"
+            ]
+          ],
+          "method": "bigram",
+          "similarity": 0.5
+        },
+        "semantic": {
+          "zone_a_categories": [],
+          "zone_b_categories": [
+            "communication"
+          ],
+          "matching_categories": [],
+          "method": "category",
+          "similarity": 0.0
+        }
+      }
+    }
+  ]
+}
