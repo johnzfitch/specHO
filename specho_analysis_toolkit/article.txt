@@ -1,0 +1,27 @@
+Since the release of ChatGPT in late 2022, millions of people have started using large language models to access knowledge. And it's easy to understand their appeal: Ask a question, get a polished synthesis and move on – it feels like effortless learning.
+
+However, a new paper I co-authored offers experimental evidence that this ease may come at a cost: When people rely on large language models to summarize information on a topic for them, they tend to develop shallower knowledge about it compared to learning through a standard Google search.
+
+Co-author Jin Ho Yun and I, both professors of marketing, reported this finding in a paper based on seven studies with more than 10,000 participants. Most of the studies used the same basic paradigm: Participants were asked to learn about a topic – such as how to grow a vegetable garden – and were randomly assigned to do so by using either an LLM like ChatGPT or the "old-fashioned way," by navigating links using a standard Google search.
+
+No restrictions were put on how they used the tools; they could search on Google as long as they wanted and could continue to prompt ChatGPT if they felt they wanted more information. Once they completed their research, they were then asked to write advice to a friend on the topic based on what they learned.
+
+The data revealed a consistent pattern: People who learned about a topic through an LLM versus web search felt that they learned less, invested less effort in subsequently writing their advice, and ultimately wrote advice that was shorter, less factual and more generic. In turn, when this advice was presented to an independent sample of readers, who were unaware of which tool had been used to learn about the topic, they found the advice to be less informative, less helpful, and they were less likely to adopt it.
+
+We found these differences to be robust across a variety of contexts. For example, one possible reason LLM users wrote briefer and more generic advice is simply that the LLM results exposed users to less eclectic information than the Google results. To control for this possibility, we conducted an experiment where participants were exposed to an identical set of facts in the results of their Google and ChatGPT searches. Likewise, in another experiment we held constant the search platform – Google – and varied whether participants learned from standard Google results or Google's AI Overview feature.
+
+The findings confirmed that, even when holding the facts and platform constant, learning from synthesized LLM responses led to shallower knowledge compared to gathering, interpreting and synthesizing information for oneself via standard web links.
+
+Why did the use of LLMs appear to diminish learning? One of the most fundamental principles of skill development is that people learn best when they are actively engaged with the material they are trying to learn.
+
+When we learn about a topic through Google search, we face much more "friction": We must navigate different web links, read informational sources, and interpret and synthesize them ourselves.
+
+While more challenging, this friction leads to the development of a deeper, more original mental representation of the topic at hand. But with LLMs, this entire process is done on the user's behalf, transforming learning from a more active to passive process.
+
+To be clear, we do not believe the solution to these issues is to avoid using LLMs, especially given the undeniable benefits they offer in many contexts. Rather, our message is that people simply need to become smarter or more strategic users of LLMs – which starts by understanding the domains wherein LLMs are beneficial versus harmful to their goals.
+
+Need a quick, factual answer to a question? Feel free to use your favorite AI co-pilot. But if your aim is to develop deep and generalizable knowledge in an area, relying on LLM syntheses alone will be less helpful.
+
+As part of my research on the psychology of new technology and new media, I am also interested in whether it's possible to make LLM learning a more active process. In another experiment we tested this by having participants engage with a specialized GPT model that offered real-time web links alongside its synthesized responses. There, however, we found that once participants received an LLM summary, they weren't motivated to dig deeper into the original sources. The result was that the participants still developed shallower knowledge compared to those who used standard Google.
+
+Building on this, in my future research I plan to study generative AI tools that impose healthy frictions for learning tasks – specifically, examining which types of guardrails or speed bumps most successfully motivate users to actively learn more beyond easy, synthesized answers. Such tools would seem particularly critical in secondary education, where a major challenge for educators is how best to equip students to develop foundational reading, writing and math skills while also preparing for a real world where LLMs are likely to be an integral part of their daily lives.
