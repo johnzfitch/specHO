@@ -494,3 +494,96 @@ class TestIntegration:
 
         assert score1 == 1.0
         assert score2 == 1.0
+
+
+# ============================================================================
+# EM-DASH DETECTION TESTS
+# ============================================================================
+
+class TestEmDashDetection:
+    """Test em-dash frequency detection feature."""
+
+    def test_no_em_dashes(self, analyzer):
+        """Test with no em-dashes."""
+        zone_a = [Token(text="word", pos_tag="NOUN", phonetic="W ER D", is_content_word=True, syllable_count=1)]
+        zone_b = [Token(text="another", pos_tag="DET", phonetic="AH N AH DH ER", is_content_word=False, syllable_count=3)]
+        
+        count, score = analyzer.detect_em_dashes(zone_a, zone_b)
+        
+        assert count == 0
+        assert score == 0.0
+
+    def test_one_em_dash(self, analyzer):
+        """Test with one em-dash."""
+        zone_a = [
+            Token(text="word", pos_tag="NOUN", phonetic="W ER D", is_content_word=True, syllable_count=1),
+            Token(text="–", pos_tag="PUNCT", phonetic="", is_content_word=False, syllable_count=0),
+        ]
+        zone_b = [Token(text="another", pos_tag="DET", phonetic="AH N AH DH ER", is_content_word=False, syllable_count=3)]
+        
+        count, score = analyzer.detect_em_dashes(zone_a, zone_b)
+        
+        assert count == 1
+        assert score == 0.4
+
+    def test_two_em_dashes(self, analyzer):
+        """Test with two em-dashes."""
+        zone_a = [
+            Token(text="word", pos_tag="NOUN", phonetic="W ER D", is_content_word=True, syllable_count=1),
+            Token(text="–", pos_tag="PUNCT", phonetic="", is_content_word=False, syllable_count=0),
+        ]
+        zone_b = [
+            Token(text="another", pos_tag="DET", phonetic="AH N AH DH ER", is_content_word=False, syllable_count=3),
+            Token(text="—", pos_tag="PUNCT", phonetic="", is_content_word=False, syllable_count=0),
+        ]
+        
+        count, score = analyzer.detect_em_dashes(zone_a, zone_b)
+        
+        assert count == 2
+        assert score == 0.7
+
+    def test_three_or_more_em_dashes(self, analyzer):
+        """Test with three or more em-dashes (high suspicion)."""
+        zone_a = [
+            Token(text="–", pos_tag="PUNCT", phonetic="", is_content_word=False, syllable_count=0),
+            Token(text="—", pos_tag="PUNCT", phonetic="", is_content_word=False, syllable_count=0),
+        ]
+        zone_b = [
+            Token(text="–", pos_tag="PUNCT", phonetic="", is_content_word=False, syllable_count=0),
+            Token(text="another", pos_tag="DET", phonetic="AH N AH DH ER", is_content_word=False, syllable_count=3),
+        ]
+        
+        count, score = analyzer.detect_em_dashes(zone_a, zone_b)
+        
+        assert count == 3
+        assert score >= 0.79  # Allow for floating point precision
+
+    def test_double_hyphen_as_em_dash(self, analyzer):
+        """Test that double hyphen -- is counted as em-dash."""
+        zone_a = [
+            Token(text="word", pos_tag="NOUN", phonetic="W ER D", is_content_word=True, syllable_count=1),
+            Token(text="--", pos_tag="PUNCT", phonetic="", is_content_word=False, syllable_count=0),
+        ]
+        zone_b = []
+        
+        count, score = analyzer.detect_em_dashes(zone_a, zone_b)
+        
+        assert count == 1
+        assert score == 0.4
+
+    def test_empty_zones_em_dash(self, analyzer):
+        """Test em-dash detection with empty zones."""
+        count, score = analyzer.detect_em_dashes([], [])
+        
+        assert count == 0
+        assert score == 0.0
+
+    def test_en_dash_vs_em_dash(self, analyzer):
+        """Test that both en-dash and em-dash are detected."""
+        zone_a = [Token(text="–", pos_tag="PUNCT", phonetic="", is_content_word=False, syllable_count=0)]
+        zone_b = [Token(text="—", pos_tag="PUNCT", phonetic="", is_content_word=False, syllable_count=0)]
+        
+        count, score = analyzer.detect_em_dashes(zone_a, zone_b)
+        
+        assert count == 2
+        assert score == 0.7
