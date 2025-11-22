@@ -1,9 +1,70 @@
-# SpecHO Development Guide
+# <img src="icons/compass.png" width="32" height="32"> SpecHO Development Guide
 
-**Version:** 2.0  
-**Type:** Machine-readable project specification  
-**Target:** Claude Code AI assistant  
+**Version:** 3.0
+**Type:** Machine-readable project specification
+**Target:** Claude Code AI assistant
 **Purpose:** Watermark detection system for AI-generated text
+
+---
+
+## DOCUMENTATION PROTOCOL (MANDATORY)
+
+### Start Claude from Project Directory
+```bash
+cd ~/dev/specHO && claude
+```
+Verify with `/memory` - must show both global and project CLAUDE.md.
+
+### Active Documents (ONLY THESE)
+
+| Document | Purpose | Update When |
+|----------|---------|-------------|
+| docs/TASKS.md | Task specifications | Tasks added/changed |
+| docs/SPECS.md | Tier specifications | Specs refined |
+| docs/IMPLEMENTATION.md | Learnings, gotchas | After each session |
+| docs/DEPLOYMENT.md | Operations | Infra changes |
+| docs/STATUS.md | Current state, AI context | After each session |
+
+### Content Routing
+
+```
+NEW CONTENT
+├─ Session work in progress? → working/session-YYYY-MM-DD.md
+├─ Task spec/configuration? → docs/TASKS.md or docs/SPECS.md
+├─ Learning/gotcha/validation? → docs/IMPLEMENTATION.md
+├─ Deployment/operations? → docs/DEPLOYMENT.md
+├─ Current status/next steps? → docs/STATUS.md
+└─ Theory/design? → architecture.md
+```
+
+### Session Protocol
+
+**START**:
+1. Read docs/STATUS.md for current state
+2. Create `working/session-YYYY-MM-DD.md`
+
+**DURING**: Log work, note insights in session file
+
+**END**:
+1. Extract insights → append to docs/IMPLEMENTATION.md
+2. Update docs/STATUS.md with new state
+3. Move session file to `docs/archive/sessions/`
+
+### Anti-Patterns (DO NOT)
+
+- Create new top-level .md files without explicit approval
+- Create CONTEXT_*, HANDOFF_*, summary* files
+- Leave working/ files after session ends
+- Use file-based references (use `[DOC.md#section]` anchors)
+
+### Reference Format
+
+```markdown
+✅ See [IMPLEMENTATION.md#preprocessor-gotchas]
+❌ See session2.md
+```
+
+---
 
 ---
 
@@ -26,17 +87,17 @@ architecture: Five-component sequential pipeline
 ```yaml
 navigation_files:
   setup:
-    - file: docs/QUICKSTART.md
-      purpose: Initial environment setup and Task 1.1 implementation
-      read_when: First session
-    
+    - file: docs/archive/legacy/QUICKSTART.md
+      purpose: Initial environment setup and Task 1.1 implementation (archived)
+      read_when: First session or environment setup reference
+
     - file: architecture.md
       purpose: Original watermark design specification
       read_when: Need context on Echo Rule algorithm
-      
-    - file: summary.md
-      purpose: All of the work we have done so far, summarized. You are returning from a /clear command and must catch 	     			  yourself back up to where we are in our project. 
-      read_when: Returning from a /clear command
+
+    - file: docs/archive/legacy/summary.md
+      purpose: Historical project summary (archived)
+      read_when: Need context on early development decisions
   
   implementation:
     - file: docs/TASKS.md
@@ -182,11 +243,12 @@ SpecHO/
 │   ├── models/
 │   └── corpus/
 └── docs/
-    ├── QUICKSTART.md
     ├── TASKS.md
     ├── SPECS.md
     ├── DEPLOYMENT.md
-    └── PHILOSOPHY.md
+    ├── PHILOSOPHY.md
+    └── archive/           # Historical docs
+        └── legacy/QUICKSTART.md
 ```
 
 ---
@@ -338,14 +400,14 @@ optional_tier_2:
 
 When user starts first Claude Code session:
 
-1. Read docs/QUICKSTART.md for environment setup
-2. Implement Task 1.1 (SpecHO/models.py)
-3. Create all 5 dataclasses with type hints and docstrings
+1. Read docs/STATUS.md for current project state
+2. Read docs/TASKS.md for task specifications
+3. For environment setup reference, see docs/archive/legacy/QUICKSTART.md
 4. Use Python 3.11+ features
-5. No processing logic - data structures only
+5. Follow DOCUMENTATION PROTOCOL in CLAUDE.md
 
 Example first prompt to expect:
-"Read QUICKSTART.md and help me implement Task 1.1: Create Core Data Models"
+"Read STATUS.md and help me continue from where we left off"
 
 ---
 

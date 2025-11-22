@@ -1,4 +1,4 @@
-# SPECS
+# <img src="../icons/document.png" width="32" height="32"> SPECS
 
 **Format:** Machine-readable tier specifications  
 **Purpose:** Detailed implementation specs for each component  

@@ -1,4 +1,4 @@
-# SpecHO Deployment Guide
+# <img src="../icons/rocket.png" width="32" height="32"> SpecHO Deployment Guide
 
 **Version:** 1.0  
 **Prerequisites:** Tier 1 complete and validated  

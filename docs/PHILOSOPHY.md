@@ -1,4 +1,4 @@
-# SpecHO Design Philosophy
+# <img src="../icons/lightbulb.png" width="32" height="32"> SpecHO Design Philosophy
 
 **Version:** 1.0  
 **Purpose:** Document design rationale and decision-making framework  
