@@ -25,6 +25,7 @@ from .preprocessor.pipeline import LinguisticPreprocessor
 from .clause_identifier.pipeline import ClauseIdentifier
 from .echo_engine.pipeline import EchoAnalysisEngine
 from .scoring.pipeline import ScoringModule
+from .scoring.transition_analyzer import TransitionSmoothnessAnalyzer
 from .validator.pipeline import StatisticalValidator
 
 
@@ -110,6 +111,9 @@ class SpecHODetector:
         self.echo_engine = EchoAnalysisEngine()
         self.scoring_module = ScoringModule()
         self.validator = StatisticalValidator(baseline_path)
+        
+        # Initialize supplementary analyzer for transition smoothness
+        self.transition_analyzer = TransitionSmoothnessAnalyzer()
 
         self.baseline_path = baseline_path
 
@@ -222,6 +226,11 @@ class SpecHODetector:
             z_score, confidence = self.validator.validate(final_score)
             logging.debug(f"  → Z-score: {z_score:.4f}, Confidence: {confidence:.4f}")
 
+            # Stage 6: Supplementary Analysis - Transition Smoothness
+            logging.debug("Stage 6: Analyzing transition smoothness...")
+            _, _, transition_rate, transition_score = self.transition_analyzer.analyze_text(text)
+            logging.debug(f"  → Transition rate: {transition_rate:.4f}, Score: {transition_score:.4f}")
+
             # Package complete analysis
             analysis = DocumentAnalysis(
                 text=text,
@@ -229,12 +238,14 @@ class SpecHODetector:
                 echo_scores=echo_scores,
                 final_score=final_score,
                 z_score=z_score,
-                confidence=confidence
+                confidence=confidence,
+                transition_rate=transition_rate,
+                transition_score=transition_score
             )
 
             logging.info(
                 f"Analysis complete: score={final_score:.3f}, z={z_score:.2f}, "
-                f"conf={confidence:.1%}"
+                f"conf={confidence:.1%}, trans_rate={transition_rate:.2f}"
             )
 
             return analysis
@@ -258,6 +269,12 @@ class SpecHODetector:
             text=text,
             clause_pairs=[],
             echo_scores=[],
+            final_score=0.0,
+            z_score=0.0,
+            confidence=0.0,
+            transition_rate=0.0,
+            transition_score=0.0
+        )
             final_score=0.0,
             z_score=0.0,
             confidence=0.5  # Neutral confidence for empty input

@@ -97,6 +97,10 @@ class EchoScore:
     between zone A and zone B. The combined_score represents the weighted
     aggregation of the three dimensions.
 
+    Also includes supplementary AI watermark indicators from toolkit analysis:
+    - comparative_cluster_score: Clustering of comparative terms (less/more/shorter)
+    - em_dash_score: Em-dash frequency indicator
+
     All scores are normalized to the range [0.0, 1.0] where:
     - 0.0 indicates no similarity
     - 1.0 indicates perfect similarity
@@ -106,11 +110,15 @@ class EchoScore:
         structural_score: Structural similarity (POS patterns, syllable counts)
         semantic_score: Semantic similarity (meaning relationships)
         combined_score: Weighted combination of the three scores
+        comparative_cluster_score: Comparative term clustering indicator (supplementary)
+        em_dash_score: Em-dash frequency indicator (supplementary)
     """
     phonetic_score: float  # 0.0-1.0
     structural_score: float  # 0.0-1.0
     semantic_score: float  # 0.0-1.0
     combined_score: float  # 0.0-1.0
+    comparative_cluster_score: float = 0.0  # 0.0-1.0 (supplementary)
+    em_dash_score: float = 0.0  # 0.0-1.0 (supplementary)
 
 
 @dataclass
@@ -125,6 +133,10 @@ class DocumentAnalysis:
     - z_score: Standard deviations above human baseline mean
     - confidence: Probability that this score is inconsistent with human writing
 
+    Also includes supplementary AI watermark indicators from toolkit analysis:
+    - transition_rate: Smooth transition words per sentence
+    - transition_score: Transition smoothness suspicion score
+
     Attributes:
         text: Original input text that was analyzed
         tokens: All tokens from preprocessing (for debugging/display)
@@ -133,6 +145,8 @@ class DocumentAnalysis:
         final_score: Aggregated document-level echo score (0.0-1.0)
         z_score: Statistical significance relative to human baseline
         confidence: Confidence level that watermark is present (0.0-1.0)
+        transition_rate: Smooth transitions per sentence (supplementary)
+        transition_score: Transition smoothness AI suspicion score (supplementary)
     """
     text: str
     clause_pairs: List[ClausePair]
@@ -141,6 +155,8 @@ class DocumentAnalysis:
     z_score: float
     confidence: float
     tokens: List[Token] = None  # Optional, added for UI display
+    transition_rate: float = 0.0  # Supplementary metric
+    transition_score: float = 0.0  # Supplementary metric
 
     @property
     def document_score(self) -> float:
