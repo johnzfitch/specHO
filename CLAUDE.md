@@ -87,17 +87,17 @@ architecture: Five-component sequential pipeline
 ```yaml
 navigation_files:
   setup:
-    - file: docs/QUICKSTART.md
-      purpose: Initial environment setup and Task 1.1 implementation
-      read_when: First session
-    
+    - file: docs/archive/legacy/QUICKSTART.md
+      purpose: Initial environment setup and Task 1.1 implementation (archived)
+      read_when: First session or environment setup reference
+
     - file: architecture.md
       purpose: Original watermark design specification
       read_when: Need context on Echo Rule algorithm
-      
-    - file: summary.md
-      purpose: All of the work we have done so far, summarized. You are returning from a /clear command and must catch 	     			  yourself back up to where we are in our project. 
-      read_when: Returning from a /clear command
+
+    - file: docs/archive/legacy/summary.md
+      purpose: Historical project summary (archived)
+      read_when: Need context on early development decisions
   
   implementation:
     - file: docs/TASKS.md
@@ -243,11 +243,12 @@ SpecHO/
 │   ├── models/
 │   └── corpus/
 └── docs/
-    ├── QUICKSTART.md
     ├── TASKS.md
     ├── SPECS.md
     ├── DEPLOYMENT.md
-    └── PHILOSOPHY.md
+    ├── PHILOSOPHY.md
+    └── archive/           # Historical docs
+        └── legacy/QUICKSTART.md
 ```
 
 ---
@@ -399,14 +400,14 @@ optional_tier_2:
 
 When user starts first Claude Code session:
 
-1. Read docs/QUICKSTART.md for environment setup
-2. Implement Task 1.1 (SpecHO/models.py)
-3. Create all 5 dataclasses with type hints and docstrings
+1. Read docs/STATUS.md for current project state
+2. Read docs/TASKS.md for task specifications
+3. For environment setup reference, see docs/archive/legacy/QUICKSTART.md
 4. Use Python 3.11+ features
-5. No processing logic - data structures only
+5. Follow DOCUMENTATION PROTOCOL in CLAUDE.md
 
 Example first prompt to expect:
-"Read QUICKSTART.md and help me implement Task 1.1: Create Core Data Models"
+"Read STATUS.md and help me continue from where we left off"
 
 ---
 

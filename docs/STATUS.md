@@ -123,7 +123,7 @@ START SESSION:
 
 ---
 
-## <img src="../icons/book.png" width="20" height="20"> Documentation System
+## <img src="../icons/document.png" width="20" height="20"> Documentation System
 
 ### Active Documents
 

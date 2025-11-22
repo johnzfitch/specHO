@@ -32,7 +32,7 @@ Five-component sequential pipeline:
 4. **Scoring** - Weighted combination of echo scores
 5. **Validator** - Z-score comparison against baseline
 
-## <img src="icons/book.png" width="24" height="24"> Documentation
+## <img src="icons/document.png" width="24" height="24"> Documentation
 
 | Document | Purpose |
 |----------|---------|
