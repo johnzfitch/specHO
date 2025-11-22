@@ -1,8 +1,8 @@
-# SpecHO - Echo Rule Watermark Detector
+# <img src="icons/sound.png" width="32" height="32"> SpecHO - Echo Rule Watermark Detector
 
 Watermark detection system for AI-generated text using phonetic, structural, and semantic echo analysis.
 
-## Quick Start
+## <img src="icons/rocket.png" width="24" height="24"> Quick Start
 
 ```bash
 # Clone and setup
@@ -17,35 +17,36 @@ python -m spacy download en_core_web_sm
 python scripts/cli.py --file sample.txt
 ```
 
-## Project Status
+## <img src="icons/bar-chart.png" width="24" height="24"> Project Status
 
-**Current:** Tier 1 (MVP) - In Development  
-**Tasks Complete:** 0/32  
-**Test Coverage:** 0%
+**Current:** Tier 1 (MVP) - Clause Identifier in progress
+**Completed:** Preprocessor (98.6% tests passing)
+**See:** [docs/STATUS.md](docs/STATUS.md) for current state
 
-## Architecture
+## <img src="icons/blueprint.png" width="24" height="24"> Architecture
 
 Five-component sequential pipeline:
-1. **Linguistic Preprocessor** - Tokenization, POS tagging, phonetic transcription
-2. **Clause Pair Identifier** - Find related clause pairs using rule-based system
-3. **Echo Analysis Engine** - Phonetic, structural, and semantic similarity scoring
-4. **Scoring & Aggregation** - Weighted combination of echo scores
-5. **Statistical Validator** - Z-score comparison against human baseline
+1. **Preprocessor** - Tokenization, POS tagging, phonetic transcription
+2. **Clause Identifier** - Find related clause pairs (in progress)
+3. **Echo Engine** - Phonetic, structural, semantic similarity
+4. **Scoring** - Weighted combination of echo scores
+5. **Validator** - Z-score comparison against baseline
 
-## Development
+## <img src="icons/book.png" width="24" height="24"> Documentation
 
-Using three-tier approach:
-- **Tier 1 (Weeks 1-12):** MVP with simple algorithms
-- **Tier 2 (Weeks 13-17):** Production hardening
-- **Tier 3 (Week 18+):** Research features
+| Document | Purpose |
+|----------|---------|
+| <img src="icons/compass.png" width="16" height="16"> [CLAUDE.md](CLAUDE.md) | AI instructions + documentation protocol |
+| <img src="icons/bar-chart.png" width="16" height="16"> [docs/STATUS.md](docs/STATUS.md) | Current state + AI context |
+| <img src="icons/task-list.png" width="16" height="16"> [docs/TASKS.md](docs/TASKS.md) | All 32 task specifications |
+| <img src="icons/document.png" width="16" height="16"> [docs/SPECS.md](docs/SPECS.md) | Tier specifications |
+| <img src="icons/wrench.png" width="16" height="16"> [docs/IMPLEMENTATION.md](docs/IMPLEMENTATION.md) | Learnings + gotchas |
+| <img src="icons/rocket.png" width="16" height="16"> [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Operations guide |
+| <img src="icons/blueprint.png" width="16" height="16"> [architecture.md](architecture.md) | Echo Rule theory |
 
-**Documentation:**
-- `CLAUDE.md` - Main development guide
-- `docs/QUICKSTART.md` - Setup and first task
-- `docs/TASKS.md` - All 32 task specifications
-- `architecture.md` - Original watermark design
+**Archive:** Historical session docs in `docs/archive/`
 
-## Usage
+## <img src="icons/wrench.png" width="24" height="24"> Usage
 
 ```python
 from SpecHO import SpecHODetector, load_config
@@ -57,7 +58,7 @@ print(f"Confidence: {result.confidence:.2%}")
 print(f"Z-Score: {result.z_score:.2f}")
 ```
 
-## Requirements
+## <img src="icons/task-list.png" width="24" height="24"> Requirements
 
 - Python 3.11+
 - spaCy with en_core_web_sm model

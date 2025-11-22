@@ -1,4 +1,4 @@
-# TASKS
+# <img src="../icons/task-list.png" width="32" height="32"> TASKS
 
 **Format:** Machine-readable task specifications  
 **Total Tasks:** 32  

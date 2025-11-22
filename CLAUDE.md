@@ -1,9 +1,70 @@
-# SpecHO Development Guide
+# <img src="icons/compass.png" width="32" height="32"> SpecHO Development Guide
 
-**Version:** 2.0  
-**Type:** Machine-readable project specification  
-**Target:** Claude Code AI assistant  
+**Version:** 3.0
+**Type:** Machine-readable project specification
+**Target:** Claude Code AI assistant
 **Purpose:** Watermark detection system for AI-generated text
+
+---
+
+## DOCUMENTATION PROTOCOL (MANDATORY)
+
+### Start Claude from Project Directory
+```bash
+cd ~/dev/specHO && claude
+```
+Verify with `/memory` - must show both global and project CLAUDE.md.
+
+### Active Documents (ONLY THESE)
+
+| Document | Purpose | Update When |
+|----------|---------|-------------|
+| docs/TASKS.md | Task specifications | Tasks added/changed |
+| docs/SPECS.md | Tier specifications | Specs refined |
+| docs/IMPLEMENTATION.md | Learnings, gotchas | After each session |
+| docs/DEPLOYMENT.md | Operations | Infra changes |
+| docs/STATUS.md | Current state, AI context | After each session |
+
+### Content Routing
+
+```
+NEW CONTENT
+├─ Session work in progress? → working/session-YYYY-MM-DD.md
+├─ Task spec/configuration? → docs/TASKS.md or docs/SPECS.md
+├─ Learning/gotcha/validation? → docs/IMPLEMENTATION.md
+├─ Deployment/operations? → docs/DEPLOYMENT.md
+├─ Current status/next steps? → docs/STATUS.md
+└─ Theory/design? → architecture.md
+```
+
+### Session Protocol
+
+**START**:
+1. Read docs/STATUS.md for current state
+2. Create `working/session-YYYY-MM-DD.md`
+
+**DURING**: Log work, note insights in session file
+
+**END**:
+1. Extract insights → append to docs/IMPLEMENTATION.md
+2. Update docs/STATUS.md with new state
+3. Move session file to `docs/archive/sessions/`
+
+### Anti-Patterns (DO NOT)
+
+- Create new top-level .md files without explicit approval
+- Create CONTEXT_*, HANDOFF_*, summary* files
+- Leave working/ files after session ends
+- Use file-based references (use `[DOC.md#section]` anchors)
+
+### Reference Format
+
+```markdown
+✅ See [IMPLEMENTATION.md#preprocessor-gotchas]
+❌ See session2.md
+```
+
+---
 
 ---
 

@@ -1,4 +1,4 @@
-# SpecHO Architecture: Echo Rule Watermark Detection
+# <img src="icons/blueprint.png" width="32" height="32"> SpecHO Architecture: Echo Rule Watermark Detection
 
 **Version:** 1.0  
 **Purpose:** Technical foundation and methodology reference  
