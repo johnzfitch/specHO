@@ -271,13 +271,9 @@ class SpecHODetector:
             echo_scores=[],
             final_score=0.0,
             z_score=0.0,
-            confidence=0.0,
+            confidence=0.5,  # Neutral confidence for empty input
             transition_rate=0.0,
             transition_score=0.0
-        )
-            final_score=0.0,
-            z_score=0.0,
-            confidence=0.5  # Neutral confidence for empty input
         )
 
     def get_pipeline_info(self) -> dict:

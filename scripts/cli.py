@@ -170,6 +170,34 @@ def format_text_output(analysis, verbose=False):
 
     results_table.add_row("Verdict", verdict)
 
+    # Add supplementary AI indicators (new toolkit heuristics)
+    results_table.add_row("", "")  # Separator
+    results_table.add_row("[dim]Supplementary Indicators:[/dim]", "")
+    
+    # Transition smoothness
+    trans_color = "green" if analysis.transition_score < 0.3 else "yellow" if analysis.transition_score < 0.6 else "red"
+    results_table.add_row(
+        "Transition Smoothness",
+        f"[{trans_color}]{analysis.transition_rate:.2f}/sent (score: {analysis.transition_score:.2f})[/{trans_color}]"
+    )
+    
+    # Average comparative clustering
+    if analysis.echo_scores:
+        avg_comparative = sum(s.comparative_cluster_score for s in analysis.echo_scores) / len(analysis.echo_scores)
+        comp_color = "green" if avg_comparative < 0.3 else "yellow" if avg_comparative < 0.6 else "red"
+        results_table.add_row(
+            "Comparative Clustering",
+            f"[{comp_color}]{avg_comparative:.2f} avg[/{comp_color}]"
+        )
+        
+        # Average em-dash frequency
+        avg_em_dash = sum(s.em_dash_score for s in analysis.echo_scores) / len(analysis.echo_scores)
+        em_color = "green" if avg_em_dash < 0.3 else "yellow" if avg_em_dash < 0.6 else "red"
+        results_table.add_row(
+            "Em-dash Frequency",
+            f"[{em_color}]{avg_em_dash:.2f} avg[/{em_color}]"
+        )
+
     console.print(results_table)
     console.print()
 
@@ -190,6 +218,8 @@ def format_text_output(analysis, verbose=False):
             echo_table.add_column("Phonetic", justify="right")
             echo_table.add_column("Structural", justify="right")
             echo_table.add_column("Semantic", justify="right")
+            echo_table.add_column("Comparative", justify="right", style="cyan")
+            echo_table.add_column("Em-dash", justify="right", style="cyan")
             echo_table.add_column("Combined", justify="right", style="bold")
 
             for i, score in enumerate(analysis.echo_scores[:10], 1):
@@ -198,6 +228,8 @@ def format_text_output(analysis, verbose=False):
                     f"{score.phonetic_score:.3f}",
                     f"{score.structural_score:.3f}",
                     f"{score.semantic_score:.3f}",
+                    f"{score.comparative_cluster_score:.3f}",
+                    f"{score.em_dash_score:.3f}",
                     f"{score.combined_score:.3f}"
                 )
 
@@ -245,6 +277,10 @@ def format_json_output(analysis):
             else "possibly_watermarked" if analysis.final_score > 0.5
             else "likely_human"
         ),
+        "supplementary_indicators": {
+            "transition_rate": float(analysis.transition_rate),
+            "transition_score": float(analysis.transition_score),
+        },
         "metadata": {
             "clause_pairs": len(analysis.clause_pairs),
             "echo_scores_count": len(analysis.echo_scores),
@@ -254,6 +290,9 @@ def format_json_output(analysis):
     # Add echo scores if available
     if analysis.echo_scores:
         combined_scores = [float(s.combined_score) for s in analysis.echo_scores]
+        comparative_scores = [float(s.comparative_cluster_score) for s in analysis.echo_scores]
+        em_dash_scores = [float(s.em_dash_score) for s in analysis.echo_scores]
+        
         result["echo_scores"] = {
             "mean": sum(combined_scores) / len(combined_scores),
             "max": max(combined_scores),
@@ -263,11 +302,21 @@ def format_json_output(analysis):
                     "phonetic": float(s.phonetic_score),
                     "structural": float(s.structural_score),
                     "semantic": float(s.semantic_score),
-                    "combined": float(s.combined_score)
+                    "combined": float(s.combined_score),
+                    "comparative_cluster": float(s.comparative_cluster_score),
+                    "em_dash": float(s.em_dash_score)
                 }
                 for s in analysis.echo_scores[:10]  # First 10 samples
             ]
         }
+        
+        # Add supplementary indicator averages
+        result["supplementary_indicators"]["avg_comparative_cluster"] = (
+            sum(comparative_scores) / len(comparative_scores)
+        )
+        result["supplementary_indicators"]["avg_em_dash"] = (
+            sum(em_dash_scores) / len(em_dash_scores)
+        )
 
     return json.dumps(result, indent=2)
 
