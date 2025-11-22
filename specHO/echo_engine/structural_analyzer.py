@@ -2,12 +2,13 @@
 Structural Echo Analyzer for SpecHO Watermark Detector.
 
 Analyzes structural similarity between clause zones based on POS patterns and syllable counts.
+Also tracks em-dash frequency as an AI watermark indicator.
 Part of Component 3: Echo Engine (Task 4.2).
 
 Tier 1: Simple exact matching of POS patterns and syllable count comparison.
 """
 
-from typing import List
+from typing import List, Tuple
 from specHO.models import Token
 
 
@@ -134,6 +135,58 @@ class StructuralEchoAnalyzer:
 
         # Ensure output is in [0, 1] range
         return max(0.0, min(1.0, similarity))
+
+    def detect_em_dashes(self, zone_a: List[Token], zone_b: List[Token]) -> Tuple[int, float]:
+        """
+        Detect em-dash usage in zones as an AI watermark indicator.
+
+        AI models (especially GPT-4) overuse em-dashes in their writing.
+        This method counts em-dashes and calculates a suspicion score.
+
+        Args:
+            zone_a: First zone
+            zone_b: Second zone
+
+        Returns:
+            Tuple of (count, score):
+            - count: Number of em-dashes found
+            - score: Float in [0, 1] representing em-dash suspicion
+                0.0-0.2: Low (0 em-dashes, human-typical)
+                0.3-0.5: Moderate (1 em-dash)
+                0.6-1.0: High (2+ em-dashes, AI-typical)
+
+        Based on toolkit analysis:
+        - Human writing: typically <0.3 em-dashes per sentence
+        - AI writing (GPT-4): typically 0.5-1.0+ em-dashes per sentence
+
+        Note: Em-dashes include both – (en-dash) and — (em-dash) Unicode chars
+        """
+        if not zone_a and not zone_b:
+            return 0, 0.0
+
+        # Combine zones for counting
+        all_tokens = zone_a + zone_b
+        
+        # Count em-dashes (both en-dash – and em-dash —)
+        em_dash_count = 0
+        for token in all_tokens:
+            if token.text in ('–', '—', '--'):
+                em_dash_count += 1
+        
+        # Map count to suspicion score
+        # 0 em-dashes: 0.0 (typical)
+        # 1 em-dash: 0.4 (moderate)
+        # 2+ em-dashes: 0.7-1.0 (high suspicion)
+        if em_dash_count == 0:
+            score = 0.0
+        elif em_dash_count == 1:
+            score = 0.4
+        elif em_dash_count == 2:
+            score = 0.7
+        else:  # 3+
+            score = min(1.0, 0.7 + (em_dash_count - 2) * 0.1)
+        
+        return em_dash_count, score
 
 
 def quick_structural_analysis(zone_a: List[Token], zone_b: List[Token]) -> float:
