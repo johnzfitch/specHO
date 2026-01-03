@@ -34,40 +34,108 @@ class SemanticEchoAnalyzer:
         model_type: Type of model ('gensim' or 'sentence_transformer')
     """
 
-    def __init__(self, model_path: str = None):
+    DEFAULT_PATHS = [
+        "data/embeddings/glove.6B.100d.txt",
+        "data/embeddings/glove.6B.300d.txt",
+        "~/.specho/embeddings/glove.6B.100d.txt",
+        "~/.cache/specho/glove.6B.100d.txt",
+    ]
+
+    def __init__(self, model_path: str = None, model_type: str = None):
         """Initialize semantic analyzer with word embeddings.
 
         Args:
             model_path: Path to gensim-compatible embeddings file, OR
                        name of Sentence Transformer model (e.g., 'all-MiniLM-L6-v2')
-                       If None, operates in fallback mode (returns 0.5)
+                       If None, searches DEFAULT_PATHS then falls back to 0.5
+            model_type: Type of model ('gensim', 'sentence_transformer')
+                       If None, auto-detects based on model_path format
         """
         self.model = None
         self.model_type = None
+        self.model_path = model_path
+        self._vocab_size = 0
 
         if model_path:
-            # Try Sentence Transformers first (if model_path looks like a model name)
-            if '/' not in model_path and '\\' not in model_path and not model_path.endswith('.txt'):
-                try:
-                    from sentence_transformers import SentenceTransformer
-                    self.model = SentenceTransformer(model_path)
-                    self.model_type = 'sentence_transformer'
-                    return
-                except Exception:
-                    pass  # Fall through to try gensim
-
-            # Try gensim KeyedVectors (for file paths)
-            try:
-                from gensim.models import KeyedVectors
-                self.model = KeyedVectors.load_word2vec_format(
-                    model_path,
-                    binary=False
-                )
+            # Auto-detect or use specified model type
+            if model_type:
+                self.model_type = model_type
+            elif '/' not in model_path and '\\' not in model_path and not model_path.endswith('.txt'):
+                self.model_type = 'sentence_transformer'
+            else:
                 self.model_type = 'gensim'
-            except Exception:
-                # Fallback mode: embeddings unavailable
-                self.model = None
-                self.model_type = None
+
+            self._load_model(model_path)
+        else:
+            # Try default paths
+            self._try_default_paths()
+
+        # Warn if in fallback mode
+        if self.model is None:
+            import sys
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.warning(
+                "SemanticEchoAnalyzer: No embeddings loaded - Running in FALLBACK MODE "
+                "(all scores = 0.5). Detection accuracy severely limited! "
+                f"Install with: uv pip install sentence-transformers"
+            )
+
+    def _try_default_paths(self):
+        """Try loading embeddings from common default locations."""
+        from pathlib import Path
+
+        for path_str in self.DEFAULT_PATHS:
+            path = Path(path_str).expanduser()
+            if path.exists():
+                import logging
+                logger = logging.getLogger(__name__)
+                logger.info(f"Found embeddings at {path}")
+                self.model_type = 'gensim'
+                self._load_model(str(path))
+                if self.model is not None:
+                    return
+
+    def _load_model(self, model_path: str):
+        """Load the embedding model.
+
+        Args:
+            model_path: Path to embeddings file or model name
+        """
+        try:
+            if self.model_type == 'sentence_transformer':
+                from sentence_transformers import SentenceTransformer
+                self.model = SentenceTransformer(model_path)
+                self._vocab_size = -1  # Transformer handles any vocab
+                import logging
+                logger = logging.getLogger(__name__)
+                logger.info(f"Loaded SentenceTransformer: {model_path}")
+
+            else:  # gensim
+                from gensim.models import KeyedVectors
+
+                # Auto-detect binary format
+                if model_path.endswith('.bin'):
+                    self.model = KeyedVectors.load_word2vec_format(model_path, binary=True)
+                else:
+                    self.model = KeyedVectors.load_word2vec_format(model_path, binary=False)
+
+                self._vocab_size = len(self.model.key_to_index)
+                import logging
+                logger = logging.getLogger(__name__)
+                logger.info(f"Loaded {self._vocab_size:,} word vectors from {model_path}")
+
+        except ImportError as e:
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Missing dependency: {e}")
+            logger.error("Install with: uv pip install gensim  OR  uv pip install sentence-transformers")
+            self.model = None
+        except Exception as e:
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Failed to load embeddings model: {e}")
+            self.model = None
 
     def analyze(self, zone_a: List[Token], zone_b: List[Token]) -> float:
         """Calculate semantic similarity between two clause zones.
@@ -188,3 +256,21 @@ class SemanticEchoAnalyzer:
 
         # Clip to [0,1] range (handle floating point errors)
         return np.clip(similarity, 0.0, 1.0)
+
+    @property
+    def is_loaded(self) -> bool:
+        """Check if embedding model is loaded (not in fallback mode).
+
+        Returns:
+            True if model is loaded and ready to use, False if in fallback mode
+        """
+        return self.model is not None
+
+    @property
+    def vocab_size(self) -> int:
+        """Get vocabulary size of the loaded model.
+
+        Returns:
+            Number of words in vocabulary, or -1 for transformer models (unlimited)
+        """
+        return self._vocab_size

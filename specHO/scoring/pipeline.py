@@ -74,14 +74,16 @@ class ScoringModule:
         This is the main entry point for the scoring pipeline. It performs
         the complete scoring workflow:
         1. Convert each EchoScore to a pair score using WeightedScorer
-        2. Aggregate all pair scores into document score using DocumentAggregator
-        3. Return the final document score
+        2. Update the EchoScore objects with their combined score
+        3. Aggregate all pair scores into document score using DocumentAggregator
+        4. Return the final document score
 
         Algorithm (Tier 1):
             1. For each EchoScore, call weighted_scorer.calculate_pair_score()
-            2. Collect all pair scores into a list
-            3. Call aggregator.aggregate_scores() on the list
-            4. Return the document score
+            2. Update echo_score.combined_score with the result
+            3. Collect all pair scores into a list
+            4. Call aggregator.aggregate_scores() on the list
+            5. Return the document score
 
         Args:
             echo_scores: List of EchoScore objects, one per clause pair.
@@ -103,11 +105,12 @@ class ScoringModule:
             >>> 0.0 <= doc_score <= 1.0
             True
         """
-        # Step 1: Convert each EchoScore to pair score using WeightedScorer
-        pair_scores = [
-            self.weighted_scorer.calculate_pair_score(echo_score)
-            for echo_score in echo_scores
-        ]
+        # Step 1: Convert each EchoScore to pair score and update the object
+        pair_scores = []
+        for echo_score in echo_scores:
+            score = self.weighted_scorer.calculate_pair_score(echo_score)
+            echo_score.combined_score = score
+            pair_scores.append(score)
 
         # Step 2: Aggregate pair scores into document score using DocumentAggregator
         document_score = self.aggregator.aggregate_scores(pair_scores)

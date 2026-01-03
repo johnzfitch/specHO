@@ -39,7 +39,8 @@ class EchoAnalysisEngine:
         self,
         phonetic_analyzer: Optional[PhoneticEchoAnalyzer] = None,
         structural_analyzer: Optional[StructuralEchoAnalyzer] = None,
-        semantic_analyzer: Optional[SemanticEchoAnalyzer] = None
+        semantic_analyzer: Optional[SemanticEchoAnalyzer] = None,
+        semantic_model_path: Optional[str] = "all-MiniLM-L6-v2"
     ):
         """Initialize the echo analysis engine with specialized analyzers.
 
@@ -49,13 +50,17 @@ class EchoAnalysisEngine:
             structural_analyzer: Structural similarity analyzer. If None,
                                 creates default instance.
             semantic_analyzer: Semantic similarity analyzer. If None, creates
-                              default instance (operates in fallback mode if
-                              no embeddings available).
+                              default instance with semantic_model_path.
+            semantic_model_path: Path to semantic embeddings model OR model name.
+                               Only used if semantic_analyzer is None.
+                               Default: "all-MiniLM-L6-v2" (Sentence Transformer)
         """
         # Initialize analyzers (use defaults if not provided)
         self.phonetic_analyzer = phonetic_analyzer or PhoneticEchoAnalyzer()
         self.structural_analyzer = structural_analyzer or StructuralEchoAnalyzer()
-        self.semantic_analyzer = semantic_analyzer or SemanticEchoAnalyzer()
+        self.semantic_analyzer = semantic_analyzer or SemanticEchoAnalyzer(
+            model_path=semantic_model_path
+        )
 
     def analyze_pair(self, clause_pair: ClausePair) -> EchoScore:
         """Analyze a clause pair across all three similarity dimensions.

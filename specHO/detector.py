@@ -85,12 +85,20 @@ class SpecHODetector:
         baseline_path: Path to baseline statistics file
     """
 
-    def __init__(self, baseline_path: str = "data/baseline/baseline_stats.pkl"):
+    def __init__(
+        self,
+        baseline_path: str = "data/baseline/baseline_stats.pkl",
+        semantic_model_path: str = "all-MiniLM-L6-v2"
+    ):
         """Initialize the detection pipeline with all components.
 
         Args:
             baseline_path: Path to baseline statistics file for validation.
                           Default: "data/baseline/baseline_stats.pkl"
+            semantic_model_path: Path to semantic embeddings model OR model name.
+                               For Sentence Transformers: Use model name (e.g., 'all-MiniLM-L6-v2')
+                               For gensim: Use file path to embeddings
+                               Default: "all-MiniLM-L6-v2" (Sentence Transformer)
 
         Raises:
             FileNotFoundError: If baseline_path doesn't exist
@@ -101,17 +109,19 @@ class SpecHODetector:
         Examples:
             >>> detector = SpecHODetector()
             >>> detector = SpecHODetector("data/baseline/custom_baseline.pkl")
+            >>> detector = SpecHODetector(semantic_model_path="all-mpnet-base-v2")
         """
         logging.info("Initializing SpecHODetector pipeline...")
 
         # Initialize all five components
         self.preprocessor = LinguisticPreprocessor()
         self.clause_identifier = ClauseIdentifier()
-        self.echo_engine = EchoAnalysisEngine()
+        self.echo_engine = EchoAnalysisEngine(semantic_model_path=semantic_model_path)
         self.scoring_module = ScoringModule()
         self.validator = StatisticalValidator(baseline_path)
 
         self.baseline_path = baseline_path
+        self.semantic_model_path = semantic_model_path
 
         logging.info("SpecHODetector initialization complete")
 
@@ -274,6 +284,10 @@ class SpecHODetector:
             >>> info = detector.get_pipeline_info()
             >>> info['baseline_path']
             'data/baseline/baseline_stats.pkl'
+            >>> info['semantic_model_path']
+            'all-MiniLM-L6-v2'
+            >>> info['semantic_model_loaded']
+            True
             >>> info['components']
             ['LinguisticPreprocessor', 'ClauseIdentifier', 'EchoAnalysisEngine',
              'ScoringModule', 'StatisticalValidator']
@@ -288,6 +302,9 @@ class SpecHODetector:
             ],
             'baseline_path': self.baseline_path,
             'baseline_stats': self.validator.get_baseline_info(),
+            'semantic_model_path': self.semantic_model_path,
+            'semantic_model_loaded': self.echo_engine.semantic_analyzer.model is not None,
+            'semantic_model_type': self.echo_engine.semantic_analyzer.model_type,
             'tier': 1,
             'version': '0.1.0'
         }
