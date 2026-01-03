@@ -20,6 +20,9 @@ sentence-transformers>=2.2.0
 # Data Structures
 pydantic>=2.0.0
 
+# Pin setuptools to avoid pkg_resources deprecation warning from pronouncing
+setuptools<81.0.0
+
 # Testing
 pytest>=7.4.0
 pytest-cov>=4.1.0
