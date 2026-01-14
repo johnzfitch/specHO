@@ -167,7 +167,7 @@ This repository is archived as of January 2026. The research achieved its primar
 
 1. Demonstrated feasibility of multi-dimensional echo detection
 2. Built a working 5-component detection pipeline
-3. Discovered the counterintuitive human-predictability finding
+3. Discovered a new working hypothesis. (Human writing being the mlst predictable) 
 4. Established that scaling requires data collection, not algorithm refinement
 
 For anyone continuing this research: focus on building larger, well-documented fingerprint corpora. The detection methodology is sound.
