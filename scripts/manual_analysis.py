@@ -600,8 +600,10 @@ def print_report(report: AnalysisReport, verbose: bool = False):
 
 def main():
     """Main entry point."""
-    # Read input file
-    input_file = Path('/home/user/specHO/data/analysis_input.txt')
+    # Read input file (relative to project root)
+    script_dir = Path(__file__).parent
+    project_root = script_dir.parent
+    input_file = project_root / 'data' / 'analysis_input.txt'
 
     if not input_file.exists():
         print("Error: Input file not found")
@@ -617,7 +619,7 @@ def main():
     print_report(report, verbose=True)
 
     # Save JSON report
-    output_file = Path('/home/user/specHO/data/analysis_output.json')
+    output_file = project_root / 'data' / 'analysis_output.json'
     report_dict = {
         'text_length': report.text_length,
         'word_count': report.word_count,
