@@ -8,7 +8,8 @@ This archive contains historical documentation from the SpecHO project consolida
 archive/
 ├── sessions/      # Development session narratives
 ├── context/       # AI context and handoff documents
-└── legacy/        # Pre-consolidation documentation
+├── legacy/        # Pre-consolidation documentation
+└── experiments/   # Debug scripts and experimental code
 ```
 
 ## Why Archived
@@ -72,6 +73,18 @@ When old documents referenced these files, use this mapping:
 | CORPUS_HARVESTING_ARCHITECTURE.md | Future corpus strategy | Preserved for later |
 | zone_extractor_validation.md | Validation results | In IMPLEMENTATION.md |
 
+### experiments/ (Debug Scripts & Proposals)
+
+| File | Original Purpose |
+|------|------------------|
+| debug_*.py | Clause boundary debugging scripts |
+| demo_analysis.py | Pipeline demonstration |
+| PHASE_1_COMPLETION_SUMMARY.md | Tier 1 MVP completion report |
+| PROJECT_STATUS.md | Detailed status tracking |
+| TIER_2_ENHANCEMENTS.md | Future enhancement proposals |
+| SCORE_TRACKING_PROPOSAL.md | Score tracking design |
+| COMMIT_MESSAGE.txt | Git commit templates |
+
 ---
 
 ## How to Use This Archive
@@ -102,5 +115,6 @@ cat docs/archive/sessions/session2.md
 
 ---
 
-*Archived: 2025-10-25*
+*Initial Archive: 2025-10-25*
+*Updated: 2026-01-14 (Repository cleanup for archival)*
 *Reason: Documentation consolidation (49 → 6 active docs)*
